@@ -1,0 +1,13 @@
+package testing;
+component UniqueName{
+    port
+        in Boolean sIn1,
+        in Boolean sIn2,
+        out Boolean sOut1,
+        out Boolean sOut2;
+    instance BooleanConnector cmp1, cmp2;
+    connect cmp1.steering -> sIn1;
+    connect cmp2.steering -> sIn2;
+    connect sIn1 -> sOut1;
+    connect sIn2 -> sOut2;
+}

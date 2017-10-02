@@ -1,0 +1,4 @@
+package testing;
+component SIUnitRangeDifferentPrefixConnector{
+	port in [(0km : 0.05km : 10km) (10km : 0.1km : 45 km)] distance;
+}

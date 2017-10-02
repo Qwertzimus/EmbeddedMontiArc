@@ -1,0 +1,11 @@
+package testing;
+component DuplicatePort{
+    port
+        in Boolean sIn1,
+        in Boolean sIn1,
+        out Boolean sOut1,
+        out Boolean sOut2;
+
+    connect sIn1 -> sOut1;
+    connect sIn1 -> sOut2;
+}

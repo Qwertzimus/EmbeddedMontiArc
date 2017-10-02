@@ -1,0 +1,8 @@
+package testing;
+
+component GenericA<N1 n=1>{
+    ports in Boolean in1[n],
+          out Boolean out1[n];
+
+
+}

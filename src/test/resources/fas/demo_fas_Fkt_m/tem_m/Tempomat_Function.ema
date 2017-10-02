@@ -1,0 +1,61 @@
+package fas.demo_fas_Fkt_m.tem_m;
+
+import fas.basicLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.CC_On_Off;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.CC_SetValue;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.CC_Enabled;
+
+component Tempomat_Function {
+	port
+		in Boolean ParkingBrake_b,
+	    in (-oo:d:oo) BrakeForce_pedal_pc,
+		in Boolean CruiseControl_b,
+		in (-oo:d:oo) V_Vehicle_kmh,
+		in Boolean Limiter_b,
+		in Boolean FTS_active_b,
+		in (-oo:d:oo) LeverUp_Stat,
+		in (-oo:d:oo) LeverDown_Stat,
+		out (-oo:d:oo) V_CC_delta_kmh,
+		out Boolean CC_active_b;
+	
+	instance SwitchB<(-oo:d:oo)> switch1, switch2, switch3, switch4, switch5;
+	instance SwitchB<Boolean> switch6, switch7, switch8, switch9, switch10;
+	instance Memory<(-oo:d:oo)>(0) mem1, mem2, mem3, mem4;
+	instance Memory<Boolean>(false) mem5, mem6, mem7, mem8;
+	instance CC_On_Off cc_OnOff;
+	instance CC_SetValue cc_Set;
+	instance CC_Enabled cc_enable;
+	
+	connect ParkingBrake_b -> switch6.in1;
+	connect BrakeForce_pedal_pc -> switch1.in1;
+	connect CruiseControl_b -> switch7.in1;
+	connect V_Vehicle_kmh -> switch2.in1;
+	connect Limiter_b -> switch8.in1;
+	connect LeverUp_Stat -> switch3.in1;
+	connect LeverDown_Stat -> switch4.in1;
+	connect FTS_active_b -> switch9.in1;
+	connect switch5.out1 -> V_CC_delta_kmh;
+	connect switch10.out1 -> CC_active_b;
+	connect 0 -> switch9.in3;
+	connect false -> switch10.in3;
+	connect Enable -> switch1.cond, switch2.cond, switch3.cond, switch4.cond, switch5.cond, switch6.cond, switch7.cond, switch8.cond, switch9.cond, switch10.cond, cc_Set.Enable;
+	connect mem1.out1 -> switch1.in3;
+	connect mem2.out1 -> switch2.in3;
+	connect mem3.out1 -> switch3.in3;
+	connect mem4.out1 -> switch4.in3;
+	connect mem5.out1 -> switch6.in3;
+	connect mem6.out1 -> switch7.in3;
+	connect mem7.out1 -> switch8.in3;
+	connect mem8.out1 -> switch9.in3;
+	connect switch6.out1 -> mem5.in1, cc_OnOff.ParkingBrake_b;
+	connect switch1.out1 -> mem1.in1, cc_OnOff.BrakeForce_pedal_pc;
+	connect switch3.out1 -> mem3.in1, cc_OnOff.LeverUp_Stat, cc_Set.LeverUp_Stat;
+	connect switch4.out1 -> mem4.in1, cc_OnOff.LeverDown_Stat, cc_Set.LeverDown_Stat;
+	connect switch2.out1 -> mem2.in1, cc_OnOff.V_Vehicle_kmh, cc_Set.V_Vehicle_kmh, cc_enable.V_Vehicle_kmh; 
+	connect switch7.out1 -> mem6.in1, cc_OnOff.CruiseControl_b, cc_Set.CruiseControl_b;
+	connect switch8.out1 -> mem7.in1, cc_OnOff.Limiter_b, cc_Set.Limiter_b;
+	connect switch9.out1 -> mem8.in1, cc_OnOff.FTS_active_b;
+	connect cc_OnOff.CC_active_b -> cc_enable.CC_active_b, cc_Set.CC_enabled_b, switch10.in1;
+	connect cc_Set.DEMO_FAS_V_CCSetValue -> cc_enable.DEMO_FAS_V_CCSetValue;
+	connect cc_enable.V_CC_delta_kmh -> switch5.in1;
+}

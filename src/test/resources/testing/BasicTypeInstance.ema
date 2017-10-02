@@ -1,0 +1,11 @@
+package testing;
+
+component BasicTypeInstance {
+	port
+		in Boolean in1,
+		out Boolean out1;
+	instance BasicTypeTest<Boolean> b1;
+
+    connect in1->b1.in1;
+    connect in1.out1->out1;
+}

@@ -1,0 +1,8 @@
+//tests if values/constants can be connected to a port. Is equivalent to setting the port to always have a certain value/constant.
+package testing;
+
+component TypeConnector{
+    
+    connect true -> out1;
+    //should set out1 to true
+}

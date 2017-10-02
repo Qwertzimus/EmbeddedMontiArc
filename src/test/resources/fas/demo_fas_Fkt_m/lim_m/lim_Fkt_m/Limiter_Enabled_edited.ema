@@ -1,0 +1,46 @@
+package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_Ena_m.Limiter_Active_edited;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_Ena_m.Limiter_Deactive_edited;
+
+component Limiter_Enabled_edited {
+	
+	port 
+		in Boolean Limiter_b,
+		in (-oo:d:oo) Accelaration_pedal_pc,
+		in (-oo:d:oo) DEMO_FAS_V_LimiterSetValue,
+		in Boolean Sign_b,
+		out (-oo:d:oo) VMax_kmh,
+		out Boolean Limiter_active_b;
+
+	instance Smaller<(-oo:d:oo)> smaller1;
+	instance And and1;
+	instance Not<Boolean> not1, not2;
+	instance EdgeRising eRising;
+	instance RSFlipFlop flipFlop;
+	instance SwitchB<(-oo:d:oo)> switch1;
+	instance SwitchB<Boolean> switch2;
+	instance Limiter_Active_edited l_Active;
+	instance Limiter_Deactive_edited l_Deactive;
+	
+	connect Accelaration_pedal_pc -> smaller1.in1;
+	connect 90 -> smaller1.in2;
+	connect smaller1.out1 -> and1.in1;
+	connect Limiter_b -> eRising.u, not1.in1, not2.in1;
+	connect DEMO_FAS_V_LimiterSetValue -> l_Active.DEMO_FAS_V_LimiterSetValue_Read;
+	connect not1.out1 -> eRising.R;
+	connect false -> eRising.IV;
+	connect eRising.y -> flipFlop.S, l_Active.edgeRising_y, l_Deactive.edgeRising_y;
+	connect not2.out1 -> flipFlop.R;
+	connect flipFlop.in_Q -> and1.in2;
+	connect and1.out1 -> switch1.cond, switch2.cond;
+	connect l_Active.VMax_kmh -> switch1.in1;
+	connect l_Deactive.VMax_kmh -> switch1.in3;
+	connect switch1.out1 -> VMax_kmh;
+	connect l_Active.Limiter_active_b -> switch2.in1;
+	connect l_Deactive.Limiter_active_b -> switch2.in3;
+	connect switch2.out1 -> Limiter_active_b;
+	connect Sign_b -> l_Active.Sign_b, l_Deactive.Sign_b;
+}

@@ -1,0 +1,12 @@
+package a;
+import SuperComp;
+component Sub2 {
+  port in (1:1:100) in1[2],
+        out Boolean out1;
+
+  instance SuperComp compi;
+
+  connect in1[:] -> compi.percentage[:];
+
+
+}

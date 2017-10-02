@@ -1,0 +1,32 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.demo_fas_Fkt_m.lim_m.Limiter_Function;
+
+component Limiter {
+	port
+		in Boolean Limiter_b,
+	    in (-oo:d:oo) Accelaration_pedal_pc,
+		in (-oo:d:oo) V_Vehicle_kmh,
+		in (-oo:d:oo) LeverUp_stat,
+		in (-oo:d:oo) LeverDown_stat,
+		in (-oo:d:oo) V_Sign_kmh,
+		in Boolean Sign_b, 
+		out (-oo:d:oo) VMax_kmh,
+		out Boolean Limiter_active_b,
+		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
+
+	instance Limiter_Function l_Function;
+
+	connect Limiter_b -> l_Function.Limiter_b;
+	connect Accelaration_pedal_pc -> l_Function.Accelaration_pedal_pc;
+	connect V_Vehicle_kmh -> l_Function.V_Vehicle_kmh;
+	connect LeverUp_stat -> l_Function.LeverUp_stat;
+	connect LeverDown_stat -> l_Function.LeverDown_stat;
+	connect V_Sign_kmh -> l_Function.V_Sign_kmh;
+	connect Sign_b -> l_Function.Sign_b;
+	connect true/*demo_fas_Limiter*/ -> l_Function.Enable;
+	connect l_Function.VMax_kmh -> VMax_kmh;
+	connect l_Function.Limiter_active_b -> Limiter_active_b;
+	connect l_Function.DEMO_FAS_V_CCSetValue -> DEMO_FAS_V_CCSetValue;
+}

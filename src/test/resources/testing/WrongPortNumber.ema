@@ -1,0 +1,10 @@
+package testing;
+
+component WrongPortNumber{
+    port
+        in Boolean sIn[5],
+        out Boolean sOut[5];
+
+    connect sIn[1:2] -> sOut[2:5];
+
+}

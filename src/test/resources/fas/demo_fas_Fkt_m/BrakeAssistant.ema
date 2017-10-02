@@ -1,0 +1,14 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.demo_fas_Fkt_m.brakeAssistant_m.Brake_Booster;
+
+component BrakeAssistant {
+	port
+		in (-oo:d:oo) BrakeForce_pedal_pc,
+		out (-oo:d:oo) BrakeForceBoosted_pc;
+	
+	instance Brake_Booster brake;
+	
+	connect BrakeForce_pedal_pc -> brake.BrakeForce_pedal_pc;
+	connect brake.BrakeForceBoosted_pc -> BrakeForceBoosted_pc;
+}

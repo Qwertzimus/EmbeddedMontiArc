@@ -1,0 +1,6 @@
+package generics;
+
+component SuperGenericCompInstance {
+  instance SuperGenericComparableComp2<(-oo:oo), (1:1:100)> sgc;
+  instance SuperGenericComparableComp2<(100:10:1000), Boolean> sgc2;
+}

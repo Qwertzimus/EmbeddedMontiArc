@@ -1,0 +1,24 @@
+package fas.advancedLibrary;
+
+import fas.basicLibrary.*;
+
+component EdgeRising {
+	port
+		in Boolean u,
+		in Boolean R,
+		in Boolean IV,
+		out Boolean y;
+		
+	instance And and;
+	instance Not<Boolean> not;
+	instance SwitchB<Boolean> switch_R;
+	instance Memory<Boolean>(false) memory_U;
+	
+	connect u -> and.in1, memory_U.in1;
+	connect IV -> switch_R.in1;
+	connect R -> switch_R.cond;
+	connect memory_U.out1 -> switch_R.in3;
+	connect switch_R.out1 -> not.in1;
+	connect not.out1 -> and.in2;
+	connect and.out1 -> y;
+}

@@ -1,0 +1,5 @@
+package testing;
+component SIUnitRangePortMissingUnit1{
+      port in (0  : 0.1 m/s: 250 m/s ) speed;
+
+}

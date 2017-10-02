@@ -1,0 +1,58 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component CC_On_Off {
+	
+	port
+	    in Boolean ParkingBrake_b,
+	    in (-oo:d:oo) BrakeForce_pedal_pc,
+	    in Boolean CruiseControl_b,
+	    in (-oo:d:oo) V_Vehicle_kmh,
+		in Boolean Limiter_b,
+		in (-oo:d:oo) LeverUp_Stat,
+		in (-oo:d:oo) LeverDown_Stat,
+		in Boolean FTS_active_b,
+		out Boolean CC_active_b;
+
+	instance Not<Boolean> not1, not2, not3;
+	instance Greater<(-oo:d:oo)> greater1, greater2, greater3;
+	instance Less<(-oo:d:oo)> less1;
+	instance And and1, and2;
+	instance Or<Boolean> or1, or2;
+	instance Or<Boolean,4> or3;
+	instance EdgeRising eRising;
+	instance EdgeFalling eFalling;
+	instance RSFlipFlop flipFlop;
+			
+	connect Limiter_b -> not1.in1;
+	connect not1.out1 -> and1.in1;
+	connect LeverUp_Stat -> greater1.in1;
+	connect 0 -> greater1.in2;
+	connect greater1.out1 -> or1.in1;
+	connect LeverDown_Stat -> greater2.in1;
+	connect 0 -> greater2.in2;
+	connect greater2.out1 -> or1.in2;
+	connect or1.out1 -> not2.in1, eRising.u;
+	connect not2.out1 -> eRising.R;
+	connect false -> eRising.IV;
+	connect eRising.y -> or2.in1;
+	connect CruiseControl_b -> or2.in2, eFalling.u, eFalling.R;
+	connect or2.out1 -> and1.in2;
+	connect and1.out1 -> flipFlop.S;
+	connect false -> eFalling.IV;
+	connect eFalling.y -> or3.in1;
+	connect ParkingBrake_b -> or3.in2;
+	connect BrakeForce_pedal_pc -> greater3.in1;
+	connect 0 -> greater3.in2;
+	connect greater3.out1 -> or3.in3;
+	connect V_Vehicle_kmh -> less1.in1;
+	connect 20 -> less1.in2;
+	connect less1.out1 -> and2.in1;
+	connect FTS_active_b -> not3.in1;
+	connect not3.out1 -> and2.in2;
+	connect and2.out1 -> or3.in4;
+	connect or3.out1 -> flipFlop.R;
+	connect flipFlop.in_Q -> CC_active_b;
+}

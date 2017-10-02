@@ -1,0 +1,5 @@
+package testing;
+
+component BasicParameter(N1 default){
+
+}

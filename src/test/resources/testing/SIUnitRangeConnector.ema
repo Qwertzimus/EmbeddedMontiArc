@@ -1,0 +1,8 @@
+package testing;
+component SIUnitRangeConnector{
+    port out [(0 cm: 0.05 cm : 10 cm) (10 cm: 0.1 cm : 45 cm)] distance;
+
+
+	connect 0.1 cm -> steering;
+
+}

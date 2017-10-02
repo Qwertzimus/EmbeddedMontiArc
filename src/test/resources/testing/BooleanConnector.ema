@@ -1,0 +1,5 @@
+package testing;
+component BooleanConnector{
+	port out Boolean steering;
+	connect true -> steering;
+}

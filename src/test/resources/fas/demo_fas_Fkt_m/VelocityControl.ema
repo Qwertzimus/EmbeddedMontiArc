@@ -1,0 +1,56 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+
+component VelocityControl {
+	port
+		in (-oo:d:oo) BrakeForceBoosted_pc,
+		in (-oo:d:oo) V_CC_delta_kmh,
+		in (-oo:d:oo) VMax_kmh,
+		in (-oo:d:oo) Accelaration_pedal_pc,
+		in (-oo:d:oo) V_Vehicle_kmh,
+		in (-oo:d:oo) BrakeForce_pedal_pc,
+		in (-oo:d:oo) BrakeForce_Distronic_pc,
+		in (-oo:d:oo) Decelerator_pc,
+		in (-oo:d:oo) BrakeForce_Emergency_pc,
+		out (-oo:d:oo) Accelaration_pc,
+		out (-oo:d:oo) BrakeForce_pc;
+
+	instance Saturation<(-oo:d:oo)> sat1, sat2;
+	instance LookUp<(-oo:d:oo)> look1,look2;
+	instance Max<(-oo:d:oo)> max1;
+	instance Max5<(-oo:d:oo)> max2;
+	instance SwitchB<(-oo:d:oo)> switch1;
+	instance SwitchM<(-oo:d:oo)> switch2, switch3;
+	instance Greater<(-oo:d:oo)> greater1, greater2;
+	instance And and1;
+	instance MultDiv<(-oo:d:oo)> mul;
+		
+	connect Decelerator_pc -> mul.in1;
+	connect V_Vehicle_kmh -> greater1.in1;
+	connect VMax_kmh -> greater1.in2, greater2.in1;
+	connect Accelaration_pedal_pc -> max1.in1;
+	connect V_CC_delta_kmh -> sat1.in1, sat2.in1;
+	connect BrakeForceBoosted_pc -> max2.in2;
+	connect BrakeForce_pedal_pc -> max2.in3;
+	connect BrakeForce_Distronic_pc -> max2.in4;
+	connect BrakeForce_Emergency_pc -> max2.in5;
+	connect greater1.out1 -> and1.in1;
+	connect greater2.out1 -> and1.in2;
+	connect 0 -> greater2.in2;
+	connect sat1.out1 -> look1.in1;
+	connect sat2.out1 -> look2.in1;
+	connect look1.out1 -> max1.in2;
+	connect look2.out1 -> switch2.in3;
+	connect max1.out1 -> switch1.in3, switch2.cond;
+	connect 0 -> switch2.in1;
+	connect switch2.out1 -> max2.in1;
+	connect and1.out1 -> switch1.cond;
+	connect 0 -> switch1.in1;
+	connect switch1.out1 -> mul.in2;
+	connect 100 -> mul.in3;
+	connect max2.out1 -> switch3.cond, BrakeForce_pc;
+	connect mul.out1 -> switch3.in3;
+	connect 0 -> switch3.in1;
+	connect switch3.out1 -> Accelaration_pc;
+}

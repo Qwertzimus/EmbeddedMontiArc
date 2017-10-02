@@ -1,0 +1,10 @@
+//simple test ressource file to check if component array initialization and connection is parsed correctly and what it is equivalent to
+package testing;
+
+component ConnectorArray{
+      connect a.port1[:] -> b.port2[:];
+      connect port1[3] -> b.port2[4];
+      connect a.port1 -> port2[:];
+      connect port4 -> b.port3;
+
+}

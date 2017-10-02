@@ -1,0 +1,11 @@
+package testing;
+
+component ConnectorArraymn{
+    ports
+        in Boolean sIn[5],
+        out Boolean sOut[5];
+
+
+    connect sIn[1:3] -> sOut[2:4];
+
+}

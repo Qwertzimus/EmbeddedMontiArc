@@ -1,0 +1,76 @@
+package fas.demo_fas_Fkt_m.lim_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_Enabled;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_SetValue;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_StartUpSetValue;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.SysInit;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_InitialSetValue;
+
+component Limiter_Function {
+	port 
+		in Boolean Limiter_b,
+		in (-oo:d:oo) Accelaration_pedal_pc,
+		in (-oo:d:oo) V_Vehicle_kmh,
+		in (-oo:d:oo) LeverUp_stat,
+		in (-oo:d:oo) LeverDown_stat,
+		in (-oo:d:oo) V_Sign_kmh,
+		in Boolean Sign_b,
+		in Boolean Enable,
+		out (-oo:d:oo) VMax_kmh,
+	    out Boolean Limiter_active_b,
+		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
+
+	instance SwitchB<(-oo:d:oo)> switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8;
+	instance SwitchB<Boolean> switch9, switch10, switch11;
+	instance Memory<(-oo:d:oo)>(0) mem1, mem2, mem3, mem4, mem5, mem6, mem7, mem8;
+	instance Memory<Boolean>(false) mem9, mem10, mem11;
+	instance And and1;
+	instance Min<(-oo:d:oo)> min1;
+	instance Limiter_Enabled lim_Enabled;
+	instance Limiter_StartUpSetValue lim_StartUpSetValue;
+	instance Limiter_InitialSetValue lim_InitialSetValue;
+	instance SysInit sys;
+	instance Limiter_SetValue lim_SetValue;
+	
+	connect V_Sign_kmh -> switch1.in1;
+	connect mem1.out1 -> switch1.in3;
+	connect switch1.out1 -> mem1.in1, min1.in1;
+	connect Sign_b -> switch9.in1;
+	connect mem9.out1 -> switch9.in3;
+	connect switch9.out1 -> mem9.in1, and1.in1;
+	connect Limiter_b -> switch10.in1;
+	connect mem10.out1 -> switch10.in3;
+	connect switch10.out1 -> mem10.in1, lim_Enabled.Limiter_b, lim_InitialSetValue.Limiter_b, lim_SetValue.Enabled_Cond;
+	connect true/*demo_fas_Signdetection*/ -> and1.in2;
+	connect Accelaration_pedal_pc -> switch2.in1;
+	connect mem2.out1 -> switch2.in3;
+	connect switch2.out1 -> mem2.in1, lim_Enabled.Accelaration_pedal_pc;
+	connect V_Vehicle_kmh -> switch3.in1;
+	connect mem3.out1 -> switch3.in3;
+	connect switch3.out1 -> mem3.in1, lim_InitialSetValue.V_Vehicle_kmh;
+	connect LeverUp_stat -> switch4.in1;
+	connect mem4.out1 -> switch4.in3;
+	connect switch4.out1 -> mem4.in1, lim_SetValue.LeverUp_stat;
+	connect LeverDown_stat -> switch5.in1;
+	connect mem5.out1 -> switch5.in3;
+	connect switch5.out1 -> mem5.in1, lim_SetValue.LeverDown_stat;
+	connect min1.out1 -> switch6.in1;
+	connect and1.out1 -> switch6.cond;
+	connect lim_Enabled.VMax_kmh -> min1.in2, switch6.in3;
+	connect lim_Enabled.Limiter_active_b -> switch11.in1;
+	connect switch6.out1 -> switch7.in1;
+	connect sys.y -> lim_StartUpSetValue.trigger;
+	connect lim_StartUpSetValue.DEMO_FAS_V_CCSetValue_Write -> switch8.in1;
+	connect switch7.out1 -> VMax_kmh, mem6.in1;
+	connect mem6.out1 -> switch7.in3;
+	connect switch11.out1 -> mem11.in1, Limiter_active_b;
+	connect mem11.out1 -> switch11.in3;
+	connect switch8.out1 -> mem8.in1, DEMO_FAS_V_CCSetValue;
+	connect mem8.out1 -> switch8.in3;
+	connect Enable -> switch1.cond, switch2.cond, switch3.cond, switch4.cond, switch5.cond, switch7.cond, switch8.cond, switch9.cond, switch10.cond, switch11.cond;
+	connect lim_SetValue.DEMO_FAS_V_LimiterSetValue_Write -> mem7.in1, lim_Enabled.DEMO_FAS_V_LimiterSetValue;
+	connect mem7.out1 -> lim_InitialSetValue.DEMO_FAS_V_LimiterSetValue_Read;
+	connect lim_InitialSetValue.DEMO_FAS_V_LimiterSetValue_Write -> lim_SetValue.DEMO_FAS_V_LimiterSetValue_Read;
+}

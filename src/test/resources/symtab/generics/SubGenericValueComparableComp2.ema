@@ -1,0 +1,10 @@
+package generics;
+
+component SuperGenericValueComparableComp2<K, T, T value> {
+
+    port
+        in T tIn,
+        out K tOut;
+
+    connect value -> tIn;
+}

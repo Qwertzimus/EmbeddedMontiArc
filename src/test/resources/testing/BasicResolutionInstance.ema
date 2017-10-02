@@ -1,0 +1,17 @@
+package testing;
+
+component BasicResolutionInstance {
+	port
+		in Boolean a1[6],
+		out Boolean out1;
+
+	instance BasicResolution<6> br1;
+
+    connect a1[1]->br1.in1[1];
+    connect a1[2]->br1.in1[2];
+    connect a1[3]->br1.in1[3];
+    connect a1[4]->br1.in1[4];
+    connect a1[5]->br1.in1[5];
+    connect a1[6]->br1.in1[6];
+
+}

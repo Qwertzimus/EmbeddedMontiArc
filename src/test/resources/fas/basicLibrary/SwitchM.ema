@@ -1,0 +1,9 @@
+package fas.basicLibrary;
+
+component SwitchM<T> {
+	port 
+		in T in1, //if
+	    in T cond, // condition
+		in T in3, //else
+		out T out1;
+}

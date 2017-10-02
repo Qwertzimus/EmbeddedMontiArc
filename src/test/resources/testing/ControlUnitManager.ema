@@ -1,0 +1,25 @@
+//simple test ressource file to check if autoconnection is working correctly
+package testing;
+component ControlUnitManager{
+    ports
+        in Boolean lightsIn[500],
+        // could be transformed into
+        // in Boolean lightsIn1,lightsIn2,...,lightsIn500;
+        out Boolean lightsOut[500];
+        //could be transformed into out Boolean lightsOut1,lightsOut2,...,lightsOut500;
+    
+    instance ControlUnit lightControlUnit;
+    
+    connect lightsIn[:] -> lightControlUnit.lightsIn[:];
+    //equivalent to
+    //connect lightsIn[0] -> lightControlUnit.lightsIn[0];
+    //connect lightsIn[1] -> lightControlUnit.lightsIn[1];
+    //...
+    //connect lightsIn[499] -> lightControlUnit.lightsIn[499];
+    connect lightControlUnit.lightsIn[:] -> lightsOut[:];
+    //equivalent to
+    //connect lightControlUnit.lightsOut[0] -> lightsOut[0];
+    //connect lightControlUnit.lightsOut[1] -> lightsOut[1];
+    //...
+    //connect lightControlUnit.lightsOut[500] -> lightsOut[500];
+}

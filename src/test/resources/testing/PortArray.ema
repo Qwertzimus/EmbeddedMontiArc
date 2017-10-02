@@ -1,0 +1,10 @@
+//simple test ressource file to check if component array initialization and connection is parsed correctly and what it is equivalent to
+package testing;
+
+component PortArray{
+    port
+        in Boolean lightsIn[5],
+        out Boolean lightsOut[5];
+
+    connect lightsIn[:] -> lightsOut[:];
+}

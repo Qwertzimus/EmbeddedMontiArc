@@ -1,0 +1,65 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_InitialSetValue;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_OnSet_SetValue;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_StartUpSetValue;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_ChangeSetValue;
+
+component CC_SetValue {
+	
+	port
+		in Boolean Limiter_b,
+		in Boolean CC_enabled_b,
+		in Boolean CruiseControl_b,
+		in (-oo:d:oo) V_Vehicle_kmh,
+		in (-oo:d:oo) LeverUp_Stat,
+		in (-oo:d:oo) LeverDown_Stat,
+		in Boolean Enable,
+		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
+
+	instance GreaterEquals<(-oo:d:oo)> greaterEq;
+	instance And and1, and2;
+	instance And3 and3;
+	instance Or<(-oo:d:oo)> or1;
+	instance Not<Boolean> not1, not2, not3, not4;
+	instance SwitchB<(-oo:d:oo)> switch1, switch2;
+	instance Memory<(-oo:d:oo)>(0) mem1;
+	instance EdgeRising eRising;
+	instance RSFlipFlop flipFlop;
+	instance SysInit sInit;
+	instance CC_OnSet_SetValue cc_OnSet;
+	instance CC_ChangeSetValue cc_ChangeSet;
+	instance CC_InitialSetValue cc_InitialSet;
+	instance CC_StartUpSetValue cc_StartUpSet;
+	
+	connect Limiter_b -> not1.in1;
+	connect CruiseControl_b -> not2.in1, and1.in1;
+	connect V_Vehicle_kmh -> cc_InitialSet.V_Vehicle_kmh, greaterEq.in1, cc_OnSet.V_Vehicle_kmh;
+	connect CC_enabled_b -> not3.in1, not4.in1, and2.in1, switch1.cond;
+	connect LeverUp_Stat -> cc_ChangeSet.LeverUp_Stat, or1.in1;
+	connect LeverDown_Stat -> cc_ChangeSet.LeverDown_Stat, or1.in2;
+	connect Enable -> and2.in2, cc_InitialSet.Enable, cc_OnSet.Enable, cc_StartUpSet.Enable, switch2.cond;
+	connect switch2.out1 -> mem1.in1;
+	connect and2.out1 -> cc_ChangeSet.Enable;
+	connect mem1.out1 -> switch2.in3, switch1.in3, cc_ChangeSet.DEMO_FAS_V_CCSetValue_Read;
+	connect cc_StartUpSet.DEMO_FAS_V_CCSetValue_Write -> DEMO_FAS_V_CCSetValue, switch2.in1;
+	connect 20 -> greaterEq.in2;
+	connect greaterEq.out1 -> and1.in2;
+	connect and1.out1 -> cc_InitialSet.trigger;
+	connect not1.out1 -> and3.in1;
+	connect not2.out1 -> and3.in2;
+	connect or1.out1 -> eRising.u;
+	connect not3.out1 -> eRising.R;
+	connect false -> eRising.IV;
+	connect eRising.y -> flipFlop.S;
+	connect not4.out1 -> flipFlop.R;
+	connect flipFlop.in_Q -> and3.in3;
+	connect and3.out1 -> cc_OnSet.trigger;
+	connect switch1.out1 -> cc_InitialSet.DEMO_FAS_V_CCSetValue_Read;
+	connect cc_ChangeSet.DEMO_FAS_V_CCSetValue -> switch1.in1;
+	connect cc_InitialSet.DEMO_FAS_V_CCSetValue -> cc_OnSet.DEMO_FAS_V_CCSetValue_Read;
+	connect cc_OnSet.DEMO_FAS_V_CCSetValue -> cc_StartUpSet.DEMO_FAS_V_CCSetValue_Read;
+	connect sInit.y -> cc_StartUpSet.trigger;
+}

@@ -1,0 +1,10 @@
+//simple test resource file to check if port array initialization and connection is parsed correctly and what is equivalent to/could be transformed into
+package testing;
+component LightControlSwitch{
+    ports
+        in Boolean lightsIn[5],
+        out Boolean lightsOut[5];
+    
+    connect lightsIn[:] -> lightsOut[:];
+
+}

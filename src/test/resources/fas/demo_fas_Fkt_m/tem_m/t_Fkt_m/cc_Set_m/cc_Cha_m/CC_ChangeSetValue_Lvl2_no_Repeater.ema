@@ -1,0 +1,39 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m;
+
+import fas.basicLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_noR.V_SetValuePlusLvl2;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_noR.V_SetValuePlus;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_noR.V_SetValueMinusLvl2;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_noR.V_SetValueMinus;
+
+component CC_ChangeSetValue_Lvl2_no_Repeater {
+	port
+		in (-oo:d:oo) LeverUp_Stat,
+		in (-oo:d:oo) LeverDown_Stat,
+		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
+		in Boolean Enable,
+		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
+
+	instance Equals<(-oo:d:oo)> eq1, eq2, eq3, eq4;
+	instance V_SetValuePlusLvl2 v_SetValuePlus2;
+	instance V_SetValuePlus v_SetValuePlus;
+	instance V_SetValueMinus v_SetValueMinus;
+	instance V_SetValueMinusLvl2 v_SetValueMinus2;
+	
+	connect LeverUp_Stat -> eq1.in1, eq2.in1;
+	connect LeverDown_Stat -> eq3.in1, eq4.in1;
+	connect 2 -> eq1.in2;
+	connect eq1.out1 -> v_SetValuePlus2.trigger;
+	connect 1 -> eq2.in2;
+	connect eq2.out1 -> v_SetValuePlus.trigger;
+	connect 1 -> eq3.in2;
+	connect eq3.out1 -> v_SetValueMinus.trigger;
+	connect 2 -> eq4.in2;
+	connect eq4.out1 -> v_SetValueMinus2.trigger;
+	connect Enable -> v_SetValuePlus2.Enable, v_SetValuePlus.Enable, v_SetValueMinus.Enable, v_SetValueMinus2.Enable;
+	connect DEMO_FAS_V_CCSetValue_Read -> v_SetValuePlus2.DEMO_FAS_V_CCSetValue_Read, v_SetValuePlus.DEMO_FAS_V_CCSetValue_Read, v_SetValueMinus.DEMO_FAS_V_CCSetValue_Read, v_SetValueMinus2.DEMO_FAS_V_CCSetValue_Read;
+	connect v_SetValueMinus2.DEMO_FAS_V_CCSetValue -> v_SetValuePlus.in1;
+	connect v_SetValueMinus.DEMO_FAS_V_CCSetValue -> v_SetValueMinus2.in1;
+	connect v_SetValuePlus.DEMO_FAS_V_CCSetValue -> v_SetValuePlus2.in1;
+	connect v_SetValuePlus2.DEMO_FAS_V_CCSetValue_Write -> DEMO_FAS_V_CCSetValue;
+}

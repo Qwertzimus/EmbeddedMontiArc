@@ -1,0 +1,19 @@
+package fas.demo_fas_Fkt_m.brakeAssistant_m;
+
+import fas.basicLibrary.*;
+
+component Brake_Booster {
+	
+	port
+		in (-oo:d:oo) BrakeForce_pedal_pc,
+		out (-oo:d:oo) BrakeForceBoosted_pc;
+	
+	instance GreaterEquals<(-oo:d:oo)> greaterEq;
+	instance SwitchB<(-oo:d:oo)> switch1;
+	
+	connect BrakeForce_pedal_pc -> greaterEq.in1, switch1.in3;
+	connect 70 /*demo_fas_BrakeBooster_Threshold*/ -> greaterEq.in2;
+	connect greaterEq.out1 -> switch1.cond;
+	connect 100 -> switch1.in1;
+	connect switch1.out1 -> BrakeForceBoosted_pc;
+}

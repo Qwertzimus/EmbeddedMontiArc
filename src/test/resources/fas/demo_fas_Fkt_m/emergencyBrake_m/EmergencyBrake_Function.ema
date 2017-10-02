@@ -1,0 +1,43 @@
+package fas.demo_fas_Fkt_m.emergencyBrake_m;
+
+import fas.basicLibrary.*;
+
+component EmergencyBrake_Function {
+	port
+		in (-oo:d:oo) V_Vehicle_ms,
+		in (-oo:d:oo) Distance_Object_m,
+		in (-oo:d:oo) V_Obj_rel_ms,
+		out (-oo:d:oo) BrakeForce_Emergency_pc,
+		out Boolean Acusti_warn_b;
+		
+	instance Saturation<(-oo:d:oo)> sat1, sat2, sat3;
+	instance Division<(-oo:d:oo)> div1, div2;
+	instance MinusPlus<(-oo:d:oo)> minPlus1, minPlus2;
+	instance Smaller<(-oo:d:oo)> smaller1, smaller2;
+	instance SwitchB<(-oo:d:oo)> switch1, switch2;
+	instance Max<(-oo:d:oo)> max1;
+	
+	connect Distance_Object_m -> div1.in1;
+	connect V_Obj_rel_ms -> sat1.in1;
+	connect sat1.out1 -> div1.in2;
+	connect V_Vehicle_ms -> div2.in1;
+	connect 8/*demo_fas_Neg_Max_ms*/ -> div2.in2;
+	connect div1.out1 -> minPlus1.in2, minPlus2.in2;
+	connect 1/*demo_fas_Emerg_Brake_Time1*/ -> minPlus1.in1;
+	connect 1.5/*demo_fas_Emerg_Brake_Time2*/ -> minPlus2.in1;
+	connect minPlus1.out1 -> sat2.in1;
+	connect sat2.out1 -> smaller1.in1;
+	connect minPlus2.out1 -> sat3.in1;
+	connect sat3.out1 -> smaller2.in1;
+	connect div2.out1 -> smaller1.in2, smaller2.in2;
+	connect smaller1.out1 -> switch1.cond, Acusti_warn_b;
+	connect smaller2.out1 -> switch2.cond;
+	connect 40/*demo_fas_Emerg_Brake_Force1*/ -> switch1.in1;
+	connect 80/*demo_fas_Emerg_Brake_Force2*/ -> switch2.in1;
+	connect 0 -> switch1.in3;
+	connect 0 -> switch2.in3;
+	connect switch1.out1 -> max1.in1;
+	connect switch2.out1 -> max1.in2;
+	connect max1.out1 -> BrakeForce_Emergency_pc;
+	
+}

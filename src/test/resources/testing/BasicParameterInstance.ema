@@ -1,0 +1,6 @@
+package testing;
+
+component BasicParameterInstance{
+
+    instance BasicParameter(5) basicParameter;
+}

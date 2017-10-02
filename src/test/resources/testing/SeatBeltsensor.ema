@@ -1,0 +1,9 @@
+package testing;
+component SeatBeltsensor{
+    ports
+      in Boolean seatBelt,
+      out Boolean indicator;
+
+    connect seatBelt->indicator;
+
+}

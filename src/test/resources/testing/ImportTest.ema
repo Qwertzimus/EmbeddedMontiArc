@@ -1,0 +1,12 @@
+package testing;
+
+import fas.basicLibrary.*;
+
+component ImportTest{
+    ports in Boolean in1[2],
+        out Boolean out1;
+
+        instance And<Boolean> and1;
+    connect in1[:]->and1.in1[:];
+    connect and1.out1->out1;
+}

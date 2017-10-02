@@ -1,0 +1,30 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component CC_StartUpSetValue {
+	port
+		in Boolean trigger,
+		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
+		in Boolean Enable,
+		out (-oo:d:oo) DEMO_FAS_V_CCSetValue_Write;
+	
+	instance SwitchB<Boolean> switch1, switch2;
+	instance SwitchB<(-oo:d:oo)> switch3;
+	instance Greater<(-oo:d:oo)> greater1, greater2;
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+	
+	connect trigger -> greater1.in1, switch1.in1;
+	connect Enable -> switch1.cond, switch2.cond;
+	connect DEMO_FAS_V_CCSetValue_Read -> switch3.in3;
+	connect switch3.out1 -> DEMO_FAS_V_CCSetValue_Write;
+	connect switch1.out1 -> mem1.in1;
+	connect mem1.out1 -> switch1.in3, greater1.in2;
+	connect greater1.out1 -> greater2.in1;
+	connect switch2.out1 -> mem2.in1;
+	connect mem2.out1 -> switch2.in3, greater2.in2;
+	connect greater2.out1 -> switch3.cond, switch2.in1;
+	connect -1 -> switch3.in1;
+}

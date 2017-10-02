@@ -1,0 +1,8 @@
+package test;
+
+import fas.*;
+
+component LookUpTest{
+    instance LookUp<(oo:d:oo), 1 > ( 2 ) look1 ;
+
+}

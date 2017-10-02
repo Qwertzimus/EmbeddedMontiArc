@@ -1,0 +1,10 @@
+package testing;
+
+component GenericAInstance{
+    ports in Boolean in1[4],
+          out Boolean out1[4];
+
+    instance GenericA<4> genericA;
+
+    connect in1[:] -> genericA.in1[:];
+}

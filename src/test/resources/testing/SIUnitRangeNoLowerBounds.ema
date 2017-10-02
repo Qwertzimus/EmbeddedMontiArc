@@ -1,0 +1,4 @@
+package testing;
+component SIUnitRangeNoLowerBounds{
+	port in (-oo km : 45 km) distance;
+}

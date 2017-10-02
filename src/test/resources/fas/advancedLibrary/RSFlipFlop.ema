@@ -1,0 +1,26 @@
+package fas.advancedLibrary;
+
+import fas.basicLibrary.*;
+
+component RSFlipFlop {
+	port 
+		in Boolean S, // Set
+	    in Boolean R, //Reset
+		out Boolean out_Q,
+		out Boolean Not_Q;
+	
+	instance Constant<Boolean>(true) oneS;
+	instance Constant<Boolean>(false) zeroR;
+	instance SwitchB<Boolean> switch_R, switch_S;
+	instance Memory<Boolean>(false) memory_Q;
+	instance Not<Boolean> logOp_N;
+	
+	connect S -> switch_S.cond;
+	connect R -> switch_R.cond;
+	connect switch_R.out1 -> memory_Q.in1, logOp_N.in1, out_Q;
+	connect switch_S.out1 -> switch_R.in3;
+	connect zeroR.out1 -> switch_R.in1;
+	connect oneS.out1 -> switch_S.in1;
+	connect memory_Q.out1 -> switch_S.in3;
+	connect logOp_N.out1 -> Not_Q;
+}

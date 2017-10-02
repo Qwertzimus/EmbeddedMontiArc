@@ -1,0 +1,12 @@
+package fas.demo_fas_Fkt_m.distronic_m;
+
+import fas.basicLibrary.*;
+
+component Distronic_Deactive {
+	port
+		out (-oo:d:oo) BrakeForce_Distronic_pc,
+		out (-oo:d:oo) Decelerator_pc;
+
+	connect 0 -> BrakeForce_Distronic_pc;
+	connect 100 -> Decelerator_pc;
+}

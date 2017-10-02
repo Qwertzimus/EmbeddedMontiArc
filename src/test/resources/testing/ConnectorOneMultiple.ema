@@ -1,0 +1,9 @@
+package testing;
+
+component ConnectorOneMultiple{
+    ports in Boolean in1,
+    out Boolean out1,
+    out Boolean out2;
+
+    connect in1->out1,out2;
+}

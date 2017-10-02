@@ -1,0 +1,5 @@
+package generics;
+
+component SubGenericInstance {
+  instance SubGeneric<(-oo:oo)> sg;
+}

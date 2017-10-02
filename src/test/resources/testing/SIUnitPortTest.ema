@@ -1,0 +1,5 @@
+package testing;
+component SIUnitPortTest{
+      port in (0 m : 0.1 m: 250 m ) distance;
+
+}
