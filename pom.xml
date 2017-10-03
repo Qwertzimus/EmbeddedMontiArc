@@ -66,6 +66,7 @@
       <version>${guava.version}</version>
     </dependency>
 
+
     <!-- MontiCore Dependencies -->
     <dependency>
       <groupId>de.monticore</groupId>
@@ -298,15 +299,15 @@
 
   <distributionManagement>
     <repository>
-      <id>se-nexus</id>
+      <id>github</id>
       <url>https://raw.githubusercontent.com/EmbeddedMontiArc/external-dependencies/master/</url>
     </repository>
     <snapshotRepository>
-      <id>se-nexus</id>
+      <id>github</id>
       <url>https://raw.githubusercontent.com/EmbeddedMontiArc/external-dependencies/master/</url>
     </snapshotRepository>
 	<site>
-      <id>se-nexus</id>
+      <id>github</id>
       <url>https://raw.githubusercontent.com/EmbeddedMontiArc/external-dependencies/master/</url>
     </site>
   </distributionManagement>
