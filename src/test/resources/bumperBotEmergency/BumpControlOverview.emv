@@ -1,0 +1,17 @@
+package bumperBotEmergency;
+
+view BumpControlOverview {
+
+  component BumpSensor {}
+  instance BumpSensor bumpSensor;
+  
+  component BumpControl {}
+  instance BumpControl bumpControl;
+  component Timer {}
+  instance Timer timer;
+  
+  connect bumpSensor -> bumpControl;
+  connect timer -> bumpControl;
+  
+  connect bumpControl -> timer;
+}

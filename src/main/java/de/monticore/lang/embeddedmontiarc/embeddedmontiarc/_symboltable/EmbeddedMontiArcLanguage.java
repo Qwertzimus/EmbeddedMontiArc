@@ -69,6 +69,7 @@ public class EmbeddedMontiArcLanguage extends EmbeddedMontiArcLanguageTOP implem
         addResolver(new CommonResolvingFilter<>(JMethodSymbol.KIND));
         addResolvingFilter(CommonResolvingFilter.create(ResolutionDeclarationSymbol.KIND));
         addResolvingFilter(CommonResolvingFilter.create(UnitNumberResolutionSymbol.KIND));
+        //addResolvingFilter(CommonResolvingFilter.create(ComponentKind.KIND));
         //addResolvingFilter(CommonResolvingFilter.create(TagSymbol.KIND));
         setModelNameCalculator(new EmbeddedMontiArcModelNameCalculator());
     }

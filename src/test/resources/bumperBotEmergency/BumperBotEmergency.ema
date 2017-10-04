@@ -1,0 +1,120 @@
+package bumperBotEmergency;
+
+// Synthesized architecture for ArcV specification
+component BumperBotEmergency {
+
+
+  component Sensors {
+      port
+      out Boolean bumpPressed,
+      out Boolean emergencyPressed;
+
+    component BumpSensor {
+      port
+        out Boolean pressed;
+    }
+    instance BumpSensor bumpSensor;
+
+    component EmergencySwitch {
+      port
+        out Boolean pressed;
+    }
+    instance EmergencySwitch emergencySwitch;
+
+    connect bumpSensor.pressed -> bumpPressed;
+    connect emergencySwitch.pressed -> emergencyPressed;
+  }
+  instance Sensors sensors;
+  
+  connect sensors.bumpPressed -> controller.bumpPressed;
+  connect sensors.emergencyPressed -> controller.emergencyPressed;
+  
+  component Controller {
+      port
+      in Boolean bumpPressed,
+      in Boolean emergencyPressed,
+      out MotorCmd rightMotorCmd,
+      out MotorCmd leftMotorCmd;
+
+    component BumpControl {
+      port
+          in Boolean bumpPressed,
+          in TimerSignal timerSig,
+          out TimerCmd timerCmd,
+        out MotorCmd leftMotorCmd,
+        out MotorCmd rightMotorCmd;
+        
+    }
+    instance BumpControl bumpControl;
+    
+    component Timer {
+      port
+          out TimerSignal signal,
+          in TimerCmd cmd;
+    }
+    instance Timer timer;
+
+    component MotorStop {
+      port
+        out MotorCmd motorCmd;
+    }
+    instance MotorStop motorStop;
+    
+    component MotorArbiter {
+      port
+        out MotorCmd rightMotorCmd,
+        out MotorCmd leftMotorCmd,
+        in MotorCmd fstAltRightMotorCmd,
+        in MotorCmd fstAltLeftMotorCmd,
+        in MotorCmd sndAltRightMotorCmd,
+        in MotorCmd sndAltLeftMotorCmd,
+        in Boolean selection;
+    }
+    instance MotorArbiter motorArbiter;
+    
+    // connections of the bump control
+    connect bumpPressed -> bumpControl.bumpPressed;
+    connect timer.signal -> bumpControl.timerSig;
+    
+    connect bumpControl.timerCmd -> timer.cmd;
+    
+    // connections of the arbiter
+    connect motorStop.motorCmd -> motorArbiter.fstAltRightMotorCmd;
+    connect motorStop.motorCmd -> motorArbiter.fstAltLeftMotorCmd;
+    
+    connect bumpControl.rightMotorCmd -> motorArbiter.sndAltRightMotorCmd;
+    connect bumpControl.leftMotorCmd -> motorArbiter.sndAltLeftMotorCmd;
+    
+    connect emergencyPressed -> motorArbiter.selection;
+    
+    connect motorArbiter.rightMotorCmd -> rightMotorCmd;
+    connect motorArbiter.leftMotorCmd -> leftMotorCmd;
+
+  }
+  instance Controller controller;
+  
+  connect controller.leftMotorCmd -> actuators.leftMotorCmd;
+  connect controller.rightMotorCmd -> actuators.rightMotorCmd;
+  
+  component Actuators {
+      port
+        in MotorCmd rightMotorCmd,
+      in MotorCmd leftMotorCmd;
+      
+    component LeftMotor {
+      port
+        in MotorCmd cmd;
+    }
+    instance LeftMotor leftMotor;
+
+    component RightMotor {
+      port
+        in MotorCmd cmd;
+    }
+    instance RightMotor rightMotor;
+
+    connect rightMotorCmd -> rightMotor.cmd;
+    connect leftMotorCmd -> leftMotor.cmd;
+  }
+  instance Actuators actuators;
+}

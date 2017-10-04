@@ -1,0 +1,47 @@
+package bumperBotEmergency;
+
+/**
+  This view shows the path that a STOP signal sent by component MotorStop
+  can travel through the MotorArbiter to the actuators.
+**/
+view MotorArbiterConnectionsEmergency {
+
+  component MotorStop {
+    port
+      out ? motorCmd;
+  }
+  instance MotorStop motorStop;
+
+  component MotorArbiter {
+    port
+      in MotorCmd fstAltLeftMotorCmd,
+      in MotorCmd fstAltRightMotorCmd,
+      out ? leftMotorCmd,
+      out ? rightMotorCmd;
+  }
+  instance MotorArbiter motorArbiter;
+  
+  component Actuators {
+
+    component LeftMotor {
+      port
+        in MotorCmd cmd;
+    }
+    instance LeftMotor leftMotor;
+
+    component RightMotor {
+      port
+        in MotorCmd cmd;
+    }
+    instance RightMotor rightMotor;
+    
+  }
+  instance Actuators actuators;
+  
+  connect motorArbiter.leftMotorCmd -> leftMotor.cmd;
+  connect motorArbiter.rightMotorCmd -> rightMotor.cmd;
+  
+  connect motorStop.motorCmd -> motorArbiter.fstAltLeftMotorCmd;
+  connect motorStop.motorCmd -> motorArbiter.fstAltRightMotorCmd;
+
+}

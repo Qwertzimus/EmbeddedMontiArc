@@ -1,0 +1,42 @@
+package bumperBotEmergency;
+
+/**
+  This view shows the signal flow path from the control component bump control
+  through the mode arbiter to the two motors.
+**/
+view MotorArbiterConnectionsOldBehavior {
+
+  component BumpControl {
+    port
+      out ? leftMotorCmd,
+      out ? rightMotorCmd;
+  }
+  instance BumpControl bumpControl;
+
+  component MotorArbiter {
+    port
+      in MotorCmd sndAltLeftMotorCmd,
+      in MotorCmd sndAltRightMotorCmd,
+      out ? leftMotorCmd,
+      out ? rightMotorCmd;
+  }
+  instance MotorArbiter motorArbiter;
+  
+  component LeftMotor {
+    port
+      in MotorCmd cmd;
+  }
+  instance LeftMotor leftMotor;
+  component RightMotor {
+    port
+      in MotorCmd cmd;
+  }
+  instance RightMotor rightMotor;
+  
+  connect motorArbiter.leftMotorCmd -> leftMotor.cmd;
+  connect motorArbiter.rightMotorCmd -> rightMotor.cmd;
+  
+  connect bumpControl.leftMotorCmd -> motorArbiter.sndAltLeftMotorCmd;
+  connect bumpControl.rightMotorCmd -> motorArbiter.sndAltRightMotorCmd;
+
+}

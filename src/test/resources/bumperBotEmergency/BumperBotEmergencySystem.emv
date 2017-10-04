@@ -1,0 +1,25 @@
+package bumperBotEmergency;
+
+/**
+  This view shows the emergency switch and its relation to the MotorArbiter.
+**/
+view BumperBotEmergencySystem {
+
+  component Sensors {
+    component EmergencySwitch {
+      port
+        out ? pressed;
+    }
+    instance EmergencySwitch emergencySwitch;
+  }
+  instance Sensors sensors;
+  
+  component MotorArbiter {
+    port
+      in ? selection;
+  }
+  instance MotorArbiter motorArbiter;
+  
+  connect emergencySwitch.pressed -> motorArbiter.selection;
+
+}

@@ -1,0 +1,82 @@
+package bumperBotEmergency;
+// Simple BumperBot
+
+component BumperBot {
+
+
+  component Sensors {
+      port
+      out Boolean bumpPressed;
+      
+    component BumpSensor {
+      port
+        out Boolean pressed;
+    }
+    instance BumpSensor bumpSensor;
+
+    connect bumpSensor.pressed -> bumpPressed;
+  }
+  instance Sensors sensors;
+  
+  connect sensors.bumpPressed -> controller.bumpPressed;
+  
+  component Controller {
+      port
+      in Boolean bumpPressed,
+      out MotorCmd rightMotorCmd,
+      out MotorCmd leftMotorCmd;
+
+    component BumpControl {
+      port
+          in Boolean bumpPressed,
+          in TimerSignal timerSig,
+          out TimerCmd timerCmd,
+        out MotorCmd leftMotorCmd,
+        out MotorCmd rightMotorCmd;
+    }
+    instance BumpControl bumpControl;
+    
+    component Timer {
+      port
+          out TimerSignal signal,
+          in TimerCmd cmd;
+    }
+    instance Timer timer;
+
+    
+    // connections of the bump control
+    connect bumpPressed -> bumpControl.bumpPressed;
+    connect timer.signal -> bumpControl.timerSig;
+    connect bumpControl.timerCmd -> timer.cmd;
+
+    connect bumpControl.rightMotorCmd -> rightMotorCmd;
+    connect bumpControl.leftMotorCmd -> leftMotorCmd;
+
+  }
+  instance Controller controller;
+  
+  connect controller.leftMotorCmd -> actuators.leftMotorCmd;
+  connect controller.rightMotorCmd -> actuators.rightMotorCmd;
+  
+  component Actuators {
+      port
+        in MotorCmd rightMotorCmd,
+        in MotorCmd leftMotorCmd;
+      
+    component LeftMotor {
+      port
+        in MotorCmd cmd;
+    }
+    instance LeftMotor leftMotor;
+
+    component RightMotor {
+      port
+        in MotorCmd cmd;
+    }
+    instance RightMotor rightMotor;
+
+    connect rightMotorCmd -> rightMotor.cmd;
+    connect leftMotorCmd -> leftMotor.cmd;
+  }
+  instance Actuators actuators;
+}

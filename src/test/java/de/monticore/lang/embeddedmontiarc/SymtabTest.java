@@ -629,5 +629,24 @@ public class SymtabTest extends AbstractSymtabTest {
     }
 
 
+    @Test
+    public void testSubComponentDefinitionInstanciation() {
+        Scope symTab = createSymTab("src/test/resources");
+        ComponentSymbol cs = symTab.<ComponentSymbol>resolve("testing.SubComponent", ComponentSymbol.KIND).orElse(null);
+        assertNotNull(cs);
+
+
+    }
+
+    @Test
+    public void testBumperBotEmergency() {
+        Scope symTab = createSymTab("src/test/resources");
+        ComponentSymbol cs = symTab.<ComponentSymbol>resolve("bumperBotEmergency.BumperBotEmergency", ComponentSymbol.KIND).orElse(null);
+        assertNotNull(cs);
+
+
+    }
+
+
 }
 

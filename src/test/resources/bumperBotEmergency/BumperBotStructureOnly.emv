@@ -1,0 +1,30 @@
+package bumperBotEmergency;
+
+/**
+  This view shows the high level and incomplete structure of the bumper bot
+  system with layers but without information of the emergency stop system.
+**/
+view BumperBotStructureOnly {
+
+  component Sensors {
+    component BumpSensor {}
+    instance BumpSensor bumpSensor;
+  }
+  instance Sensors sensors;
+  
+  component Controller {
+    component BumpControl {}
+    instance BumpControl bumpControl;
+    component Timer {}
+    instance Timer timer;
+  }
+  instance Controller controller;
+  
+  component Actuators {
+    component LeftMotor {}
+    instance LeftMotor leftMotor;
+    component RightMotor {}
+    instance RightMotor rightMotor;
+  }
+  instance Actuators actuators;
+}

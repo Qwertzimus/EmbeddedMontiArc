@@ -1,0 +1,13 @@
+package bumperBotEmergency;
+
+/**
+  The sensors of the bumper bot (without emergency).
+**/
+view BumperBotSensors {
+
+  component Sensors {
+    component BumpSensor {}
+    instance BumpSensor bumpSensor;
+  }
+  instance Sensors sensors;
+}

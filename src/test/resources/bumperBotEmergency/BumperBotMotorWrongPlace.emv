@@ -1,0 +1,15 @@
+package bumperBotEmergency;
+
+/**
+  This is an undesired case where the motors are inside the sensors layer.
+**/
+view BumperBotMotorWrongPlace {
+
+  component Sensors {
+    component LeftMotor {}
+    instance LeftMotor leftMotor;
+    component RightMotor {}
+    instance RightMotor rightMotor;
+  }
+  instance Sensors sensors;
+}

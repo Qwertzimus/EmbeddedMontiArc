@@ -77,7 +77,7 @@ public class InstanceInformation {
         Log.debug(componentInstanceSymbol.getComponentType().toString(), "ComponentInstanceSymbol");
         Log.debug(portName, "PortName");
         PortArraySymbol namedArray = componentInstanceSymbol.getComponentType().getPortArray(portName);
-        if (namedArray.getNameSizeDependsOn().isPresent())
+        if (namedArray!=null&&namedArray.getNameSizeDependsOn().isPresent())
             Log.debug(namedArray.getNameSizeDependsOn().get(), "PortArray Depends On:");
 
         int counter = 0;
