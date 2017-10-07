@@ -1,0 +1,8 @@
+package industry;
+
+component ParkController {
+  ports in (0 : 100) parkingBrake,
+        in (0 : 100) brakeControl,
+        in (0 : 100) turbineState,
+        out (0 : 100) out1;
+}

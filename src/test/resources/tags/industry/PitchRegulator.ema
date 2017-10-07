@@ -1,0 +1,7 @@
+package industry;
+
+component PitchRegulator {
+  ports in (0 : 100) estimatedAngle,
+        in (0 : 100) desiredAngle,
+        out (0 : 100) regulatedPitch;
+}

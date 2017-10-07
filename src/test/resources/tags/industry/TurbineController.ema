@@ -1,0 +1,36 @@
+package industry;
+
+component TurbineController {
+  ports in (0 : 100) omega,
+        in (0 : 100) windSpeed,
+        out (0 : 100) controlSignals;
+
+  instance Filtering filtering;
+  instance PitchEstimator pitchEstimator;
+  instance PIController piController;
+  instance MainController mainController;
+  instance PitchRegulator pitchRegulator;
+  instance BrakeController brakeController;
+  instance ParkController parkController;
+
+  connect omega -> filtering.omega;
+  connect windSpeed -> filtering.windSpeed;
+
+  connect filtering.filteredOmega -> mainController.filteredSpeed,
+                                     pitchEstimator.rotorSpeed,
+                                     piController.rotorSpeed;
+  connect filtering.filteredWindSpeed -> mainController.filteredOmega,
+                                         pitchEstimator.windSpeed;
+  connect pitchEstimator.estimatedAngle -> pitchRegulator.estimatedAngle;
+  connect piController.desiredAngle -> pitchRegulator.desiredAngle;
+  connect pitchRegulator.regulatedPitch -> brakeController.regulatedPitch;
+
+  connect mainController.pitchBrake -> brakeController.pitchBrake;
+  connect mainController.parkingBrake -> parkController.parkingBrake;
+  connect mainController.turbineState -> parkController.turbineState,
+                                         brakeController.turbineState;
+
+  connect brakeController.brakeSignal -> parkController.brakeControl;
+
+  connect parkController.out1 -> controlSignals;
+}
