@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 /**
  * Symboltable entry for ports.
  */
-public class PortSymbol extends TaggingSymbol {
+public class PortSymbol extends TaggingSymbol implements ElementInstance {
     public static final EmbeddedPortKind KIND = EmbeddedPortKind.INSTANCE;
 
     private final Map<String, Optional<String>> stereotype = new HashMap<>();
