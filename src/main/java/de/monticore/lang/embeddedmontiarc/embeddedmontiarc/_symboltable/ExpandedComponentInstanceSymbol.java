@@ -22,7 +22,6 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.EMAVariable;
 import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ElementInstance;
 import de.monticore.lang.montiarc.tagging._symboltable.TaggingScopeSpanningSymbol;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;

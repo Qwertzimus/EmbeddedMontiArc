@@ -4,7 +4,7 @@
 
 package de.monticore.lang.embeddedmontiarc.tag.drawing.TraceabilityTagSchema;
 
-import de.monticore.lang.montiarc.montiarc._symboltable.ExpandedComponentInstanceSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
 import de.monticore.lang.montiarc.tagging._ast.ASTNameScope;
 import de.monticore.lang.montiarc.tagging._ast.ASTScope;
 import de.monticore.lang.montiarc.tagging._ast.ASTTag;
