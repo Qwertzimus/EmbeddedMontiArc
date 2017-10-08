@@ -24,7 +24,7 @@ package de.monticore.lang.embeddedmontiarc;
  *
  * @author Sascha Schneiders, Sining Wang, Yu Qiao
  */
-grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticore.lang.monticar.Ranges, de.monticore.lang.monticar.MCExpressions {
+grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticore.lang.monticar.Ranges, de.monticore.lang.monticar.MCExpressions, de.monticore.lang.monticar.Types2 {
 
   /** ASTEMACompilationUnit represents the complete component
    * @attribute package          The package declaration of this component
