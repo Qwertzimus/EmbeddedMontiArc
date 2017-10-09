@@ -262,4 +262,48 @@ public class PortSymbol extends TaggingSymbol implements ElementInstance {
     public boolean isPartOfPortArray() {
         return getName().contains("[") && getName().contains("]");
     }
+
+    /**
+     * if model input is;
+     * component X {
+     *     port ...;
+     *
+     *     component A {
+     *         port in Integer p1,
+     *              out Integer p2;
+     *     }
+     *
+     *     component A a1, a2, a3;
+     *
+     *     connect a1.p2 -> a2.p1, a3.p1;
+     * }
+     *
+     * if I have the port symbol a1.p2 than this method returns the list of port symbols {a2.p1, a3.p1}
+     * @return
+     */
+    public List<PortSymbol> getTargetConnectedPorts(ExpandedComponentInstanceSymbol topComponent) {
+
+        //It does not works for components, when one of them is top component and another not.
+
+        List<PortSymbol> targetPorts = new ArrayList<>();
+
+        if(!topComponent.getConnectors().equals(null))
+        {
+            //If the port is Outgoing then return incoming ports of connected components
+            if(this.isOutgoing()) {
+                topComponent.getConnectors().stream()
+                        .filter(s -> s.getSourcePort().equals(this))
+                        .forEach(s -> targetPorts.add(s.getTargetPort()));
+            } else if(this.isIncoming())
+            {
+                //If the port is incoming then return outgoing ports of connected components
+                topComponent.getConnectors().stream()
+                        .filter(s -> s.getTargetPort().equals(this))
+                        .forEach(s -> targetPorts.add(s.getSourcePort()));
+            }
+        }
+        return targetPorts;
+
+        //TODO: Find the way to get connections from the top element
+    }
 }
