@@ -47,6 +47,8 @@ public class AbstractSymtabTest {
       mp.addEntry(Paths.get(m));
     }
     GlobalScope scope = new GlobalScope(mp, fam);
+
+    LogConfig.init();
     return scope;
   }
 }
