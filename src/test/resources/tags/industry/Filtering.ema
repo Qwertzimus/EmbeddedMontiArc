@@ -1,0 +1,8 @@
+package industry;
+
+component Filtering {
+  ports in (0 : 100) omega,
+        in (0 : 100) windSpeed,
+        out (0 : 100) filteredOmega,
+        out (0 : 100) filteredWindSpeed;
+}

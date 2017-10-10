@@ -1,0 +1,7 @@
+package industry;
+
+component PitchEstimator {
+  ports in (0 : 100) windSpeed,
+        in (0 : 100) rotorSpeed,
+        out (0 : 100) estimatedAngle;
+}

@@ -1,0 +1,6 @@
+package industry;
+
+component PIController {
+  ports in (0 : 100) rotorSpeed,
+        out (0 : 100) desiredAngle;
+}

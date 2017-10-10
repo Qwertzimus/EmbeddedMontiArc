@@ -36,7 +36,7 @@ import java.util.Optional;
  *
  * @author Robert Heim
  */
-public class ComponentInstanceSymbol extends TaggingScopeSpanningSymbol {
+public class ComponentInstanceSymbol extends TaggingScopeSpanningSymbol implements ElementInstance {
 
     public static final EMAComponentInstanceKind KIND = EMAComponentInstanceKind.INSTANCE;
 

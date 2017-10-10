@@ -1,0 +1,9 @@
+package industry;
+
+component MainController {
+  ports in (0 : 100) filteredSpeed,
+        in (0 : 100) filteredOmega,
+        out (0 : 100) pitchBrake,
+        out (0 : 100) parkingBrake,
+        out (0 : 100) turbineState;
+}
