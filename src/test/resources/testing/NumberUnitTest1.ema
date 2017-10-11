@@ -1,5 +1,5 @@
 package testing;
 
 component NumberUnitTest1{
-    ports in Q(-90°:0.001°:90°) in1;
+    ports in Q(-90:0.001:90) in1;
 }
