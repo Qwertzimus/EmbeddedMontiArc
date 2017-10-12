@@ -102,6 +102,7 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
 
     @Test
     public void testConnectorInstancing() {
+        ConstantPortSymbol.resetLastID();
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
                 "testing.connectorInstancing", ExpandedComponentInstanceSymbol.KIND).orElse(null);
@@ -156,23 +157,24 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
         assertEquals("RangeType", inst2.getSubComponent("sgc2").get().getPort("tOut").get().getTypeReference().getName());
     */
     }
+
     @Test
-    public void testBasicParameterInstance(){
+    public void testBasicParameterInstance() {
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
                 "testing.basicParameterInstance", ExpandedComponentInstanceSymbol.KIND).orElse(null);
 
         assertNotNull(inst);
         System.out.println(inst);
-        assertEquals(1,inst.getSubComponents().iterator().next().getParameters().size());
-        for(ASTExpression astExpression:inst.getSubComponents().iterator().next().getArguments()){
-            Log.info(astExpression.toString(),"info:");
+        assertEquals(1, inst.getSubComponents().iterator().next().getParameters().size());
+        for (ASTExpression astExpression : inst.getSubComponents().iterator().next().getArguments()) {
+            Log.info(astExpression.toString(), "info:");
         }
-        assertEquals(1,inst.getSubComponents().iterator().next().getArguments().size());
+        assertEquals(1, inst.getSubComponents().iterator().next().getArguments().size());
     }
 
     @Test
-    public void testExtensionMechanism1(){
+    public void testExtensionMechanism1() {
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
                 "a.superCompExtension", ExpandedComponentInstanceSymbol.KIND).orElse(null);
@@ -183,7 +185,7 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
     }
 
     @Test
-    public void testExtensionMechanism2(){
+    public void testExtensionMechanism2() {
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
                 "a.superCompGenericExtension", ExpandedComponentInstanceSymbol.KIND).orElse(null);
@@ -196,7 +198,7 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
     //Currently not working
     @Ignore
     @Test
-    public void testExtensionMechanism3(){
+    public void testExtensionMechanism3() {
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
                 "a.superCompGenericGenericExtensionInstance", ExpandedComponentInstanceSymbol.KIND).orElse(null);

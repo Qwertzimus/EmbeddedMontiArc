@@ -34,13 +34,13 @@ public class UniquePortsTest extends AbstractCoCoTest {
     public static void setUp() {
         Log.enableFailQuick(false);
     }
-    @Ignore
+    //@Ignore
     @Test
     public void testValid() {
         checkValid("", "testing.UniqueName");
     }
 
-    @Ignore
+    //@Ignore
     @Test
     public void testInvalid() {
         checkInvalid(new EmbeddedMontiArcCoCoChecker().addCoCo(new SourceTargetNumberMatch()),

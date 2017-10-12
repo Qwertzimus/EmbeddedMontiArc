@@ -35,7 +35,7 @@ public class SourceTargetNumberMatchTest extends AbstractCoCoTest {
         Log.enableFailQuick(false);
     }
 
-    @Ignore
+    //@Ignore
     @Test
     public void testValid() {
         checkValid("", "testing.CorrectPortNumber");

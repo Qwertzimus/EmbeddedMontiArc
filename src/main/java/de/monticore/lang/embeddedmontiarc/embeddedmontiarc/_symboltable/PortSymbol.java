@@ -306,4 +306,13 @@ public class PortSymbol extends TaggingSymbol implements ElementInstance {
 
         //TODO: Find the way to get connections from the top element
     }
+
+    public static boolean isConstantPortName(String name){
+        if(name.contains(".")){
+            String secondPart=name.split("\\.")[1];
+            return secondPart.startsWith("CONSTANTPORT");
+        }else{
+            return name.startsWith("CONSTANTPORT");
+        }
+    }
 }
