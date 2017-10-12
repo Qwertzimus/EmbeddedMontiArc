@@ -36,29 +36,27 @@ import java.util.List;
  */
 public class TypeParameterNamesUnique implements EmbeddedMontiArcASTComponentHeadCoCo {
 
-  /**
-   * @see de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentCoCo#check(de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent)
-   */
-  @Override
-  public void check(ASTComponentHead node) {
-    ASTTypeParameters typeParameters = node.getGenericTypeParameters().orElse(null);
-    if (typeParameters == null) {
-      return;
+    /**
+     * @see de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentCoCo#check(de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent)
+     */
+    @Override
+    public void check(ASTComponentHead node) {
+        ASTTypeParameters typeParameters = node.getGenericTypeParameters().orElse(null);
+        if (typeParameters == null) {
+            return;
+        }
+
+        List<String> typeParameterNames = new ArrayList<>();
+        for (ASTTypeVariableDeclaration typeParameter : typeParameters.getTypeVariableDeclarations()) {
+
+            if (typeParameter.getNamingResolution().isPresent() && typeParameterNames.contains(typeParameter.getNamingResolution().get().getName())) {
+                Log.error(String.format(
+                        "0x35F1A The formal type parameter name \"%s\" is not unique",
+                        typeParameter.getNamingResolution().get().getName()), typeParameter.get_SourcePositionStart());
+            } else {
+                //typeParameterNames.add(typeParameter.getNamingResolution().get().getName());
+            }
+        }
     }
-
-    List<String> typeParameterNames = new ArrayList<>();
-    for (ASTTypeVariableDeclaration typeParameter : typeParameters.getTypeVariableDeclarations()) {
-
-      if (typeParameterNames.contains(typeParameter.getNamingResolution().get().getName())) {
-        Log.error(String.format(
-            "0x35F1A The formal type parameter name \"%s\" is not unique",
-            typeParameter.getNamingResolution().get().getName()), typeParameter.get_SourcePositionStart());
-      }
-
-      else {
-        typeParameterNames.add(typeParameter.getNamingResolution().get().getName());
-      }
-    }
-  }
 
 }
