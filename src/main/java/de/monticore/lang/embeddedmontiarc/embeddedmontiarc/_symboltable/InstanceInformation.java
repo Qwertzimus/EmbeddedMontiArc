@@ -123,23 +123,31 @@ public class InstanceInformation {
         if (simpleReferenceType.getTypeArguments().isPresent()) {
             int counter = 0;
             for (ASTTypeArgument astTypeArgument : simpleReferenceType.getTypeArguments().get().getTypeArguments()) {
-                if (astTypeArgument instanceof ASTUnitNumberTypeArgument) {
-                    if (((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().isPresent()) {
-                        if (counter == index)
-                            return ((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().get().intValue();
-                        ++counter;
-                    }
-
-                } else if (astTypeArgument instanceof ASTUnitNumberResolution) {
-                    if (((ASTUnitNumberResolution) astTypeArgument).getUnitNumber().isPresent()) {
-                        if (counter == index)
-                            return ((ASTUnitNumberResolution) astTypeArgument).getNumber().get().intValue();
-                        ++counter;
-                    }
-                }
+                int result = handleSimpleReferenceType(astTypeArgument, index, counter);
+                if (result != -1)
+                    return result;
             }
         }
         return -1;
+    }
+
+    public static int handleSimpleReferenceType(ASTTypeArgument astTypeArgument, int index, int counter) {
+        int result = -1;
+        if (astTypeArgument instanceof ASTUnitNumberTypeArgument) {
+            if (((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().isPresent()) {
+                if (counter == index)
+                    result = ((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().get().intValue();
+                ++counter;
+            }
+
+        } else if (astTypeArgument instanceof ASTUnitNumberResolution) {
+            if (((ASTUnitNumberResolution) astTypeArgument).getUnitNumber().isPresent()) {
+                if (counter == index)
+                    result = ((ASTUnitNumberResolution) astTypeArgument).getNumber().get().intValue();
+                ++counter;
+            }
+        }
+        return result;
     }
 
     public static String getInstanceNameFromASTSubComponent(ASTSubComponent subComponent, int index) {
