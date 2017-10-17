@@ -191,44 +191,28 @@ public class TypesHelper {
     private static int updateVar2(int var2, String typeName) {
         switch (typeName.hashCode()) {
             case -1325958191:
-                if (typeName.equals("double")) {
-                    var2 = 4;
-                }
+                if (typeName.equals("double")) var2 = 4;
                 break;
             case 104431:
-                if (typeName.equals("int")) {
-                    var2 = 5;
-                }
+                if (typeName.equals("int")) var2 = 5;
                 break;
             case 3039496:
-                if (typeName.equals("byte")) {
-                    var2 = 2;
-                }
+                if (typeName.equals("byte")) var2 = 2;
                 break;
             case 3052374:
-                if (typeName.equals("char")) {
-                    var2 = 3;
-                }
+                if (typeName.equals("char")) var2 = 3;
                 break;
             case 3327612:
-                if (typeName.equals("long")) {
-                    var2 = 7;
-                }
+                if (typeName.equals("long")) var2 = 7;
                 break;
             case 64711720:
-                if (typeName.equals("boolean")) {
-                    var2 = 0;
-                }
+                if (typeName.equals("boolean")) var2 = 0;
                 break;
             case 97526364:
-                if (typeName.equals("float")) {
-                    var2 = 1;
-                }
+                if (typeName.equals("float")) var2 = 1;
                 break;
             case 109413500:
-                if (typeName.equals("short")) {
-                    var2 = 6;
-                }
+                if (typeName.equals("short")) var2 = 6;
         }
         return var2;
     }
