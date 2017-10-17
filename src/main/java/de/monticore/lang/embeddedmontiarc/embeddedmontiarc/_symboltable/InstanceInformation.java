@@ -77,7 +77,7 @@ public class InstanceInformation {
         Log.debug(componentInstanceSymbol.getComponentType().toString(), "ComponentInstanceSymbol");
         Log.debug(portName, "PortName");
         PortArraySymbol namedArray = componentInstanceSymbol.getComponentType().getPortArray(portName);
-        if (namedArray!=null&&namedArray.getNameSizeDependsOn().isPresent())
+        if (namedArray != null && namedArray.getNameSizeDependsOn().isPresent())
             Log.debug(namedArray.getNameSizeDependsOn().get(), "PortArray Depends On:");
 
         int counter = 0;
@@ -114,26 +114,30 @@ public class InstanceInformation {
     public static int getInstanceNumberFromASTSubComponent(ASTSubComponent subComponent, int index) {
         if (subComponent.getType() instanceof ASTSimpleReferenceType) {
             ASTSimpleReferenceType simpleReferenceType = (ASTSimpleReferenceType) subComponent.getType();
-            if (simpleReferenceType.getTypeArguments().isPresent()) {
-                int counter = 0;
-                for (ASTTypeArgument astTypeArgument : simpleReferenceType.getTypeArguments().get().getTypeArguments()) {
-                    if (astTypeArgument instanceof ASTUnitNumberTypeArgument) {
-                        if (((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().isPresent()) {
-                            if (counter == index)
-                                return ((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().get().intValue();
-                            ++counter;
-                        }
+            return handleSimpleReferenceType(simpleReferenceType, index);
+        }
+        return -1;
+    }
 
-                    } else if (astTypeArgument instanceof ASTUnitNumberResolution) {
-                        if (((ASTUnitNumberResolution) astTypeArgument).getUnitNumber().isPresent()) {
-                            if (counter == index)
-                                return ((ASTUnitNumberResolution) astTypeArgument).getNumber().get().intValue();
-                            ++counter;
-                        }
+    private static int handleSimpleReferenceType(ASTSimpleReferenceType simpleReferenceType, int index) {
+        if (simpleReferenceType.getTypeArguments().isPresent()) {
+            int counter = 0;
+            for (ASTTypeArgument astTypeArgument : simpleReferenceType.getTypeArguments().get().getTypeArguments()) {
+                if (astTypeArgument instanceof ASTUnitNumberTypeArgument) {
+                    if (((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().isPresent()) {
+                        if (counter == index)
+                            return ((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().get().intValue();
+                        ++counter;
+                    }
+
+                } else if (astTypeArgument instanceof ASTUnitNumberResolution) {
+                    if (((ASTUnitNumberResolution) astTypeArgument).getUnitNumber().isPresent()) {
+                        if (counter == index)
+                            return ((ASTUnitNumberResolution) astTypeArgument).getNumber().get().intValue();
+                        ++counter;
                     }
                 }
             }
-
         }
         return -1;
     }
