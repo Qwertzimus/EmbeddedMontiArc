@@ -23,7 +23,7 @@ package de.monticore.lang.embeddedmontiarc.helper;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.*;
 import de.monticore.lang.monticar.ValueSymbol;
 import de.monticore.lang.montiarc.tagging._symboltable.IsTaggable;
-import de.monticore.prettyprint.IndentPrinter;
+import de.monticore.lang.monticar.helper.IndentPrinter;
 import de.monticore.symboltable.types.JTypeSymbol;
 import de.monticore.symboltable.types.TypeSymbol;
 import de.monticore.symboltable.types.references.ActualTypeArgument;
@@ -186,16 +186,7 @@ public class SymbolPrinter {
     }
 
     public static void printComponent(ComponentSymbol cmp, IndentPrinter ip, boolean skipPackageImport) {
-        if (!skipPackageImport) {
-            if (cmp.getPackageName() != null && !cmp.getPackageName().isEmpty()) {
-                ip.print("package ");
-                ip.print(cmp.getPackageName());
-                ip.println(";");
-            }
-            if (cmp.getImports() != null) {
-                cmp.getImports().stream().forEachOrdered(a -> ip.println("import " + a.getStatement() + (a.isStar() ? ".*" : "") + ";"));
-            }
-        }
+        printPackageInfo(cmp, ip, skipPackageImport);
         ip.print("component " + cmp.getName());
         if (cmp.hasFormalTypeParameters()) {
             ip.print(printFormalTypeParameters(cmp.getFormalTypeParameters()));
@@ -251,9 +242,8 @@ public class SymbolPrinter {
         }
     }
 
-    public static void printExpandedComponentInstance(ExpandedComponentInstanceSymbol inst, IndentPrinter ip, boolean skipPackageImport) {
+    public static void printPackageInfo(ComponentSymbol cmp, IndentPrinter ip, boolean skipPackageImport) {
         if (!skipPackageImport) {
-            ComponentSymbol cmp = inst.getComponentType().getReferencedSymbol();
             if (cmp.getPackageName() != null &&
                     !cmp.getPackageName().isEmpty()) {
                 ip.print("package ");
@@ -264,6 +254,10 @@ public class SymbolPrinter {
                 cmp.getImports().stream().forEachOrdered(a -> ip.println("import " + a.getStatement() + (a.isStar() ? ".*" : "") + ";"));
             }
         }
+    }
+
+    public static void printExpandedComponentInstance(ExpandedComponentInstanceSymbol inst, IndentPrinter ip, boolean skipPackageImport) {
+        printPackageInfo(inst.getComponentType().getReferencedSymbol(), ip, skipPackageImport);
         ip.print("component /*instance*/ " + inst.getName());
 
         ip.println(" {");
