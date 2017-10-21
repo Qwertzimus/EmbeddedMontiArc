@@ -146,7 +146,7 @@ Stereotype =
    Port =
           Stereotype?
           (incoming:["in"] | outgoing:["out"])
-           Type   (Name? | Name ( "[" UnitNumberResolution "]" )?);
+           ("Q"|"N"|"Z")? Type   (Name? | Name ( "[" UnitNumberResolution "]" )?);
 
   /**
   * Sets the timing of a component.
