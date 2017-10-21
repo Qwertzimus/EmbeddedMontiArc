@@ -1,0 +1,6 @@
+package fas.basicLibrary;
+
+component Terminator<T> {
+    ports
+      in T in1;
+}

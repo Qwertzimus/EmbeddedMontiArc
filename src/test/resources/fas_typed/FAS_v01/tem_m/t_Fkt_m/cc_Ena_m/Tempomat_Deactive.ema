@@ -1,0 +1,12 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Ena_m;
+
+import fas.basicLibrary.*;
+
+component Tempomat_Deactive {
+  ports
+	out Double v_CC_delta_kmhOut1;
+
+  instance Constant<(0:10)>(0) constant;
+
+  connect constant.v_CC_delta_kmhOut1 -> v_CC_delta_kmhOut1;
+}

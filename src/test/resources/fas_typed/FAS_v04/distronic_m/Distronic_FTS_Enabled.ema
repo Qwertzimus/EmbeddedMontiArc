@@ -1,0 +1,31 @@
+package fas.demo_fas_Fkt_m.distronic_m;
+
+import fas.basicLibrary.*;
+
+component Distronic_FTS_Enabled {
+	port
+		in (0m:200m) Distance_Object_m,
+		in (0m:200m) FTS_Abstand_soll_m,
+		in (-1820.39m/s:0.28m/s:1820.39m/s) V_Obj_rel_kmh,
+		out N(0:255) BrakeForce_Distronic_pc,
+		out N(0:255) Decelerator_pc;
+
+	instance PlusMinus<(0m:200m)> plusMinus1;
+	instance LookUpM<(-1820.39m/s:0.28m/s:1820.39m/s),N(0:255)> look1, look2;
+	instance Smaller<(0m:200m)> smaller1;
+	instance Multiplication<N(0:255)> mult1;
+	instance SwitchB<N(0:255)> switch1;
+
+	connect Distance_Object_m -> smaller1.in1, plusMinus1.in1;
+	connect FTS_Abstand_soll_m -> plusMinus1.in2;
+	connect V_Obj_rel_kmh -> look1.in1;
+	connect 2.5 -> smaller1.in2;
+	connect plusMinus1.out1 -> look2.in1;
+	connect look1.out1 -> mult1.in1[1];
+	connect look2.out1 -> mult1.in1[0];
+	connect smaller1.out1 -> switch1.cond;
+	connect 100 -> switch1.in1;
+	connect mult1.out1 -> switch1.in3;
+	connect 100 -> Decelerator_pc;
+	connect switch1.out1 -> BrakeForce_Distronic_pc;
+}

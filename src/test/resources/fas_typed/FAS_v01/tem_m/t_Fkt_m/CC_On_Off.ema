@@ -1,0 +1,57 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component CC_On_Off {
+  port
+	in Boolean parkingBrake_bIn1,
+	in Double brakeForce_pedal_pcIn2,
+	in Boolean cruiseControl_bIn3,
+	in Double v_Vehicle_kmhIn4,
+	in Boolean limiter_bIn5,
+	in Boolean leverUp_bIn6,
+	in Boolean leverDown_bIn7,
+	out Boolean cC_active_bOut1;
+
+  instance Constant<(0:10)>(0) constant;
+  instance Constant<(10:30)>(20) constant1;
+  instance EdgeFalling edgeFalling;
+  instance EdgeRising edgeRising;
+  instance Constant<Boolean>(false) falseBlock, falseBlock1;
+  instance Or<4> logicalOperator;
+  instance Not<Boolean> logicalOperator1;
+  instance Or<3> logicalOperator3;
+  instance And logicalOperator4;
+  instance Not<Boolean> logicalOperator5;
+  instance RSFlipFlop rSFlipFlop;
+  instance Less<(-oo:oo)> relOp1;
+  instance Greater<(-oo:oo)> relOp2;
+  instance Terminator<Boolean> terminator;
+
+  connect falseBlock1.out1 -> edgeFalling.IV;
+  connect logicalOperator5.out1 -> logicalOperator4.in1;
+  connect logicalOperator3.out1 -> logicalOperator4.in2;
+  connect logicalOperator4.out1 -> logicalOperator1.in1;
+  connect logicalOperator4.out1 -> edgeRising.uIn1;
+  connect limiter_bIn5 -> logicalOperator5.in1;
+  connect edgeFalling.out1 -> logicalOperator.in1;
+  connect v_Vehicle_kmhIn4 -> relOp1.in1;
+  connect cruiseControl_bIn3 -> logicalOperator3.in3;
+  connect cruiseControl_bIn3 -> edgeFalling.uIn1;
+  connect cruiseControl_bIn3 -> edgeFalling.rIn2;
+  connect leverUp_bIn6 -> logicalOperator3.in1;
+  connect leverDown_bIn7 -> logicalOperator3.in2;
+  connect relOp1.out1 -> logicalOperator.in4;
+  connect rSFlipFlop.out_Q -> cC_active_bOut1;
+  connect constant1.out1 -> relOp1.in2;
+  connect falseBlock.out1 -> edgeRising.IV;
+  connect logicalOperator1.out1 -> edgeRising.rIn2;
+  connect brakeForce_pedal_pcIn2 -> relOp2.in1;
+  connect rSFlipFlop.Not_Q -> terminator.in1;
+  connect parkingBrake_bIn1 -> logicalOperator.in2;
+  connect constant.out1 -> relOp2.in2;
+  connect relOp2.out1 -> logicalOperator.in3;
+  connect logicalOperator.out1 -> rSFlipFlop.S;
+  connect edgeRising.out1 -> rSFlipFlop.R;
+}

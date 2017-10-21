@@ -1,0 +1,8 @@
+package fas.basicLibrary;
+
+component LookUpM<T,Q,N1 n> (Boolean values[n]) {
+	port
+		in T in1,
+		out Q out1;
+
+}

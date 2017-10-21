@@ -1,0 +1,34 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Ena_m.Tempomat_Active;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Ena_m.Tempomat_Deactive;
+
+component CC_enabled {
+  port
+	in Boolean cC_active_bIn1,
+	in Double v_Vehicle_kmhIn2,
+	out Double v_CC_delta_kmhOut1,
+	in Double in1;
+	
+  instance Tempomat_Active tempomat_Active;
+  instance Tempomat_Deactive tempomat_Deactive;
+  instance SwitchB<(-oo:oo)> switchBlock, switchBlock1;
+  instance Condition<Boolean>("u1") condition;
+  instance Condition<Boolean>("!(u1)") condition1;
+  instance UnitDelay<(-oo:oo)> unitDelay;
+
+  connect in1 -> tempomat_Active.in1;
+  connect cC_active_bIn1 -> condition.in1;
+  connect condition.out1 -> switchBlock.cond;
+  connect tempomat_Active.v_CC_delta_kmhOut1 -> switchBlock.in1;
+  connect cC_active_bIn1 -> condition1.in1;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect tempomat_Deactive.v_CC_delta_kmhOut1 -> switchBlock1.in1;
+  connect switchBlock1.out1 -> switchBlock.in3;
+  connect switchBlock.out1 -> unitDelay.in1;
+  connect unitDelay.out1 -> switchBlock1.in3;
+  connect switchBlock.out1 -> v_CC_delta_kmhOut1;
+  connect v_Vehicle_kmhIn2 -> tempomat_Active.v_Vehicle_kmhIn1;
+}

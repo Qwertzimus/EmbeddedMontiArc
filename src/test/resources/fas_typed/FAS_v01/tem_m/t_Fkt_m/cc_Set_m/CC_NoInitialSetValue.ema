@@ -1,0 +1,14 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component CC_NoInitialSetValue {
+  port
+    in Double v_Vehicle_kmhIn1,
+    out Double out1,
+    out Double out2;
+
+  connect v_Vehicle_kmhIn1 -> out1;
+  connect v_Vehicle_kmhIn1 -> out2;
+}

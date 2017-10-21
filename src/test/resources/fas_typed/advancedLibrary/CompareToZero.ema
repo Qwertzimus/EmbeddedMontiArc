@@ -1,0 +1,16 @@
+package fas.advancedLibrary;
+
+import fas.basicLibrary.*;
+
+component CompareToZero {
+    port
+        in Boolean uIn1,
+        out Boolean yOut1;
+
+    instance Greater<(-oo:oo)> compare;
+    instance Constant<(0:10)>(0) constant;
+
+    connect compare.out1 -> yOut1;
+    connect uIn1 -> compare.in1;
+    connect constant.out1 -> compare.in2;
+}

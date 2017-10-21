@@ -1,0 +1,34 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component CC_InitialSetValue {
+  ports
+	in Double v_Vehicle_kmhIn1,
+	in Double in1,
+	in Double in2,
+	out Double out1,
+	in Double in3,
+	out Double out2;
+
+  instance CC_NoInitialSetValue cC_NoInitialSetValue;
+  instance Constant<(0:10)>(0) constant;
+  instance Less relOp;
+  instance SwitchB<(-oo:oo)> switchBlock, switchBlock1;
+  instance Condition<Boolean>("u1") condition, condition1;
+
+  connect in1 -> relOp.in1;
+  connect relOp.out1 -> condition.in1;
+  connect cC_NoInitialSetValue.out1 -> switchBlock.in1;
+  connect condition.out1 -> switchBlock.cond;
+  connect in2 -> switchBlock.in3;
+  connect switchBlock.out1 -> out1;
+  connect relOp.out1 -> condition1.in1;
+  connect cC_NoInitialSetValue.out2 -> switchBlock1.in1;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect in3 -> switchBlock1.in3;
+  connect switchBlock1.out1 -> out2;
+  connect constant.out1 -> relOp.in2;
+  connect v_Vehicle_kmhIn1 -> cC_NoInitialSetValue.v_Vehicle_kmhIn1;
+}

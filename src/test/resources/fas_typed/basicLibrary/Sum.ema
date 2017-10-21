@@ -1,0 +1,7 @@
+package fas.basicLibrary;
+
+component Sum<T,N1 n=2> {
+	port
+		in T in1[n],
+		out T out1;
+}

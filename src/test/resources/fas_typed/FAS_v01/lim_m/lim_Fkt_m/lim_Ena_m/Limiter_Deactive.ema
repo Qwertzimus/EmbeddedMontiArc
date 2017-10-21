@@ -1,0 +1,20 @@
+package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_Ena_m;
+
+import fas.basicLibrary.*;
+
+component Limiter_Deactive {
+  port
+	out Double vMax_kmhOut1,
+	out Boolean limiter_active_bOut2;
+
+  component Constant<(-oo:oo)>(300) constant;
+  component Constant<Boolean>(false) falseBlock;
+  component Gain gain;
+  component And logOp;
+
+  connect logOp.out1 -> limiter_active_bOut2;
+  connect falseBlock.out1 -> logOp.in1;
+  connect falseBlock.out1 -> logOp.in2;
+  connect gain.out1 -> vMax_kmhOut1;
+  connect constant.out1 -> gain.in1;
+}

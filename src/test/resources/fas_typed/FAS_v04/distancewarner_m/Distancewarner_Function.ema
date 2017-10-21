@@ -1,0 +1,24 @@
+package fas.demo_fas_Fkt_m.distancewarner_m;
+
+import fas.basicLibrary.*;
+
+component Distancewarner_Function {
+
+	port
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_ms,
+		in (0m:200m) Distance_Object_m,
+		out Boolean Opti_warn_b,
+		out Boolean Acusti_warn_b;
+
+	instance Multiplication<(0m/s:0.28m/s:1820.39m/s)> multiplication1, multiplication2;
+	instance SmallerEquals<(0m/s:0.28m/s:1820.39m/s)> smaller1, smaller2;
+
+	connect V_Vehicle_ms -> multiplication1.in1[0], multiplication2.in1[0];
+	connect Distance_Object_m -> smaller1.in1, smaller2.in1;
+	connect 1.5 /*demo_fas_Opti_Threshold_Time*/ -> multiplication1.in1[1];
+	connect 1 /*demo_fas_Acusti_Threshold_Time*/-> multiplication2.in1[1];
+	connect multiplication1.out1 -> smaller1.in2;
+	connect multiplication2.out1 -> smaller2.in2;
+	connect smaller1.out1 -> Opti_warn_b;
+	connect smaller2.out1 -> Acusti_warn_b;
+}

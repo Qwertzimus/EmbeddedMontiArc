@@ -1,0 +1,18 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.demo_fas_Fkt_m.distancewarner_m.Distancewarner_Function;
+
+component Distancewarner {
+	port
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_ms,
+		in (0m:1m:200m) Distance_Object_m,
+		out Boolean Opti_warn_b,
+		out Boolean Acusti_warn_b;
+
+	instance Distancewarner_Function distance;
+
+	connect V_Vehicle_ms -> distance.V_Vehicle_ms;
+	connect Distance_Object_m -> distance.Distance_Object_m;
+	connect distance.Opti_warn_b -> Opti_warn_b;
+	connect distance.Acusti_warn_b -> Acusti_warn_b;
+}

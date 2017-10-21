@@ -1,0 +1,25 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_noR;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component V_SetValueMinus {
+  port
+	in Double v_CCSetValueIn1,
+	out Double out1,
+	out Double out2,
+	out Double out3,
+	out Double out4,
+	out Double out5;
+
+  instance Constant<(0:10)>(5) parameter;
+  instance Sum sum;
+  
+  connect sum.out1 -> out1;
+  connect sum.out1 -> out2;
+  connect sum.out1 -> out3;
+  connect sum.out1 -> out4;
+  connect sum.out1 -> out5;
+  connect parameter.out1 -> sum.in2;
+  connect v_CCSetValueIn1 -> sum.in1;
+}

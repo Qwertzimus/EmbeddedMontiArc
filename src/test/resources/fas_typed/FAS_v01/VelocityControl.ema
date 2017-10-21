@@ -1,0 +1,38 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component VelocityControl {
+  port
+	in Double v_CC_delta_kmhIn1,
+	in Double vMax_kmhIn2,
+	in Double acceleration_pedal_pcIn3,
+	in Double v_Vehicle_kmhIn4,
+	out Double acceleration_pcOut1;
+
+  instance Constant<(0:10)>(0) constant1, constant2;
+  instance And logOp;
+  instance LookUp<(-oo:oo)>([0 20 60 100]) lookUpTable;
+  instance Max<(-oo:oo)> minMax1;
+  instance Greater<(-oo:oo)> relOp, relOp1;
+  instance Saturation<(-oo:oo)> saturation;
+  instance SwitchB<(-oo:oo)> switchBlock;
+  instance Condition<Boolean>("u2 >= 1") condition;
+
+  connect condition.out1 -> switchBlock.cond;
+  connect logOp.out1 -> condition.in1;
+  connect saturation.out1 -> lookUpTable.in1;
+  connect constant2.out1 -> relOp1.in2;
+  connect minMax1.out1 -> switchBlock.in3;
+  connect switchBlock.out1 -> acceleration_pcOut1;
+  connect acceleration_pedal_pcIn3 -> minMax1.in1;
+  connect vMax_kmhIn2 -> relOp.in2;
+  connect vMax_kmhIn2 -> relOp1.in1;
+  connect v_Vehicle_kmhIn4 -> relOp.in1;
+  connect lookUpTable.out1 -> minMax1.in2;
+  connect v_CC_delta_kmhIn1 -> saturation.in1;
+  connect relOp.out1 -> logOp.in1;
+  connect relOp1.out1 -> logOp.in2;
+  connect constant1.out1 -> switchBlock.in1;
+}

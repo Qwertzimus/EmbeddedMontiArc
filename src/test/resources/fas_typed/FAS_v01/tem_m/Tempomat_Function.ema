@@ -1,0 +1,69 @@
+package fas.demo_fas_Fkt_m.tem_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.CC_On_Off;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.CC_SetValue;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.CC_Enabled;
+
+component Tempomat_Function {
+  port
+	in Boolean parkingBrake_bIn1,
+	in Double brakeForce_pedal_pcIn2,
+	in Boolean cruiseControl_bIn3,
+	in Double v_Vehicle_kmhIn4,
+	in Boolean limiter_bIn5,
+	in Boolean leverUp_bIn6,
+	in Boolean leverDown_bIn7,
+	out Double v_CC_delta_kmhOut1,
+	out Boolean cC_active_bOut2,
+	in Double in1,
+	in Double in2,
+	in Double in3,
+	in Double in4,
+	in Double in5,
+	in Double in6,
+	in Double in7,
+	in Double in8,
+	in Double in9,
+	in Double in10,
+	in Double in11,
+	in Double in12,
+	out Double out1;
+
+  instance CC_On_Off cC_On_Off;
+  instance CC_SetValue cC_SetValue;
+  instance CC_enabled cC_enabled;
+
+  connect in1 -> cC_SetValue.in1;
+  connect in2 -> cC_SetValue.in2;
+  connect in3 -> cC_SetValue.in3;
+  connect in4 -> cC_SetValue.in4;
+  connect in5 -> cC_SetValue.in5;
+  connect in6 -> cC_SetValue.in6;
+  connect in7 -> cC_SetValue.in7;
+  connect in8 -> cC_SetValue.in8;
+  connect cC_SetValue.out1 -> cC_enabled.in1;
+  connect in9 -> cC_SetValue.in9;
+  connect in10 -> cC_SetValue.in10;
+  connect in11 -> cC_SetValue.in11;
+  connect in12 -> cC_SetValue.in12;
+  connect cC_SetValue.out2 -> out1;
+  connect limiter_bIn5 -> cC_On_Off.limiter_bIn5;
+  connect limiter_bIn5 -> cC_SetValue.limiter_bIn1;
+  connect cC_On_Off.cC_active_bOut1 -> cC_enabled.cC_active_bIn1;
+  connect cC_On_Off.cC_active_bOut1 -> cC_SetValue.cC_enabled_bIn2;
+  connect cC_On_Off.cC_active_bOut1 -> cC_active_bOut2;
+  connect brakeForce_pedal_pcIn2 -> cC_On_Off.brakeForce_pedal_pcIn2;
+  connect parkingBrake_bIn1 -> cC_On_Off.parkingBrake_bIn1;
+  connect cruiseControl_bIn3 -> cC_SetValue.cruiseControl_bIn3;
+  connect cruiseControl_bIn3 -> cC_On_Off.cruiseControl_bIn3;
+  connect v_Vehicle_kmhIn4 -> cC_On_Off.v_Vehicle_kmhIn4;
+  connect v_Vehicle_kmhIn4 -> cC_enabled.v_Vehicle_kmhIn2;
+  connect v_Vehicle_kmhIn4 -> cC_SetValue.v_Vehicle_kmhIn4;
+  connect cC_enabled.v_CC_delta_kmhOut1 -> v_CC_delta_kmhOut1;
+  connect leverUp_bIn6 -> cC_SetValue.leverUp_bIn5;
+  connect leverUp_bIn6 -> cC_On_Off.leverUp_bIn6;
+  connect leverDown_bIn7 -> cC_SetValue.leverDown_bIn6;
+  connect leverDown_bIn7 -> cC_On_Off.leverDown_bIn7;
+}

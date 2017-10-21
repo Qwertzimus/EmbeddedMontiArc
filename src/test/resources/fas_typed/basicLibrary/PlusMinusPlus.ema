@@ -1,0 +1,9 @@
+package fas.basicLibrary;
+
+component PlusMinusPlus<T> {
+	port
+		in T in1,
+		in T in2,
+		in T in3,
+		out T out1;
+}

@@ -1,0 +1,85 @@
+package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_Function;
+
+component Limiter_enabled {
+  port
+	in Boolean limiter_bIn1,
+	in Double acceleration_pedal_pcIn2,
+	in Double v_Vehicle_kmhIn3,
+	in Boolean leverUp_bIn4,
+	in Boolean leverDown_bIn5,
+	out Double vMax_kmhOut1,
+	out Boolean limiter_active_bOut2,
+	in Double in1,
+	in Double in2,
+	in Double in3,
+	in Double in4,
+	in Double in5,
+	in Double in6,
+	out Double out1;
+
+  instance Limiter_Function limiter_Function;
+  instance Limiter_InitialSetValue limiter_InitialSetValue;
+  instance Limiter_SetValue limiter_SetValue;
+  instance Limiter_StartUpSetValue limiter_StartUpSetValue;
+  instance SysInit sysInit;
+  instance EdgeRising risingEdgeDetector;
+  instance EdgeRising risingEdgeDetector1;
+  instance Condition<(-oo:oo)>("u1>0") condition, condition1, condition2, condition3, condition4, condition5, condition6, condition7, condition8;
+  instance SwitchB<(-oo:oo)> switchBlock, switchBlock1, switchBlock2, switchBlock3, switchBlock4, switchBlock5, switchBlock6, switchBlock7, switchBlock8;
+
+  connect sysInit.out1 -> risingEdgeDetector.in1;
+  connect limiter_bIn1 -> risingEdgeDetector1.in1;
+  connect risingEdgeDetector1.out1Out1 -> condition.in1;
+  connect limiter_InitialSetValue.out1 -> switchBlock.in1;
+  connect condition.out1 -> switchBlock.cond;
+  connect in1 -> switchBlock.in3;
+  connect switchBlock.out1 -> limiter_SetValue.in1;
+  connect risingEdgeDetector1.out1Out1 -> condition1.in1;
+  connect limiter_InitialSetValue.out2 -> switchBlock1.in1;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect in2 -> switchBlock1.in3;
+  connect switchBlock1.out1 -> limiter_SetValue.in2;
+  connect risingEdgeDetector1.out1Out1 -> condition2.in1;
+  connect limiter_InitialSetValue.out3 -> switchBlock2.in1;
+  connect condition2.out1 -> switchBlock2.cond;
+  connect in3 -> switchBlock2.in3;
+  connect switchBlock2.out1 -> limiter_SetValue.in3;
+  connect limiter_bIn1 -> condition3.in1;
+  connect limiter_SetValue.out1 -> switchBlock3.in1;
+  connect condition3.out1 -> switchBlock3.cond;
+  connect risingEdgeDetector1.out1Out1 -> condition4.in1;
+  connect limiter_InitialSetValue.out4 -> switchBlock4.in1;
+  connect condition4.out1 -> switchBlock4.cond;
+  connect in4 -> switchBlock4.in3;
+  connect switchBlock4.out1 -> switchBlock3.in3;
+  connect switchBlock3.out1 -> limiter_Function.in1;
+  connect risingEdgeDetector.out1Out1 -> condition5.in1;
+  connect limiter_StartUpSetValue.out1 -> switchBlock5.in1;
+  connect condition5.out1 -> switchBlock5.cond;
+  connect risingEdgeDetector1.out1Out1 -> condition6.in1;
+  connect limiter_InitialSetValue.out5 -> switchBlock6.in1;
+  connect condition6.out1 -> switchBlock6.cond;
+  connect in5 -> switchBlock6.in3;
+  connect switchBlock6.out1 -> limiter_SetValue.in4;
+  connect limiter_bIn1 -> condition7.in1;
+  connect limiter_SetValue.out2 -> switchBlock7.in1;
+  connect condition7.out1 -> switchBlock7.cond;
+  connect risingEdgeDetector1.out1Out1 -> condition8.in1;
+  connect limiter_InitialSetValue.out6 -> switchBlock8.in1;
+  connect condition8.out1 -> switchBlock8.cond;
+  connect in6 -> switchBlock8.in3;
+  connect switchBlock8.out1 -> switchBlock7.in3;
+  connect switchBlock7.out1 -> switchBlock5.in3;
+  connect switchBlock5.out1 -> out1;
+  connect limiter_Function.limiter_active_bOut2 -> limiter_active_bOut2;
+  connect acceleration_pedal_pcIn2 -> limiter_Function.acceleration_pedal_pcIn2;
+  connect limiter_bIn1 -> limiter_Function.limiter_bIn1;
+  connect limiter_Function.vMax_kmhOut1 -> vMax_kmhOut1;
+  connect v_Vehicle_kmhIn3 -> limiter_InitialSetValue.v_Vehicle_kmhIn1;
+  connect leverUp_bIn4 -> limiter_SetValue.leverUp_bIn1;
+  connect leverDown_bIn5 -> limiter_SetValue.leverDown_bIn2;
+}

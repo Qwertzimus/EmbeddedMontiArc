@@ -1,0 +1,17 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Ena_m;
+
+import fas.basicLibrary.*;
+
+component Tempomat_Active {
+
+	port
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh,
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Read,
+		out (-1820.39m/s:0.28m/s:1820.39m/s) V_CC_delta_kmh;
+
+	instance MinusPlus<(-1820.39m/s:0.28m/s:1820.39m/s)> minusPlus1;
+
+	connect V_Vehicle_kmh -> minusPlus1.in1;
+	connect DEMO_FAS_V_CCSetValue_Read -> minusPlus1.in2;
+	connect minusPlus1.out1 -> V_CC_delta_kmh;
+}

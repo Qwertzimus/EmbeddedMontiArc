@@ -1,0 +1,28 @@
+package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_SetVal_m;
+
+import fas.basicLibrary.*;
+
+component V_LimSetValuePlus {
+	port
+		in (0m/s:0.28m/s:1820.39m/s) V_LimiterSetValue,
+		in Boolean trigger,
+		in (0m/s:0.28m/s:1820.39m/s) in1,
+		out (0m/s:0.28m/s:1820.39m/s) out1;
+
+	instance Sum<(0m/s:0.28m/s:1820.39m/s)> sum1;
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+	instance Greater<Boolean> greater1, greater2;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch1;
+
+	connect trigger -> greater1.in1, mem1.in1;
+	connect mem1.out1 -> greater1.in2;
+	connect greater1.out1 -> greater2.in1;
+	connect mem2.out1 -> greater2.in2;
+	connect greater2.out1 -> mem2.in1, switch1.cond;
+	connect V_LimiterSetValue -> sum1.in1;
+	connect in1 -> switch1.in3;
+	connect 5 -> sum1.in2;
+	connect sum1.out1 -> switch1.in1;
+	connect switch1.out1 -> out1;
+}

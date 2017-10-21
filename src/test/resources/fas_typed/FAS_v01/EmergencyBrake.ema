@@ -1,0 +1,31 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.demo_fas_Fkt_m.emergencyBrake_m.EmergencyBrake_Function;
+
+component EmergencyBrake {
+	port
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_ms,
+		in (0m:1m:200m) Distance_Object_m,
+		in (0m/s:0.28m/s:1820.39m/s) V_Obj_rel_ms,
+		in Boolean cond,
+		out N(0:255) BrakeForce_Emergency_pc,
+		out Boolean Acusti_warn_b;
+
+	instance EmergencyBrake_Function eBrake_Function;
+	instance SwitchB<N(0:255)> switch1;
+	instance SwitchB<Boolean> switch2;
+	instance Memory<N(0:255)>(0) mem1;
+	instance Memory<Boolean>(false) mem2;
+
+	connect V_Vehicle_ms -> eBrake_Function.V_Vehicle_ms;
+	connect Distance_Object_m -> eBrake_Function.Distance_Object_m;
+	connect V_Obj_rel_ms -> eBrake_Function.V_Obj_rel_ms;
+	connect cond -> switch1.cond, switch2.cond;
+	connect eBrake_Function.BrakeForce_Emergency_pc -> switch1.in1;
+	connect eBrake_Function.Acusti_warn_b -> switch2.in1;
+	connect mem1.out1 -> switch1.in3;
+	connect mem2.out1 -> switch2.in3;
+	connect switch1.out1 -> BrakeForce_Emergency_pc, mem1.in1;
+	connect switch2.out1 -> Acusti_warn_b, mem2.in1;
+}

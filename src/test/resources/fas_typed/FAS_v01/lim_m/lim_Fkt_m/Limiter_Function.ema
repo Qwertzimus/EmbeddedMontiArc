@@ -1,0 +1,55 @@
+package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_Ena_m.Limiter_Active;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_Ena_m.Limiter_Deactive;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_SetValue;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_StartUpSetValue;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_InitialSetValue;
+
+component Limiter_Function {
+  port
+	in Boolean limiter_bIn1,
+	in Double acceleration_pedal_pcIn2,
+	out Double vMax_kmhOut1,
+	out Boolean limiter_active_bOut2,
+	in Double in1;
+
+  instance Limiter_Active limiter_Active;
+  instance Limiter_Deactive limiter_Deactive;
+  instance SwitchBlock switchBlock;
+  instance ConditionB<(0:100)>("u2 & u1 <= 90") condition;
+  instance SwitchBlockB<(0:100)> switchBlock1;
+  instance ConditionB<(0:100)>("!(u2 & u1 <= 90)") condition1;
+  instance UnitDelay unitDelay, unitDelay1;
+  instance SwitchB<(0:100)> switchBlock2, switchBlock3;
+  instance ConditionB<(0:100)>("u2 & u1 <= 90") condition2;
+  instance ConditionB<(0:100)>("!(u2 & u1 <= 90)") condition3;
+
+  connect switchBlock.out1 -> vMax_kmhOut1;
+  connect switchBlock2.out1 -> limiter_active_bOut2;
+  connect in1 -> limiter_Active.in1;
+  connect acceleration_pedal_pcIn2 -> condition.in1;
+  connect limiter_bIn1 -> condition.in2;
+  connect condition.out1 -> switchBlock.cond;
+  connect limiter_Active.vMax_kmhOut1 -> switchBlock.in1;
+  connect acceleration_pedal_pcIn2 -> condition1.in1;
+  connect limiter_bIn1 -> condition1.in2;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect limiter_Deactive.vMax_kmhOut1 -> switchBlock1.in1;
+  connect switchBlock1.out1 -> switchBlock.in3;
+  connect switchBlock.out1 -> unitDelay.in1;
+  connect unitDelay.out1 -> switchBlock1.in3;
+  connect acceleration_pedal_pcIn2 -> condition2.in1;
+  connect limiter_bIn1 -> condition2.in2;
+  connect condition2.out1 -> switchBlock2.cond;
+  connect limiter_Active.limiter_active_bOut2 -> switchBlock2.in1;
+  connect acceleration_pedal_pcIn2 -> condition3.in1;
+  connect limiter_bIn1 -> condition3.in2;
+  connect condition3.out1 -> switchBlock3.cond;
+  connect limiter_Deactive.limiter_active_bOut2 -> switchBlock3.in1;
+  connect switchBlock3.out1 -> switchBlock2.in3;
+  connect switchBlock2.out1 -> unitDelay1.in1;
+  connect unitDelay1.out1 -> switchBlock3.in3;
+}

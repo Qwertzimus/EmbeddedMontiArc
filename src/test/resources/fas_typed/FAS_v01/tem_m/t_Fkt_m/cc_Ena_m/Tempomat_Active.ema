@@ -1,0 +1,17 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Ena_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component Tempomat_Active {
+  port
+	in Double v_Vehicle_kmhIn1,
+	out Double v_CC_delta_kmhOut1,
+	in Double in1;
+
+  instance Sum sum;
+  
+  connect in1 -> sum.in2;
+  connect sum.v_CC_delta_kmhOut1 -> v_CC_delta_kmhOut1;
+  connect v_Vehicle_kmhIn1 -> sum.in1;
+}

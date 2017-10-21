@@ -1,0 +1,42 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_Rep;
+
+import fas.basicLibrary.*;
+
+component V_SetValue_MinusLvl2 {
+	port
+		in Boolean trigger,
+		in Boolean Enable,
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Read,
+		in (0m/s:0.28m/s:1820.39m/s) in1,
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue;
+
+	instance Greater<Boolean> greater1, greater2;
+	instance SwitchB<Boolean> switch1, switch2;
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+	instance PlusMinus<(0m/s:0.28m/s:1820.39m/s)> pm1;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch3;
+	//Tag auf >=20 setzen
+	instance SwitchM<(0m/s:0.28m/s:1820.39m/s)> switch4;
+	//Tag auf !=0 setzen
+	instance SwitchM<(0m/s:0.28m/s:1820.39m/s)> switch5;
+	instance Mod<(0m/s:0.28m/s:1820.39m/s)> mod1;
+
+	connect trigger -> greater1.in1, switch1.in1;
+	connect switch1.out1 -> mem1.in1;
+	connect mem1.out1 -> switch1.in3, greater1.in2;
+	connect greater1.out1 -> greater2.in1;
+	connect greater2.out1 -> switch3.cond, switch2.in1;
+	connect mem2.out1 -> greater2.in2, switch2.in3;
+	connect switch2.out1 -> mem2.in1;
+	connect DEMO_FAS_V_CCSetValue_Read -> mod1.in1, pm1.in1, switch4.in3;
+	connect 10 -> mod1.in2;
+	connect mod1.out1 -> switch5.in1, switch5.cond;
+	connect 10 -> switch5.in3;
+	connect switch5.out1 -> pm1.in2;
+	connect pm1.out1 -> switch4.in1, switch4.cond;
+	connect switch4.out1 -> switch3.in1;
+	connect in1 -> switch3.in3;
+	connect switch3.out1 -> DEMO_FAS_V_CCSetValue;
+	connect Enable -> switch1.cond, switch2.cond;
+}

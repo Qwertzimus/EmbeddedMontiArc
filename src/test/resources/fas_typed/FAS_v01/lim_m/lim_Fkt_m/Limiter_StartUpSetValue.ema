@@ -1,0 +1,12 @@
+package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m;
+
+import fas.basicLibrary.*;
+
+component Limiter_StartUpSetValue {
+  port
+	out Double out1;
+
+  instance Constant<(299:301)>(300) constant;
+
+  connect constant.out1 -> out1;
+}

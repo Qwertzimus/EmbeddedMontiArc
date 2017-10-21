@@ -1,0 +1,136 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_InitialSetValue;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_OnSet_SetValue;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_StartUpSetValue;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_ChangeSetValue;
+
+component CC_SetValue {
+  port
+	in Boolean limiter_bIn1,
+	in Boolean cC_enabled_bIn2,
+	in Boolean cruiseControl_bIn3,
+	in Double v_Vehicle_kmhIn4,
+	in Boolean leverUp_bIn5,
+	in Boolean leverDown_bIn6,
+	in Double in1,
+	in Double in2,
+	in Double in3,
+	in Double in4,
+	in Double in5,
+	in Double in6,
+	in Double in7,
+	in Double in8,
+	out Double out1,
+	in Double in9,
+	in Double in10,
+	in Double in11,
+	in Double in12,
+	out Double out2;
+
+  instance CC_ChangeSetValue cC_ChangeSetValue;
+  instance CC_InitialSetValue cC_InitialSetValue;
+  instance CC_OnSet_SetValue cC_OnSet_SetValue;
+  instance CC_StartUpSetValue cC_StartUpSetValue;
+  instance CompareToZero compareToZero, comüareToZero1;
+  instance Constant<(0:30)>(20) constant;
+  instance Constant<Boolean>(false) falseBlock;
+  instance RSFlipFlop rSFlipFlop;
+  instance SysInit sysInit;
+  instance Terminator terminator;
+  instance EdgeRising risingEdgeDetector, risingEdgeDetector1, risingEdgeDetector2;
+  instance Condition<Boolean>("u1>0") condition, condition1, condition2, condition3, condition4, condition5, condition6, condition7, condition8, condition9, condition10;
+  instance And logicalOperator;
+  instance Not<Boolean> logicalOperator1, logicalOperator4, logicalOperator5, logicalOperator6;
+  instance And<3> logicalOperator2;
+  instance Or logicalOperator3;
+  instance GreaterEquals<(-oo:oo)> relOp;
+  instance SwitchB<(-oo:oo)> switchBlock, switchBlock1, switchBlock2, switchBlock3, switchBlock4, switchBlock5, switchBlock6, switchBlock7, switchBlock8, switchBlock9, switchBlock10;
+
+  connect sysInit.out1 -> risingEdgeDetector.in1;
+  connect logicalOperator2.out1 -> risingEdgeDetector1.in1;
+  connect logicalOperator.out1 -> risingEdgeDetector2.in1;
+  connect in1 -> cC_ChangeSetValue.in1;
+  connect in2 -> cC_ChangeSetValue.in2;
+  connect in3 -> cC_ChangeSetValue.in3;
+  connect cC_enabled_bIn2 -> condition.in1;
+  connect cC_ChangeSetValue.out1 -> switchBlock.in1;
+  connect condition.out1 -> switchBlock.cond;
+  connect in4 -> switchBlock.in3;
+  connect switchBlock.out1 -> cC_InitialSetValue.in1;
+  connect risingEdgeDetector.out1 -> condition1.in1;
+  connect cC_StartUpSetValue.out1 -> switchBlock1.in1;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect risingEdgeDetector1.out1 -> condition2.in1;
+  connect cC_OnSet_SetValue.out1 -> switchBlock2.in1;
+  connect condition2.out1 -> switchBlock2.cond;
+  connect in5 -> cC_ChangeSetValue.in4;
+  connect cC_enabled_bIn2 -> condition3.in1;
+  connect cC_ChangeSetValue.out2 -> switchBlock3.in1;
+  connect condition3.out1 -> switchBlock3.cond;
+  connect in6 -> switchBlock3.in3;
+  connect switchBlock3.out1 -> cC_InitialSetValue.in2;
+  connect risingEdgeDetector2.out1 -> condition4.in1;
+  connect cC_InitialSetValue.out1 -> switchBlock4.in1;
+  connect condition4.out1 -> switchBlock4.cond;
+  connect in7 -> cC_ChangeSetValue.in5;
+  connect cC_enabled_bIn2 -> condition5.in1;
+  connect cC_ChangeSetValue.out3 -> switchBlock5.in1;
+  connect condition5.out1 -> switchBlock5.cond;
+  connect in8 -> switchBlock5.in3;
+  connect switchBlock5.out1 -> switchBlock4.in3;
+  connect switchBlock4.out1 -> switchBlock2.in3;
+  connect switchBlock2.out1 -> switchBlock1.in3;
+  connect switchBlock1.out1 -> out1;
+  connect risingEdgeDetector.out1 -> condition6.in1;
+  connect cC_StartUpSetValue.out2 -> switchBlock6.in1;
+  connect condition6.out1 -> switchBlock6.cond;
+  connect risingEdgeDetector1.out1 -> condition7.in1;
+  connect cC_OnSet_SetValue.out2 -> switchBlock7.in1;
+  connect condition7.out1 -> switchBlock7.cond;
+  connect in9 -> cC_ChangeSetValue.in6;
+  connect cC_enabled_bIn2 -> condition8.in1;
+  connect cC_ChangeSetValue.out4 -> switchBlock8.in1;
+  connect condition8.out1 -> switchBlock8.cond;
+  connect in10 -> switchBlock8.in3;
+  connect switchBlock8.out1 -> cC_InitialSetValue.in3;
+  connect risingEdgeDetector2.out1 -> condition9.in1;
+  connect cC_InitialSetValue.out2 -> switchBlock9.in1;
+  connect condition9.out1 -> switchBlock9.cond;
+  connect in11 -> cC_ChangeSetValue.in7;
+  connect cC_enabled_bIn2 -> condition10.in1;
+  connect cC_ChangeSetValue.out5 -> switchBlock10.in1;
+  connect condition10.out1 -> switchBlock10.cond;
+  connect in12 -> switchBlock10.in3;
+  connect switchBlock10.out1 -> switchBlock9.in3;
+  connect switchBlock9.out1 -> switchBlock7.in3;
+  connect switchBlock7.out1 -> switchBlock6.in3;
+  connect switchBlock6.out1 -> out2;
+  connect compareToZero.out1 -> logicalOperator3.in1;
+  connect compareToZero1.out1 -> logicalOperator3.in2;
+  connect leverDown_bIn6 -> cC_ChangeSetValue.cCDown_bIn2;
+  connect leverDown_bIn6 -> compareToZero1.uIn1;
+  connect leverUp_bIn5 -> cC_ChangeSetValue.cCUp_bIn1;
+  connect leverUp_bIn5 -> compareToZero.uIn1;
+  connect rSFlipFlop.out_Q -> logicalOperator2.in3;
+  connect rSFlipFlop.Not_Q -> terminator.in1;
+  connect logicalOperator6.out1 -> rSFlipFlop.rIn2;
+  connect logicalOperator5.out1 -> logicalOperator2.in1;
+  connect limiter_bIn1 -> logicalOperator5.in1;
+  connect edgeRising.out1 -> rSFlipFlop.sIn1;
+  connect logicalOperator4.out1 -> logicalOperator2.in2;
+  connect logicalOperator1.out1 -> edgeRising.rIn2;
+  connect falseBlock.out1 -> edgeRising.iVIn3;
+  connect logicalOperator3.out1 -> edgeRising.uIn1;
+  connect cC_enabled_bIn2 -> logicalOperator6.in1;
+  connect cC_enabled_bIn2 -> logicalOperator1.in1;
+  connect cruiseControl_bIn3 -> logicalOperator.in1;
+  connect cruiseControl_bIn3 -> logicalOperator4.in1;
+  connect relOp.out1 -> logicalOperator.in2;
+  connect constant.out1 -> relOp.in2;
+  connect v_Vehicle_kmhIn4 -> cC_InitialSetValue.v_Vehicle_kmhIn1;
+  connect v_Vehicle_kmhIn4 -> cC_OnSet_SetValue.v_Vehicle_kmhIn1;
+  connect v_Vehicle_kmhIn4 -> relOp.in1;
+}

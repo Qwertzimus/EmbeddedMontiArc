@@ -1,0 +1,54 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component FAS_Input {
+  port
+    out Boolean parkingBrake_b,
+    out Double brakeForce_pedal_pc,
+    out Boolean cruiseControl_b,
+    out Double v_Vehicle_kmh,
+    out Boolean limiter_b,
+    out Boolean leverUp_b,
+    out Boolean leverDown_b,
+    out Double acceleration_pedal_pc,
+    out Double v_Vehicle_kmh1,
+    in Boolean parkingBrake_b1,
+    in Boolean parkingBrake_b2,
+    in Double brakeForce_pedal_pc1,
+    in Double brakeForce_pedal_pc2,
+    in Double acceleration_pedal_pc1,
+    in Double acceleration_pedal_pc2,
+    in Boolean cruiseControl_b1,
+    in Boolean cruiseControl_b2,
+    in Boolean limiter_b1,
+    in Boolean limiter_b2,
+    in Boolean leverUp_b1,
+    in Boolean leverUp_b2,
+    in Boolean leverDown_b1,
+    in Boolean leverDown_b2,
+    in Double v_Vehicle_kmh2,
+    in Double v_Vehicle_kmh3,
+    in Double v_Vehicle_kmh4,
+    out Boolean limiter_b3,
+    out Double acceleration_pedal_pc3,
+    out Double v_Vehicle_kmh5,
+    out Boolean leverUp_b3,
+    out Boolean leverDown_b3;
+
+  connect parkingBrake_b1 -> parkingBrake_b;
+  connect brakeForce_pedal_pc1 -> brakeForce_pedal_pc;
+  connect cruiseControl_b1 -> cruiseControl_b;
+  connect v_Vehicle_kmh4 -> v_Vehicle_kmh;
+  connect limiter_b1 -> limiter_b;
+  connect leverUp_b2 -> leverUp_b;
+  connect leverDown_b2 -> leverDown_b;
+  connect acceleration_pedal_pc1 -> acceleration_pedal_pc;
+  connect v_Vehicle_kmh2 -> v_Vehicle_kmh1;
+  connect limiter_b2 -> limiter_b3;
+  connect acceleration_pedal_pc2 -> acceleration_pedal_pc3;
+  connect v_Vehicle_kmh3 -> v_Vehicle_kmh5;
+  connect leverUp_b1 -> leverUp_b3;
+  connect leverDown_b1 -> leverDown_b3;
+}

@@ -1,0 +1,80 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.CC_ChangeSetValue_Lvl2_no_Repeater;
+import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.CC_ChangeSetValue_Lvl2_Repeater;
+
+component CC_ChangeSetValue {
+  port
+	in Boolean cCUp_bIn1,
+	in Boolean cCDown_bIn2,
+	in Double in1,
+	in Double in2,
+	in Double in3,
+	out Double out1,
+	in Double in4,
+	out Double out2,
+	in Double in5,
+	out Double out3,
+	in Double in6,
+	out Double out4,
+	in Double in7,
+	out Double out5;
+
+  instance V_SetValueMinus v_SetValueMinus;
+  instance V_SetValuePlus v_SetValuePlus;
+  instance EdgeRising risingEdgeDetector, risingEdgeDetector1;
+  instance SwitchB<(-oo:oo)> switchBlock, switchBlock1, switchBlock2, switchBlock3, switchBlock4, switchBlock5, switchBlock6, switchBlock7, switchBlock8, switchBlock9;
+  instance Condition<(-oo:oo)>("u1>0") condition, condition1, condition2, condition3, condition4, condition5, condition6, condition7, condition8, condition9;
+  
+  connect in1 -> v_SetValuePlus.v_CCSetValueIn1;
+  connect in2 -> v_SetValueMinus.v_CCSetValueIn1;
+  connect cCUp_bIn1 -> risingEdgeDetector.in1In1;
+  connect cCDown_bIn2 -> risingEdgeDetector1.in1In1;
+  connect risingEdgeDetector.out1Out1 -> condition.in1;
+  connect v_SetValuePlus.out1 -> switchBlock.in1;
+  connect condition.out1 -> switchBlock.cond;
+  connect risingEdgeDetector1.out1Out1 -> condition1.in1;
+  connect v_SetValueMinus.out1 -> switchBlock1.in1;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect in3 -> switchBlock1.in3;
+  connect switchBlock1.out1 -> switchBlock.in3;
+  connect switchBlock.out1 -> out1;
+  connect risingEdgeDetector.out1Out1 -> condition2.in1;
+  connect v_SetValuePlus.out2 -> switchBlock2.in1;
+  connect condition2.out1 -> switchBlock2.cond;
+  connect risingEdgeDetector1.out1Out1 -> condition3.in1;
+  connect v_SetValueMinus.out2 -> switchBlock3.in1;
+  connect condition3.out1 -> switchBlock3.cond;
+  connect in4 -> switchBlock3.in3;
+  connect switchBlock3.out1 -> switchBlock2.in3;
+  connect switchBlock2.out1 -> out2;
+  connect risingEdgeDetector.out1Out1 -> condition4.in1;
+  connect v_SetValuePlus.out3 -> switchBlock4.in1;
+  connect condition4.out1 -> switchBlock4.cond;
+  connect risingEdgeDetector1.out1Out1 -> condition5.in1;
+  connect v_SetValueMinus.out3 -> switchBlock5.in1;
+  connect condition5.out1 -> switchBlock5.cond;
+  connect in5 -> switchBlock5.in3;
+  connect switchBlock5.out1 -> switchBlock4.in3;
+  connect switchBlock4.out1 -> out3;
+  connect risingEdgeDetector.out1Out1 -> condition6.in1;
+  connect v_SetValuePlus.out4 -> switchBlock6.in1;
+  connect condition6.out1 -> switchBlock6.cond;
+  connect risingEdgeDetector1.out1Out1 -> condition7.in1;
+  connect v_SetValueMinus.out4 -> switchBlock7.in1;
+  connect condition7.out1 -> switchBlock7.cond;
+  connect in6 -> switchBlock7.in3;
+  connect switchBlock7.out1 -> switchBlock6.in3;
+  connect switchBlock6.out1 -> out4;
+  connect risingEdgeDetector.out1Out1 -> condition8.in1;
+  connect v_SetValuePlus.out5 -> switchBlock8.in1;
+  connect condition8.out1 -> switchBlock8.cond;
+  connect risingEdgeDetector1.out1Out1 -> condition9.in1;
+  connect v_SetValueMinus.out5 -> switchBlock9.in1;
+  connect condition9.out1 -> switchBlock9.cond;
+  connect in7 -> switchBlock9.in3;
+  connect switchBlock9.out1 -> switchBlock8.in3;
+  connect switchBlock8.out1 -> out5;
+}

@@ -1,0 +1,58 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+
+component Limiter {
+  port
+	in Boolean limiter_bIn1,
+	in Double acceleration_pedal_pcIn2,
+	in Double v_Vehicle_kmhIn3,
+	in Boolean leverUp_bIn4,
+	in Boolean leverDown_bIn5,
+	out Double vMax_kmhOut1,
+	out Boolean limiter_active_bOut2,
+	in Double in1,
+	in Double in2,
+	in Double in3,
+	in Double in4,
+	in Double in5,
+	in Double in6,
+	in Double in7,
+	out Double out1;
+
+  instance Constant<(-oo:oo)>(1) constant;
+  instance Constant<(-oo:oo)>(300) constant1;
+  instance Constant<(-oo:oo)>(0) constant2;
+  instance Limiter_enabled limiter_enabled;
+  instance Condition<(-oo:oo)>("u1>0") condition, condition1, condition2;
+  instance SwitchB<(-oo:oo)> switchBlock, switchBlock1;
+  instance SwitchB<Boolean> switchBlock2;
+
+  connect in1 -> limiter_enabled.in1;
+  connect in2 -> limiter_enabled.in2;
+  connect in3 -> limiter_enabled.in3;
+  connect in4 -> limiter_enabled.in4;
+  connect in5 -> limiter_enabled.in5;
+  connect in6 -> limiter_enabled.in6;
+  connect constant.out1 -> condition.in1;
+  connect limiter_enabled.out1 -> switchBlock.in1;
+  connect condition.out1 -> switchBlock.cond;
+  connect in7 -> switchBlock.in3;
+  connect switchBlock.out1 -> out1;
+  connect constant.out1 -> condition1.in1;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect limiter_enabled.vMax_kmhOut1 -> switchBlock1.in1;
+  connect constant1.out1 -> switchBlock1.in3;
+  connect constant.out1 -> condition2.in1;
+  connect condition2.out1 -> switchBlock2.cond;
+  connect limiter_enabled.limiter_active_bOut2 -> switchBlock2.in1;
+  connect constant2.out1 -> switchBlock2.in3;
+  connect switchBlock2.out1 -> limiter_active_bOut2;
+  connect switchBlock1.out1 -> vMax_kmhOut1;
+  connect leverDown_bIn5 -> limiter_enabled.leverDown_bIn5;
+  connect leverUp_bIn4 -> limiter_enabled.leverUp_bIn4;
+  connect v_Vehicle_kmhIn3 -> limiter_enabled.v_Vehicle_kmhIn3;
+  connect acceleration_pedal_pcIn2 -> limiter_enabled.acceleration_pedal_pcIn2;
+  connect limiter_bIn1 -> limiter_enabled.limiter_bIn1;
+}

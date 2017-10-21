@@ -1,0 +1,34 @@
+package fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_Rep;
+
+import fas.basicLibrary.*;
+
+component CountDown {
+	port
+		in Boolean E,
+		in Boolean R,
+		in Boolean Enable,
+		in N(1:10) IV, // delay auto repeat
+		out Boolean y;
+
+	instance SwitchB<N(1:10)> switch_R, switch_C, switch1;
+	instance Memory<N(1:10)>(0) mem1;
+	instance Greater<N(1:10)> relOp_Y, relOp_C;
+	instance PlusMinus<N(1:10)> sum_C;
+	instance And logOp_C;
+
+	connect IV -> switch_R.in1;
+	connect R -> switch_R.cond;
+	connect switch_C.out1 -> switch_R.in3;
+	connect 1 -> sum_C.in2;
+	connect switch_R.out1 -> relOp_Y.in1, switch1.in1;
+	connect mem1.out1 -> switch1.in3, sum_C.in1, switch_C.in3, relOp_C.in1;
+	connect switch1.out1 -> mem1.in1;
+	connect 0 -> relOp_C.in2;
+	connect relOp_C.out1 -> logOp_C.in2;
+	connect E -> logOp_C.in1;
+	connect logOp_C.out1 -> switch_C.cond;
+	connect relOp_Y.out1 -> y;
+	connect sum_C.out1 -> switch_C.in1;
+	connect Enable -> switch1.cond;
+	connect 0.0001 -> relOp_Y.in2;
+}

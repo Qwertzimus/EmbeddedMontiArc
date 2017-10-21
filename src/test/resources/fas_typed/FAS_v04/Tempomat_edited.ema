@@ -1,0 +1,34 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.Tempomat_Function_edited;
+
+component Tempomat_edited {
+	port
+		in Boolean ParkingBrake_b,
+	    in N(0:255) BrakeForce_pedal_pc,
+		in Boolean CruiseControl_b,
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh,
+		in Boolean Limiter_b,
+		in Boolean FTS_active_b,
+		in N(0:7) LeverUp_Stat,
+		in N(0:7) LeverDown_Stat,
+		in Boolean Enable,
+		out (0m/s:0.28m/s:1820.39m/s) V_CC_delta_kmh,
+		out Boolean CC_active_b;
+
+	instance Tempomat_Function_edited t_Function;
+
+	connect ParkingBrake_b -> t_Function.ParkingBrake_b;
+	connect BrakeForce_pedal_pc -> t_Function.BrakeForce_pedal_pc;
+	connect CruiseControl_b -> t_Function.CruiseControl_b;
+	connect V_Vehicle_kmh -> t_Function.V_Vehicle_kmh;
+	connect Limiter_b -> t_Function.Limiter_b;
+	connect FTS_active_b -> t_Function.FTS_active_b;
+	connect LeverUp_Stat -> t_Function.LeverUp_Stat;
+	connect LeverDown_Stat -> t_Function.LeverDown_Stat;
+	connect Enable -> t_Function.Enable;
+	connect t_Function.V_CC_delta_kmh -> V_CC_delta_kmh;
+	connect t_Function.CC_active_b -> CC_active_b;
+
+}

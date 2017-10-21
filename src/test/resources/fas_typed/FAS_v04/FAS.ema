@@ -1,0 +1,107 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+
+component FAS {
+    port
+        in Boolean ParkingBrake_b,
+        // Winkel BrakeForce_pedal = (0°:0.2°:45°), codiert in 8-bit
+        in N(0:255) BrakeForce_pedal_pc, // BRMS_STATUS
+        // Winkel Accelaration_pedal = (0°:0.2°:45°)
+	    in N(0:255) Accelaration_pedal_pc, // GAS_STATUS
+        in Boolean CruiseControl_b,
+		in Boolean Limiter_b,
+		in N(0:7) LeverUp_stat, // TMP_POS
+		in N(0:7) LeverDown_stat, // TMP_POS
+        // Geschwindigkeit = (0km/h:0.1km/h:6553.4km/h)
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh, // R_Fahrzeuggeschwindigkeit_kmh
+		in N(0:255) V_Sign_kmh, // R_TrafficSign, 8-bit Datenstruktur
+		in Boolean Sign_b,
+		in N(0:255) Distance_stat, // RDR_DETECT, 8-bit Datenstruktur
+        in (0m/s:2.8m/s:1820.39m/s) V_Obj_rel_kmh,
+        in (0m:1m:200m) Distance_Object_m, // siehe: RDR_DETECT
+        out Boolean CC_active_b,
+        out N(0:255) Accelaration_pc,
+        out N(0:255) BrakeForce_pc,
+        out (0m/s:2.8m/s:1820.39m/s) CCSetValue_kmh,
+        out (0m/s:2.8m/s:1820.39m/s) LimiterSetValue_kmh,
+        out Boolean Limiter_active_b,
+        out Boolean Opti_warn_b,
+        out Boolean Acusti_warn_b;
+
+    instance BrakeAssistant brakeAssistant;
+    instance Tempomat tempo;
+    instance Limiter lim;
+    instance Distancewarner distWarner;
+    instance Distronic dist;
+    //component FollowToStop followToStop;
+    instance EmergencyBrake emergencyBrake;
+    instance VelocityControl velocityControl;
+    instance Or or;
+	instance MultDiv<(0m/s:0.28m/s:1820.39m/s)> multDiv1, multDiv2;
+
+    connect BrakeForce_pedal_pc -> brakeAssistant.BrakeForce_pedal_pc;
+
+    connect ParkingBrake_b -> tempo.ParkingBrake_b;
+    connect BrakeForce_pedal_pc -> tempo.BrakeForce_pedal_pc;
+    connect CruiseControl_b -> tempo.CruiseControl_b;
+	connect V_Vehicle_kmh -> tempo.V_Vehicle_kmh;
+    connect Limiter_b -> tempo.Limiter_b;
+    connect LeverUp_stat -> tempo.LeverUp_stat;
+    connect LeverDown_stat -> tempo.LeverDown_stat;
+    //connect followToStop.FTS_active_b -> tempo.FTS_active_b;
+
+    connect Limiter_b -> lim.Limiter_b;
+    connect Accelaration_pedal_pc -> lim.Accelaration_pedal_pc;
+    connect V_Vehicle_kmh -> lim.V_Vehicle_kmh;
+    connect LeverUp_stat -> lim.LeverUp_stat;
+    connect LeverDown_stat -> lim.LeverDown_stat;
+    connect V_Sign_kmh -> lim.V_Sign_kmh;
+    connect Sign_b -> lim.Sign_b;
+
+	connect V_Vehicle_kmh -> multDiv1.in1;
+	connect 3.6 -> multDiv1.in2;
+
+	connect V_Obj_rel_kmh -> multDiv2.in1;
+	connect 3.6 -> multDiv2.in2;
+
+    connect multDiv1.out1 -> distWarner.V_Vehicle_ms;
+    connect Distance_Object_m -> distWarner.Distance_Object_m;
+
+    connect tempo.CC_active_b -> dist.CC_active_b;
+    connect V_Vehicle_ms -> dist.V_Vehicle_ms;
+    connect Distance_Object_m -> dist.Distance_Object_m;
+    connect Distance_stat -> dist.Distance_stat;
+    connect V_Obj_rel_kmh -> dist.V_Obj_rel_kmh;
+    //connect followToStop.FTS_active_b -> dist.FTS_active_b;
+    //connect followToStop.FTS_Abstand_soll_m -> dist.FTS_Abstand_soll_m;
+
+	connect V_Vehicle_kmh -> followToStop.V_Vehicle_kmh;
+	connect V_Obj_rel_kmh -> followToStop.V_Obj_rel_kmh;
+
+    connect multDiv1.out1 -> emergencyBrake.V_Vehicle_ms;
+    connect Distance_Object_m -> emergencyBrake.Distance_Object_m;
+    connect multDiv2.out1 -> emergencyBrake.V_Obj_rel_ms;
+
+    connect brakeAssistant.BrakeForceBoosted_pc -> velocityControl.BrakeForceBoosted_pc;
+    connect tempo.V_CC_delta_kmh -> velocityControl.V_CC_delta_kmh;
+    connect lim.VMax_kmh -> velocityControl.VMax_kmh;
+    connect Accelaration_pedal_pc -> velocityControl.Accelaration_pedal_pc;
+    connect V_Vehicle_kmh -> velocityControl.V_Vehicle_kmh;
+    connect BrakeForce_pedal_pc -> velocityControl.BrakeForce_pedal_pc;
+    connect dist.BrakeForce_Distronic_pc -> velocityControl.BrakeForce_Distronic_pc;
+    connect dist.Decelerator_pc -> velocityControl.Decelerator_pc;
+    connect emergencyBrake.BrakeForce_Emergency_pc -> velocityControl.BrakeForce_Emergency_pc;
+
+    connect distWarner.Acusti_warn_b -> or.in1;
+    connect emergencyBrake.Acusti_warn_b -> or.in2;
+
+    connect tempo.CC_active_b -> CC_active_b;
+    connect velocityControl.Accelaration_pc -> Accelaration_pc;
+    connect velocityControl.BrakeForce_pc -> BrakeForce_pc;
+    // CCSetValue_kmh?
+    // LimiterSetValue_kmh?
+    connect lim.Limiter_active_b -> Limiter_active_b;
+    connect distWarner.Opti_warn_b -> Opti_warn_b;
+    connect or.out1 -> Acusti_warn_b;
+}

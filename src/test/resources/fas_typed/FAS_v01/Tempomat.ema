@@ -1,0 +1,73 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.tem_m.Tempomat_Function;
+
+component Tempomat {
+  port
+	in Boolean parkingBrake_bIn1,
+	in Double brakeForce_pedal_pcIn2,
+	in Boolean cruiseControl_bIn3,
+	in Double v_Vehicle_kmhIn4,
+	in Boolean limiter_bIn5,
+	in Boolean leverUp_bIn6,
+	in Boolean leverDown_bIn7,
+	out Double v_CC_delta_kmhOut1,
+	out Boolean cC_active_bOut2,
+	in Double in1,
+	in Double in2,
+	in Double in3,
+	in Double in4,
+	in Double in5,
+	in Double in6,
+	in Double in7,
+	in Double in8,
+	in Double in9,
+	in Double in10,
+	in Double in11,
+	in Double in12,
+	in Double in13,
+	out Double out1;
+
+  instance Constant<(0:10)>(1) constant;
+  instance Constant<(0:10)>(0) constant1, constant2;
+  instance Tempomat_Function tempomat_Function;
+  instance SwitchB<(-oo:oo)> switchBlock, switchBlock1, switchBlock2;
+  instance Condition<(-oo:oo)>("u1>0") condition, condition1, condition2;
+
+  connect in1 -> tempomat_Function.in1;
+  connect in2 -> tempomat_Function.in2;
+  connect in3 -> tempomat_Function.in3;
+  connect in4 -> tempomat_Function.in4;
+  connect in5 -> tempomat_Function.in5;
+  connect in6 -> tempomat_Function.in6;
+  connect in7 -> tempomat_Function.in7;
+  connect in8 -> tempomat_Function.in8;
+  connect in9 -> tempomat_Function.in9;
+  connect in10 -> tempomat_Function.in10;
+  connect in11 -> tempomat_Function.in11;
+  connect in12 -> tempomat_Function.in12;
+  connect constant.out1 -> condition.in1;
+  connect tempomat_Function.out1 -> switchBlock.in1;
+  connect condition.out1 -> switchBlock.cond;
+  connect in13 -> switchBlock.in3;
+  connect switchBlock.out1 -> out1;
+  connect constant.out1 -> condition1.in1;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect tempomat_Function.v_CC_delta_kmhOut1 -> switchBlock1.in1;
+  connect constant1.out1 -> switchBlock1.in3;
+  connect constant.out1 -> condition2.in1;
+  connect condition2.out1 -> switchBlock2.cond;
+  connect tempomat_Function.cC_active_bOut2 -> switchBlock2.in1;
+  connect constant2.out1 -> switchBlock2.in3;
+  connect switchBlock2.out1 -> cC_active_bOut2;
+  connect switchBlock1.out1 -> v_CC_delta_kmhOut1;
+  connect leverDown_bIn7 -> tempomat_Function.leverDown_bIn7;
+  connect leverUp_bIn6 -> tempomat_Function.leverUp_bIn6;
+  connect limiter_bIn5 -> tempomat_Function.limiter_bIn5;
+  connect v_Vehicle_kmhIn4 -> tempomat_Function.v_Vehicle_kmhIn4;
+  connect cruiseControl_bIn3 -> tempomat_Function.cruiseControl_bIn3;
+  connect brakeForce_pedal_pcIn2 -> tempomat_Function.brakeForce_pedal_pcIn2;
+  connect parkingBrake_bIn1 -> tempomat_Function.parkingBrake_bIn1;
+}

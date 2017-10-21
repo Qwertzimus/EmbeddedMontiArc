@@ -1,0 +1,96 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+
+component FAS {
+    port
+        out Boolean cC_active_b,
+        out Double acceleration_pc,
+        out Double cCSetValue_kmh,
+        out Double limiterSetValue_kmh,
+        out Boolean limiter_active_b,
+        in Boolean parkingBrake_b,
+        in Boolean parkingBrake_b1,
+        in Double brakeForce_pedal_pc,
+        in Double brakeForce_pedal_pc1,
+        in Double acceleration_pedal_pc,
+        in Double acceleration_pedal_pc1,
+        in Boolean cruiseControl_b,
+        in Boolean cruiseControl_b1,
+        in Boolean limiter_b,
+        in Boolean limiter_b1,
+        in Boolean leverUp_b,
+        in Boolean leverUp_b1,
+        in Boolean leverDown_b,
+        in Boolean leverDown_b1,
+        in Double v_Vehicle_kmh,
+        in Double v_Vehicle_kmh1,
+        in Double v_Vehicle_kmh2;
+
+    instance FAS_Input fAS_Input;
+    instance Limiter limiter;
+    instance Tempomat tempmat;
+    instance VelocityControl velocityControl;
+    instance UnitDelay<(-oo:oo)> unitDelay, unitDelay1;
+
+    connect fAS_Input.limiter_b -> tempomat.limiter_bIn5;
+    connect limiter.vMax_kmhOut1 -> velocityControl.vMax_kmhIn2;
+    connect tempomat.v_CC_delta_kmhOut1 -> velocityControl.v_CC_delta_kmhIn1;
+    connect fAS_Input.acceleration_pedal_pc3 -> limiter.acceleration_pedal_pcIn2;
+    connect fAS_Input.acceleration_pedal_pc -> velocityControl.acceleration_pedal_pcIn3;
+    connect fAS_Input.v_Vehicle_kmh1 -> velocityControl.v_Vehicle_kmhIn4;
+    connect fAS_Input.leverUp_b3 -> limiter.leverUp_bIn4;
+    connect fAS_Input.v_Vehicle_kmh5 -> limiter.v_Vehicle_kmhIn3;
+    connect fAS_Input.limiter_b3 -> limiter.limiter_bIn1;
+    connect fAS_Input.leverDown_b3 -> limiter.leverDown_bIn5;
+    connect fAS_Input.cruiseControl_b -> tempomat.cruiseControl_bIn3;
+    connect fAS_Input.v_Vehicle_kmh -> tempomat.v_Vehicle_kmhIn4;
+    connect fAS_Input.leverDown_b -> tempomat.leverDown_bIn7;
+    connect fAS_Input.leverUp_b -> tempomat.leverUp_bIn6;
+    connect fAS_Input.brakeForce_pedal_pc -> tempomat.brakeForce_pedal_pcIn2;
+    connect fAS_Input.parkingBrake_b -> tempomat.parkingBrake_bIn1;
+    connect unitDelay.out1 -> limiter.in1;
+    connect unitDelay.out1 -> limiter.in2;
+    connect unitDelay.out1 -> limiter.in3;
+    connect unitDelay.out1 -> limiter.in4;
+    connect unitDelay.out1 -> limiter.in5;
+    connect unitDelay.out1 -> limiter.in6;
+    connect unitDelay.out1 -> limiter.in7;
+    connect limiter.out1 -> unitDelay.in1;
+    connect unitDelay1.out1 -> tempomat.in1;
+    connect unitDelay1.out1 -> tempomat.in2;
+    connect unitDelay1.out1 -> tempomat.in3;
+    connect unitDelay1.out1 -> tempomat.in4;
+    connect unitDelay1.out1 -> tempomat.in5;
+    connect unitDelay1.out1 -> tempomat.in6;
+    connect unitDelay1.out1 -> tempomat.in7;
+    connect unitDelay1.out1 -> tempomat.in8;
+    connect unitDelay1.out1 -> tempomat.in9;
+    connect unitDelay1.out1 -> tempomat.in10;
+    connect unitDelay1.out1 -> tempomat.in11;
+    connect unitDelay1.out1 -> tempomat.in12;
+    connect unitDelay1.out1 -> tempomat.in13;
+    connect tempomat.out1 -> unitDelay1.in1;
+    connect tempomat.cC_active_bOut2 -> cC_active_b;
+    connect velocityControl.acceleration_pcOut1 -> acceleration_pc;
+    connect unitDelay1.out1 -> cCSetValue_kmh;
+    connect unitDelay.out1 -> limiterSetValue_kmh;
+    connect limiter.limiter_active_bOut2 -> limiter_active_b;
+    connect parkingBrake_b -> fAS_Input.parkingBrake_b1;
+    connect parkingBrake_b1 -> fAS_Input.parkingBrake_b2;
+    connect brakeForce_pedal_pc -> fAS_Input.brakeForce_pedal_pc1;
+    connect brakeForce_pedal_pc1 -> fAS_Input.brakeForce_pedal_pc2;
+    connect acceleration_pedal_pc -> fAS_Input.acceleration_pedal_pc1;
+    connect acceleration_pedal_pc1 -> fAS_Input.acceleration_pedal_pc2;
+    connect cruiseControl_b -> fAS_Input.cruiseControl_b1;
+    connect cruiseControl_b1 -> fAS_Input.cruiseControl_b2;
+    connect limiter_b -> fAS_Input.limiter_b1;
+    connect limiter_b1 -> fAS_Input.limiter_b2;
+    connect leverUp_b -> fAS_Input.leverUp_b1;
+    connect leverUp_b1 -> fAS_Input.leverUp_b2;
+    connect leverDown_b -> fAS_Input.leverDown_b1;
+    connect leverDown_b1 -> fAS_Input.leverDown_b2;
+    connect v_Vehicle_kmh -> fAS_Input.v_Vehicle_kmh2;
+    connect v_Vehicle_kmh1 -> fAS_Input.v_Vehicle_kmh3;
+    connect v_Vehicle_kmh2 -> fAS_Input.v_Vehicle_kmh4;
+}

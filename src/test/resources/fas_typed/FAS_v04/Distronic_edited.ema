@@ -1,0 +1,60 @@
+package fas.demo_fas_Fkt_m;
+
+import fas.basicLibrary.*;
+
+import fas.demo_fas_Fkt_m.distronic_m.Distronic_Enabled;
+import fas.demo_fas_Fkt_m.distronic_m.Distronic_FTS_Enabled;
+import fas.demo_fas_Fkt_m.distronic_m.Distronic_Disabled;
+import fas.demo_fas_Fkt_m.distronic_m.Distronic_Deactive;
+
+component Distronic_edited {
+	port
+		in Boolean demo_fas_Distronic,
+		in Boolean CC_active_b,
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_ms,
+		in (0m:1m:200m) Distance_Object_m,
+		in N(0:255) Distance_stat,
+		in (0m/s:0.28m/s:1820.39m/s) V_Obj_rel_kmh,
+		in Boolean FTS_active_b,
+		in (0m:200m) FTS_Abstand_soll_m,
+		out N(0:255) BrakeForce_Distronic_pc,
+		out N(0:255) Decelerator_pc;
+
+	instance SwitchB<N(0:255)> switch1, switch2, switch3, switch4, switch5, switch6;
+	instance And and1, and2, and3, and4, and5;
+	instance Not<Boolean> not1, not2;
+	instance Distronic_Enabled dist_Enabled;
+	instance Distronic_FTS_Enabled dist_FTS_Enabled;
+	instance Distronic_Disabled dist_Disabled;
+	instance Distronic_Deactive dist_Deactive;
+
+	connect V_Vehicle_ms -> dist_Enabled.V_Vehicle_ms;
+	connect Distance_Object_m -> dist_Enabled.Distance_Object_m, dist_FTS_Enabled.Distance_Object_m;
+	connect Distance_stat -> dist_Enabled.Distance_stat;
+	connect V_Obj_rel_kmh -> dist_Enabled.V_Obj_rel_kmh, dist_FTS_Enabled.V_Obj_rel_kmh;
+	connect FTS_Abstand_soll_m -> dist_FTS_Enabled.FTS_Abstand_soll_m;
+	connect demo_fas_Distronic -> and1.in1, and3.in1, and5.in1;
+	connect CC_active_b -> and1.in2, and3.in2, not1.in1;
+	connect not1.out1 -> and5.in2;
+	connect and1.out1 -> and2.in1;
+	connect and3.out1 -> and4.in1;
+	connect FTS_active_b -> and4.in2, not2.in1;
+	connect not2.out1 -> and2.in2;
+	connect dist_Deactive.BrakeForce_Distronic_pc -> switch2.in3;
+	connect dist_Deactive.Decelerator_pc -> switch1.in3;
+	connect dist_Disabled.BrakeForce_Distronic_pc -> switch2.in1;
+	connect dist_Disabled.Decelerator_pc -> switch1.in1;
+	connect and5.out1 -> switch1.cond, switch2.cond;
+	connect switch1.out1 -> switch3.in3;
+	connect switch2.out1 -> switch4.in3;
+	connect dist_FTS_Enabled.BrakeForce_Distronic_pc -> switch4.in1;
+	connect dist_FTS_Enabled.Decelerator_pc -> switch3.in1;
+	connect and4.out1 -> switch3.cond, switch4.cond;
+	connect switch3.out1 -> switch5.in3;
+	connect switch4.out1 -> switch6.in3;
+	connect dist_Enabled.BrakeForce_Distronic_pc -> switch6.in1;
+	connect dist_Enabled.Decelerator_pc -> switch5.in1;
+	connect and2.out1 -> switch5.cond, switch6.cond;
+	connect switch5.out1 -> Decelerator_pc;
+	connect switch6.out1 -> BrakeForce_Distronic_pc;
+}

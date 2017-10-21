@@ -1,0 +1,18 @@
+package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_Ena_m;
+
+import fas.basicLibrary.*;
+
+component Limiter_Active {
+	port
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_LimiterSetValue_Read,
+		out (0m/s:0.28m/s:1820.39m/s) VMax_kmh,
+		out Boolean Limiter_active_b;
+
+	instance Gain<(0m/s:0.28m/s:1820.39m/s)> gain;
+	instance And and;
+
+	connect DEMO_FAS_V_LimiterSetValue_Read -> gain.in1;
+	connect gain.out1 -> VMax_kmh;
+	connect true -> and.in1, and.in2;
+	connect and.out1 -> Limiter_active_b;
+}

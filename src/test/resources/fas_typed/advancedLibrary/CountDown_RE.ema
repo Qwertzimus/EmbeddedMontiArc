@@ -1,0 +1,34 @@
+package fas.advancedLibrary;
+
+import fas.basicLibrary.*;
+
+component CountDown_RE {
+	port
+		in Boolean in_E,
+		in Boolean in_R,
+		in Boolean in_IV,
+		out Boolean out_y;
+
+	instance Greater<(-oo : oo )> relOp_C, relOp_Y;
+	instance And logOp_C;
+	instance PlusMinus<(-oo s:oo s)> sum_C;
+	instance SwitchM<Boolean> switch_C, switch_R;
+	instance Constant<(-oo s: oo s)>(0 s) zero_C;
+	instance Constant<(-oo s: oo s)>(eps*100000) zero_Y;
+	instance Constant<(1 s: 1 s)>(1) one_C;
+	instance Memory<Boolean>(false) memory_C;
+
+	connect in_IV -> switch_R.in1;
+	connect in_R -> switch_R.cond;
+	connect in_E -> logOp_C.in1;
+	connect switch_C.out1 -> switch_R.in3;
+	connect switch_R.out1 -> relOp_Y.in1, memory_C.in1;
+	connect memory_C.out1 -> sum_C.in1, switch_C.in3, relOp_C.in1;
+	connect zero_C.out1 -> relOp_C.in2;
+	connect relOp_C.out1 -> logOp_C.in2;
+	connect logOp_C.out1 -> switch_C.cond;
+	connect one_C.out1 -> sum_C.in2;
+	connect sum_C.out1 -> switch_C.in1;
+	connect zero_Y.out1 -> relOp_Y.in2;
+	connect relOp_Y.out1 -> out_y;
+}

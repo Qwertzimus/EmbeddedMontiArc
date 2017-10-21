@@ -1,0 +1,47 @@
+package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m;
+
+import fas.basicLibrary.*;
+import fas.advancedLibrary.*;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_SetVal_m.V_LimSetValuePlus;
+import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_SetVal_m.V_LimSetValueMinus;
+
+component Limiter_SetValue {
+  port
+	in Boolean leverUp_bIn1,
+	in Boolean leverDown_bIn2,
+	in Double in1,
+	in Double in2,
+	in Double in3,
+	out Double out1,
+	in Double in4,
+	out Double out2;
+
+  instance V_LimSetValueMinus v_LimSetValueMinus;
+  instance V_LimSetValuePlus v_LimSetValuePlus;
+  instance EdgeRising risingEdgeDetector, risingEdgeDetector1;
+  instance Condition<(-oo:oo)>("u1>0") condition, condition1, condition2, condition3;
+  instance SwitchB<(-oo:oo)> switchBlock, switchBlock1, switchBlock2, switchBlock3;
+
+  connect in2 -> v_LimSetValueMinus.v_LimiterSetValueIn1;
+  connect in1 -> v_LimSetValuePlus.v_LimiterSetValueIn1;
+  connect leverUp_bIn1 -> risingEdgeDetector.in1In1;
+  connect leverDown_bIn2 -> risingEdgeDetector1.in1In1;
+  connect risingEdgeDetector.out1 -> condition.in1;
+  connect v_LimSetValuePlus.out1 -> switchBlock.in1;
+  connect condition.out1 -> switchBlock.cond;
+  connect risingEdgeDetector1.out1 -> condition1.in1;
+  connect v_LimSetValueMinus.out1 -> switchBlock1.in1;
+  connect condition1.out1 -> switchBlock1.cond;
+  connect in3 -> switchBlock1.in3;
+  connect switchBlock1.out1 -> switchBlock.in3;
+  connect switchBlock.out1 -> out1;
+  connect risingEdgeDetector.out1 -> condition2.in1;
+  connect v_LimSetValuePlus.out2 -> switchBlock2.in1;
+  connect condition2.out1 -> switchBlock2.cond;
+  connect risingEdgeDetector1.out1 -> condition3.in1;
+  connect v_LimSetValueMinus.out2 -> switchBlock3.in1;
+  connect condition3.out1 -> switchBlock3.cond;
+  connect in4 -> switchBlock3.in3;
+  connect switchBlock3.out1 -> switchBlock2.in3;
+  connect switchBlock2.out1 -> out2;
+}

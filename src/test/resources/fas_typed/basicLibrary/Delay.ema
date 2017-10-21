@@ -1,0 +1,7 @@
+package fas.basicLibrary;
+
+component Delay<T>(T value) {
+	port 
+		in T in1,
+		out T out1;
+}
