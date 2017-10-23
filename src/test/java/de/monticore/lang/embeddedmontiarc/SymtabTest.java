@@ -22,6 +22,7 @@ package de.monticore.lang.embeddedmontiarc;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.*;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.unit.constant.EMAConstantSIUnit;
+import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.si._symboltable.SIUnitRangesSymbol;
 import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
@@ -322,8 +323,8 @@ public class SymtabTest extends AbstractSymtabTest {
 //check for all names
         assertEquals(5, cs.getAllIncomingPorts().size());
         assertEquals(5, cs.getAllOutgoingPorts().size());
-        for(ConnectorSymbol con:cs.getConnectors()){
-            Log.debug(con.toString(),"testPortArray");
+        for (ConnectorSymbol con : cs.getConnectors()) {
+            Log.debug(con.toString(), "testPortArray");
         }
     }
 
@@ -595,9 +596,8 @@ public class SymtabTest extends AbstractSymtabTest {
         //ComponentInstanceSymbol csInner = symTab.<ComponentInstanceSymbol>resolve("testing.BasicResolutionInstance.br1", ComponentInstanceSymbol.KIND).orElse(null);
         //assertNotNull(csInner);
 
-        Log.debug(cs.getSubComponents().iterator().next().getComponentType().getReferencedSymbol().howManyResolutionDeclarationSymbol()+"","Expanded:");
+        Log.debug(cs.getSubComponents().iterator().next().getComponentType().getReferencedSymbol().howManyResolutionDeclarationSymbol() + "", "Expanded:");
         Log.debug(cs.getSubComponents().iterator().next().getComponentType().getReferencedSymbol().getResolutionDeclarationSymbols().get(0).getNameToResolve(), "Name to Resolve:");
-
 
 
         ResolutionDeclarationSymbol jt = cs.getSubComponents().iterator().next().getComponentType().getReferencedSymbol().getResolutionDeclarationSymbol("n").get();
@@ -647,6 +647,23 @@ public class SymtabTest extends AbstractSymtabTest {
 
     }
 
+    @Test
+    public void testComponentGenericsSameComponent() {
+        Scope symTab = createSymTab("src/test/resources");
+        ComponentSymbol inst = symTab.<ComponentSymbol>resolve(
+                "testing.BasicParameterInstance", ComponentSymbol.KIND).orElse(null);
 
+        assertNotNull(inst);
+        System.out.println(inst.getSubComponents().iterator().next().getComponentType());
+        for (ASTExpression astExpression : inst.getSubComponents().iterator().next().getComponentType().getArguments()) {
+            Log.info(astExpression.toString(), "info:");
+        }
+        assertEquals(2, inst.getSubComponents().size());
+        Iterator<ComponentInstanceSymbol> iterator = inst.getSubComponents().iterator();
+        UnitNumberExpressionSymbol symbol1 = (UnitNumberExpressionSymbol) iterator.next().getComponentType().getArguments().get(0).getSymbol().get();
+        UnitNumberExpressionSymbol symbol2 = (UnitNumberExpressionSymbol) iterator.next().getComponentType().getArguments().get(0).getSymbol().get();
+        assertEquals("5", symbol1.getTextualRepresentation());
+        assertEquals("1", symbol2.getTextualRepresentation());
+    }
 }
 

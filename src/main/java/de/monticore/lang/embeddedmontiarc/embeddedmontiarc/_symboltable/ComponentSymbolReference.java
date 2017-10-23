@@ -24,6 +24,7 @@
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import com.google.common.collect.ImmutableList;
+import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
 import de.monticore.symboltable.MutableScope;
@@ -49,6 +50,7 @@ public class ComponentSymbolReference extends ComponentSymbol implements
     private List<ActualTypeArgument> actualTypeArguments = new ArrayList<>();
 
     private List<ResolutionDeclarationSymbol> resSymbols = new ArrayList<>();
+    private List<ASTExpression> arguments = new ArrayList<>();
 
     public ComponentSymbolReference(final String name, final Scope definingScopeOfReference) {
         super(name);
@@ -85,6 +87,7 @@ public class ComponentSymbolReference extends ComponentSymbol implements
     public List<ResolutionDeclarationSymbol> getResolutionDeclarationSymbols() {
         return resSymbols;
     }
+
     @Override
     public Optional<ResolutionDeclarationSymbol> getResolutionDeclarationSymbol(String name) {
         for (ResolutionDeclarationSymbol symbol : getResolutionDeclarationSymbols()) {
@@ -93,6 +96,7 @@ public class ComponentSymbolReference extends ComponentSymbol implements
         }
         return Optional.empty();
     }
+
     @Override
     public boolean hasResolutionDeclaration(String name) {
         for (ResolutionDeclarationSymbol resDeclSym : resSymbols)
@@ -101,6 +105,7 @@ public class ComponentSymbolReference extends ComponentSymbol implements
             }
         return false;
     }
+
     @Override
     public int howManyResolutionDeclarationSymbol() {
         return resSymbols.size();
@@ -160,7 +165,22 @@ public class ComponentSymbolReference extends ComponentSymbol implements
     public boolean isReferencedSymbolLoaded() {
         return reference.isReferencedSymbolLoaded();
     }
-  
+
+    @Override
+    public List<ASTExpression> getArguments() {
+        return arguments;
+    }
+
+    @Override
+    public void addArgument(ASTExpression astExpression) {
+        arguments.add(astExpression);
+    }
+
+    @Override
+    public void setArguments(List<ASTExpression> arguments) {
+        this.arguments = arguments;
+    }
+
   /* Methods of Symbol interface */
 
     @Override
@@ -192,5 +212,4 @@ public class ComponentSymbolReference extends ComponentSymbol implements
     public void setAccessModifier(AccessModifier accessModifier) {
         getReferencedSymbol().setAccessModifier(accessModifier);
     }
-
 }
