@@ -27,6 +27,8 @@ import de.se_rwth.commons.logging.Log;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 
 /**
@@ -166,11 +168,16 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
 
         assertNotNull(inst);
         System.out.println(inst);
+        assertEquals(2, inst.getSubComponents().size());
         assertEquals(1, inst.getSubComponents().iterator().next().getParameters().size());
         for (ASTExpression astExpression : inst.getSubComponents().iterator().next().getArguments()) {
             Log.info(astExpression.toString(), "info:");
         }
-        assertEquals(1, inst.getSubComponents().iterator().next().getArguments().size());
+        Iterator<ExpandedComponentInstanceSymbol> iterator = inst.getSubComponents().iterator();
+        UnitNumberExpressionSymbol symbol1 = (UnitNumberExpressionSymbol) iterator.next().getArguments().get(0).getSymbol().get();
+        UnitNumberExpressionSymbol symbol2 = (UnitNumberExpressionSymbol) iterator.next().getArguments().get(0).getSymbol().get();
+        assertEquals("5", symbol1.getTextualRepresentation());
+        assertEquals("1", symbol2.getTextualRepresentation());
     }
 
     @Test

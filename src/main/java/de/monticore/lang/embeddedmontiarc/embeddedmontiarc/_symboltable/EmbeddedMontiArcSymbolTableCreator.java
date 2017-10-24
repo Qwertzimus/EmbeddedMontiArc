@@ -36,6 +36,7 @@ import de.monticore.lang.monticar.common2._ast.ASTStereoValue;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.ranges._ast.ASTRange;
 import de.monticore.lang.monticar.ranges._ast.ASTRanges;
+import de.monticore.lang.monticar.ranges._ast.ASTUnitNumberExpression;
 import de.monticore.lang.monticar.resolution._ast.ASTResolutionDeclaration;
 import de.monticore.lang.monticar.resolution._ast.ASTTypeArgument;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
@@ -281,6 +282,13 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         return name;
     }
 
+
+    @Override
+    public void visit(ASTUnitNumberExpression node) {
+        UnitNumberExpressionSymbol symbol = new UnitNumberExpressionSymbol(node);
+
+        addToScopeAndLinkWithNode(symbol, node);
+    }
 
     @Override
     public void visit(ASTPort node) {

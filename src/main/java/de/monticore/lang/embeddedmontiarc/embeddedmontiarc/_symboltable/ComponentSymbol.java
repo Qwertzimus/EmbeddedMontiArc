@@ -691,6 +691,7 @@ public class ComponentSymbol extends TaggingScopeSpanningSymbol {
         this.arguments = arguments;
     }
 
+
     public void addIncomingPort(PortSymbol symbol) {
         //TODO implement me
     }

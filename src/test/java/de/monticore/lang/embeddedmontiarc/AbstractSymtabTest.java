@@ -48,7 +48,7 @@ public class AbstractSymtabTest {
     }
     GlobalScope scope = new GlobalScope(mp, fam);
 
-    LogConfig.init();
+    LogConfig.init();//TODO comment for logger output
     return scope;
   }
 }

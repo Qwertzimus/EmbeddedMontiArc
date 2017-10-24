@@ -359,4 +359,8 @@ public class ExpandedComponentInstanceSymbol
     public void setArguments(List<ASTExpression> arguments) {
         this.arguments = arguments;
     }
+
+    public Optional<ExpandedComponentInstanceSymbol> getEnclosingComponent() {
+        return (Optional<ExpandedComponentInstanceSymbol>) getEnclosingScope().getSpanningSymbol();
+    }
 }

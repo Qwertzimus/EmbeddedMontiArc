@@ -3,4 +3,6 @@ package testing;
 component BasicParameterInstance{
 
     instance BasicParameter(5) basicParameter;
+
+    instance BasicParameter(1) basicParameter2;
 }
