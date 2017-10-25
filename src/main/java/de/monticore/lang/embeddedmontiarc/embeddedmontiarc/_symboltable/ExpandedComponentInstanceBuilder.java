@@ -292,7 +292,11 @@ public class ExpandedComponentInstanceBuilder {
     }
 
     public ExpandedComponentInstanceBuilder addResolutionDeclarationSymbols(List<ResolutionDeclarationSymbol> resolutionDeclarationSymbols) {
-        this.resolutionDeclarationSymbols.addAll(resolutionDeclarationSymbols);
+        for (ResolutionDeclarationSymbol symbol : resolutionDeclarationSymbols) {
+            if (!this.resolutionDeclarationSymbols.contains(symbol))
+                this.resolutionDeclarationSymbols.add(symbol);
+        }
+
         return this;
     }
 
@@ -301,7 +305,10 @@ public class ExpandedComponentInstanceBuilder {
     }
 
     public ExpandedComponentInstanceBuilder addParameters(List<EMAVariable> parameters) {
-        this.parameters.addAll(parameters);
+        for (EMAVariable parameter : parameters) {
+            if (!this.parameters.contains(parameter))
+                this.parameters.add(parameter);
+        }
         return this;
     }
 
@@ -310,7 +317,10 @@ public class ExpandedComponentInstanceBuilder {
     }
 
     public ExpandedComponentInstanceBuilder addArguments(List<ASTExpression> arguments) {
-        this.arguments.addAll(arguments);
+        for (ASTExpression argument : arguments) {
+            if (!this.arguments.contains(argument))
+                this.arguments.add(argument);
+        }
         return this;
     }
 }
