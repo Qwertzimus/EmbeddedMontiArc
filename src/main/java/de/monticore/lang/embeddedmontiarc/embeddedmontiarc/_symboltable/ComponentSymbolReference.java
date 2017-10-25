@@ -115,7 +115,7 @@ public class ComponentSymbolReference extends ComponentSymbol implements
 
         int count = 0;
         for (ResolutionDeclarationSymbol resDeclSym : getResolutionDeclarationSymbols()) {
-            Log.debug("" + ((ASTUnitNumberResolution) getResolutionDeclarationSymbols().get(count).getASTResolution()).getNumber().get().intValue(), "resolus:");
+            //Log.debug("" + ((ASTUnitNumberResolution) getResolutionDeclarationSymbols().get(count).getASTResolution()).getNumber().get().intValue(), "resolus:");
             String lastNameStart = "";
             for (PortSymbol portSymbol : getIncomingPorts()) {
                 Log.debug(portSymbol.getName(), "Found Port:");
