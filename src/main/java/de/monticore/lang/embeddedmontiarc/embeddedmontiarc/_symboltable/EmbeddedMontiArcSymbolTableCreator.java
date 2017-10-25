@@ -786,7 +786,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
 
                     ResolutionDeclarationSymbolReference resDeclSymRef;
-                    resDeclSymRef = ResolutionDeclarationSymbolReference.constructResolutionDeclSymbolRef(((ASTTypeNameResolutionDeclaration) astResDecl).getName(), ((ASTTypeNameResolutionDeclaration) astResDecl).getResolution().orElse(null));
+                    resDeclSymRef = ResolutionDeclarationSymbolReference.constructResolutionDeclSymbolRef(((ASTTypeNameResolutionDeclaration) astResDecl).getName(), ((ASTTypeNameResolutionDeclaration) astResDecl).getResolution());
 
                     Log.debug(resDeclSymRef.getNameToResolve(), "Added ResolutionDeclarationSymbol with name: ");
                     typeSymbol.addResolutionDeclarationSymbol(resDeclSymRef);
