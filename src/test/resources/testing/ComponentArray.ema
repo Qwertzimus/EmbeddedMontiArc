@@ -1,4 +1,7 @@
 package testing;
 component ComponentArray{
-  instance PortArray portArray[51];
+  ports in Boolean lightsIn[25],
+        out Boolean lightOut[25];
+
+  instance PortArray portArray[5];
 }

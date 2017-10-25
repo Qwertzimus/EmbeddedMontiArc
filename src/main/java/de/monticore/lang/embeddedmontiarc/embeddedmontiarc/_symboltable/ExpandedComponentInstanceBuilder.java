@@ -236,8 +236,10 @@ public class ExpandedComponentInstanceBuilder {
         inst.getSubComponents().stream()
                 .forEachOrdered(s -> {
                     if (s.getActualTypeArguments().size() != s.getComponentType().getFormalTypeParameters().size()) {
-                        Log.error(String.format("instance '%s' has a subcomponent instance '%s' where the given generics '%s' distinguish from the generics definition '%s'",
+                        /*Log.error(String.format("instance '%s' has a subcomponent instance '%s' where the given generics '%s' distinguish from the generics definition '%s'",
                                 inst.getFullName(), s.getName(), s.getActualTypeArguments(), s.getComponentType().getFormalTypeParameters()));
+                        */
+                        //TODO change this after removing everything that is related to Java/JavaDSL
                     } else {
                         Log.debug(s.getComponentType().toString(), "ComponentType");
                         Log.debug(s.getComponentType().getFormalTypeParameters().toString(), "FormalTypeParameters");

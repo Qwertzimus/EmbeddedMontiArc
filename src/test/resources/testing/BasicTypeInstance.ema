@@ -7,5 +7,5 @@ component BasicTypeInstance {
 	instance BasicTypeTest<Boolean> b1;
 
     connect in1->b1.in1;
-    connect in1.out1->out1;
+    connect b1.out1 -> out1;
 }

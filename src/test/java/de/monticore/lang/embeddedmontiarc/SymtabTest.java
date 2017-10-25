@@ -405,9 +405,9 @@ public class SymtabTest extends AbstractSymtabTest {
         ComponentSymbol cs = symTab.<ComponentSymbol>resolve("testing.ComponentArray", ComponentSymbol.KIND).orElse(null);
         assertNotNull("ComponentSymbol is null", cs);
         //test if amount of SubComponents is correct
-        assertEquals(51, cs.getSubComponents().size());
+        assertEquals(5, cs.getSubComponents().size());
         //test if every SubComponent can be accessed by its corresponding name
-        for (int i = 1; i <= 51; ++i) {
+        for (int i = 1; i <= 5; ++i) {
             assertEquals(true, cs.getSubComponent("portArray[" + i + "]").isPresent());
             //add type check
         }

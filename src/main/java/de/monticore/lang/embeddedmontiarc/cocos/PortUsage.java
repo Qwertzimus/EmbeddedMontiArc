@@ -94,7 +94,7 @@ public class PortUsage implements EmbeddedMontiArcASTComponentCoCo {
           .forEach(sc -> connectorTargets.addAll(getTargetNames(sc.getSimpleConnectors())));
 
       remainingPorts.removeAll(connectorTargets);
-      if (!remainingPorts.isEmpty()) {
+      if (!remainingPorts.isEmpty()&&node.getSubComponents().size()!=0) {
         remainingPorts.forEach(p -> Log.error(String.format("0xAC007 Port %s is not used!", p),
             node.get_SourcePositionStart()));
       }

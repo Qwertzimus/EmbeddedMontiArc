@@ -1,21 +1,20 @@
 /**
- *
- *  ******************************************************************************
- *  MontiCAR Modeling Family, www.se-rwth.de
- *  Copyright (c) 2017, Software Engineering Group at RWTH Aachen,
- *  All rights reserved.
- *
- *  This project is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU Lesser General Public
- *  License as published by the Free Software Foundation; either
- *  version 3.0 of the License, or (at your option) any later version.
- *  This library is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *  Lesser General Public License for more details.
- *
- *  You should have received a copy of the GNU Lesser General Public
- *  License along with this project. If not, see <http://www.gnu.org/licenses/>.
+ * ******************************************************************************
+ * MontiCAR Modeling Family, www.se-rwth.de
+ * Copyright (c) 2017, Software Engineering Group at RWTH Aachen,
+ * All rights reserved.
+ * <p>
+ * This project is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3.0 of the License, or (at your option) any later version.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this project. If not, see <http://www.gnu.org/licenses/>.
  * *******************************************************************************
  */
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
@@ -30,6 +29,7 @@ import de.monticore.lang.embeddedmontiarc.helper.ArcTypePrinter;
 import de.monticore.lang.embeddedmontiarc.helper.Timing;
 import de.monticore.lang.embeddedmontiarc.trafos.AutoConnection;
 import de.monticore.lang.monticar.ValueSymbol;
+import de.monticore.lang.monticar.common2._ast.ASTArrayAccess;
 import de.monticore.lang.monticar.common2._ast.ASTParameter;
 import de.monticore.lang.monticar.common2._ast.ASTQualifiedNameWithArray;
 import de.monticore.lang.monticar.common2._ast.ASTStereoValue;
@@ -390,7 +390,6 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
 
     private List<String> getPortNameParts(ASTQualifiedNameWithArray portName, int amountSources) {
-
         List<String> names = new ArrayList<String>();
         String name = "";
         //ignore for now
@@ -404,8 +403,8 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             } else if (portName.getPortArray().get().getLowerbound().isPresent()) {
                 names = getmnPortNameParts(name, portName);
             } else {
-
-                int size = countPortArrayInstances(name, portName.getCompName().orElse(null));
+                System.out.println(portName.toString());
+                int size = countPortArrayInstances(name, portName.getCompName().orElse(null), portName.getCompArray().orElse(null));
 
                 Log.debug("Size" + size, "PortNameParts");
                 for (int i = 1; i <= size; ++i) {
@@ -436,15 +435,29 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         return names;
     }
 
-    private int countPortArrayInstances(String portName, String compName) {
+    private String getNameArrayPart(ASTArrayAccess arrayPart) {
+        String result = "";
+        if (arrayPart.getIntLiteral().isPresent())
+            result += "[" + arrayPart.getIntLiteral().get().getNumber().get().intValue() + "]";
+        //Not handled here change handling this case after refactoring
+        /*else if (arrayPart.getLowerbound().isPresent() && arrayPart.getUpperbound().isPresent()) {
+
+        }*/
+        return result;
+    }
+
+    private int countPortArrayInstances(String portName, String compName, ASTArrayAccess arrayPart) {
         MutableScope curScope = currentScope().get();
         boolean present = true;
         int counter = 0;
-
+        if (arrayPart != null) {
+            compName += getNameArrayPart(arrayPart);
+        }
         while (present) {
             present = curScope.resolve(portName + "[" + (counter + 1) + "]", PortSymbol.KIND).isPresent();
             if (present) ++counter;
             else {
+                System.out.println(curScope.toString());
                 Log.debug("Could not resolve " + portName + "[" + (counter + 1) + "]", "countPortArrayInstances");
             }
         }
@@ -452,7 +465,9 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             //TODO
             present = true;
             Log.debug("compInstanceName: " + compName, "Resolving");
-            ComponentInstanceSymbol symbol = curScope.<ComponentInstanceSymbol>resolve(compName, ComponentInstanceSymbol.KIND).get();
+            System.out.println(compName);
+            ComponentInstanceSymbol symbol;
+            symbol= curScope.<ComponentInstanceSymbol>resolve(compName, ComponentInstanceSymbol.KIND).get();
             for (PortSymbol portSymbol : symbol.getComponentType().getAllPorts()) {
 
                 Log.debug(portSymbol.toString(), "PortInfo");

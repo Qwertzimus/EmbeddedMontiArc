@@ -1,7 +1,8 @@
 package testing;
 
-component BasicResolution<N1 n=2> {
+component BasicResolution<N1 n = 2> {
 	port
 		in Boolean in1[n],
 		out Boolean out1;
+
 }
