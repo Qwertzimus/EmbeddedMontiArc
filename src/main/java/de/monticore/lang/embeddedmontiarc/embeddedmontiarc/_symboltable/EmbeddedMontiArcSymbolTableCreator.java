@@ -24,6 +24,7 @@ import de.monticore.ast.ASTNode;
 //import de.monticore.common.common._ast.ASTStereoValue;
 import de.monticore.java.symboltable.JavaSymbolFactory;
 import de.monticore.java.symboltable.JavaTypeSymbolReference;
+import de.monticore.lang.embeddedmontiarc.FormalTypeParameterFieldType;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.*;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.TypesPrinter;
 import de.monticore.lang.embeddedmontiarc.helper.ArcTypePrinter;
@@ -43,6 +44,7 @@ import de.monticore.lang.monticar.resolution._ast.ASTTypeArgument;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbolReference;
 import de.monticore.lang.monticar.si._symboltable.SIUnitRangesSymbolReference;
+import de.monticore.lang.monticar.struct.model.type.StructFieldTypeInfo;
 import de.monticore.symboltable.*;
 import de.monticore.symboltable.modifiers.BasicAccessModifier;
 import de.monticore.symboltable.types.JFieldSymbol;
@@ -173,6 +175,9 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         typeName.append(ArcTypePrinter.printTypeWithoutTypeArgumentsAndDimension(astType));
         //Log.debug(astType.toString(),"TYPE:");
         //Log.debug(typeName,"TYPEName:");
+        if ("".equals(typeName.toString())) {
+            typeName.append("java.lang.Object");
+        }
         typeRef = new CommonJTypeReference<JTypeSymbol>(typeName.toString(), JTypeSymbol.KIND, currentScope().get());
         typeRef.setDimension(TypesHelper.getArrayDimensionIfArrayOrZero(astType));
         addTypeArgumentsToTypeSymbol(typeRef, astType);
@@ -245,6 +250,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         } else {
             // create PortSymbol with same content as PortArraySymbol
             createPort(node, name, node.isIncoming(), pas.getStereotype(), typeRef, pas);
+            ((PortSymbol)node.getSymbol().get()).setTypeInfo(pas.getTypeInfo());
         }
     }
 
@@ -307,6 +313,25 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         PortArraySymbol pas = new PortArraySymbol(name, nameTO);
 
         pas.setTypeReference(typeRef);
+        StructFieldTypeInfo typeInfo = null;
+        if (astType instanceof ASTSimpleReferenceType && componentStack.peek().hasFormalTypeParameters()) {
+            List<String> names = ((ASTSimpleReferenceType) astType).getNames();
+            if (names != null && names.size() == 1) {
+                String possibleFormalTypeParamName = names.get(0);
+                boolean isFormalTypeParameterOfParent = componentStack
+                        .peek()
+                        .getFormalTypeParameters()
+                        .stream()
+                        .anyMatch(p -> p.isFormalTypeParameter() && p.getName().equals(possibleFormalTypeParamName));
+                if (isFormalTypeParameterOfParent) {
+                    typeInfo = new FormalTypeParameterFieldType(possibleFormalTypeParamName);
+                }
+            }
+        }
+        if (typeInfo == null) {
+            typeInfo = StructFieldTypeInfo.tryRepresentASTType(astType, currentScope().orElse(null));
+        }
+        pas.setTypeInfo(typeInfo);
         pas.setDirection(node.isIncoming());
 
         // stereotype
