@@ -388,9 +388,6 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.3.0</version>
                 <configuration>
-	           <excludes>
-                     <exclude>target/**</exclude>
-                  </excludes>
                 </configuration>
             </plugin>
             <plugin>
@@ -423,4 +420,13 @@
       <url>file://${project.build.directory}/external-dependencies</url>
     </snapshotRepository>
   </distributionManagement>
+	
+<reporting>
+    <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+</reporting>
 </project>
