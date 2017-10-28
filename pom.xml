@@ -30,7 +30,7 @@
 
   <groupId>de.monticore.lang.monticar</groupId>
   <artifactId>embedded-montiarc</artifactId>
-  <version>0.0.3-SNAPSHOT</version>
+  <version>1.0.0-beta</version>
 
   <!-- == PROJECT DEPENDENCIES ============================================= -->
 
@@ -47,7 +47,7 @@
     <mc.grammars.assembly.version>0.0.6-SNAPSHOT</mc.grammars.assembly.version>
 	<languages.version>4.0.1-SNAPSHOT</languages.version>
     <SIUnit.version>0.0.6-SNAPSHOT</SIUnit.version>
-    <struct.version>0.0.3-SNAPSHOT</struct.version>
+    <struct.version>1.0.0-beta</struct.version>
 
     <Common-MontiCar.version>0.0.3-SNAPSHOT</Common-MontiCar.version>
 
@@ -227,7 +227,7 @@
       <artifactId>logback-classic</artifactId>
       <version>${logback.version}</version>
     </dependency>
-  
+
     <dependency>
       <groupId>org.jscience</groupId>
       <artifactId>jscience</artifactId>
@@ -237,7 +237,7 @@
   </dependencies>
 
 
-  <!-- == BUILD INFRASTRUCTURE ============================================ 
+  <!-- == BUILD INFRASTRUCTURE ============================================
 
   <ciManagement>
     <system>Jenkins CI</system>
