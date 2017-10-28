@@ -18,13 +18,27 @@
  *  License along with this project. If not, see <http://www.gnu.org/licenses/>.
  * *******************************************************************************
  */
-package de.monticore.lang.embeddedmontiarc
+package de.monticore.lang.embeddedmontiarc;
 
-import de.monticore.ast.ASTNode
+import de.monticore.ast.ASTNode;
 
-internal fun <T> Iterable<T>.asSortedByStartSourcePosition(): MutableList<T>
-        where T : ASTNode {
-    val result = toMutableList()
-    result.sortWith(StartSourcePositionComparator)
-    return result
+import java.util.Comparator;
+
+public final class StartSourcePositionComparator {
+
+    public static final Comparator<ASTNode> INSTANCE = (o1, o2) -> {
+        int l1 = o1.get_SourcePositionStart().getLine();
+        int l2 = o2.get_SourcePositionStart().getLine();
+        int lResult = Integer.compare(l1, l2);
+        if (lResult != 0) {
+            return lResult;
+        } else {
+            int c1 = o1.get_SourcePositionStart().getColumn();
+            int c2 = o2.get_SourcePositionStart().getColumn();
+            return Integer.compare(c1, c2);
+        }
+    };
+
+    private StartSourcePositionComparator() {
+    }
 }

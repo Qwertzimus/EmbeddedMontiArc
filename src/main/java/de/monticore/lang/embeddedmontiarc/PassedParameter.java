@@ -18,9 +18,39 @@
  *  License along with this project. If not, see <http://www.gnu.org/licenses/>.
  * *******************************************************************************
  */
-package de.monticore.lang.embeddedmontiarc
+package de.monticore.lang.embeddedmontiarc;
 
-class LiteralParameterSubstitution<out T>(
-        val parameterName: String,
-        val literalValue: T
-)
+import javax.annotation.Nonnull;
+
+public final class PassedParameter {
+
+    @Nonnull
+    private final String sourceParameterName;
+
+    @Nonnull
+    private final String targetChildName;
+
+    @Nonnull
+    private final String targetParameterName;
+
+    @Nonnull
+    public final String getSourceParameterName() {
+        return this.sourceParameterName;
+    }
+
+    @Nonnull
+    public final String getTargetChildName() {
+        return this.targetChildName;
+    }
+
+    @Nonnull
+    public final String getTargetParameterName() {
+        return this.targetParameterName;
+    }
+
+    public PassedParameter(@Nonnull String sourceParameterName, @Nonnull String targetChildName, @Nonnull String targetParameterName) {
+        this.sourceParameterName = sourceParameterName;
+        this.targetChildName = targetChildName;
+        this.targetParameterName = targetParameterName;
+    }
+}
