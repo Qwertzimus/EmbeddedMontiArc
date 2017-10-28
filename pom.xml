@@ -456,22 +456,12 @@
                 <version>2.7</version>
                 <configuration>
                     <format>xml</format>
-                    <maxmem>256m</maxmem>
-                    <!-- aggregated reports for multi-module projects -->
-                    <aggregate>true</aggregate>
 		<instrumentation>
                 <excludes>
-                    <exclude>target/**</exclude>
+                    <exclude>**/target/**</exclude>
                 </excludes>
             </instrumentation>
            </configuration>
-	<executions>
-          <execution>
-            <goals>
-              <goal>clean</goal>
-            </goals>
-          </execution>
-        </executions>
 	</plugin>
     </plugins>
   </build>
@@ -491,10 +481,18 @@
 <reporting>
     <plugins>
         <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.7</version>
-        </plugin>
+            <groupId>org.codehaus.mojo</groupId>
+               <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <format>xml</format>
+		<instrumentation>
+                <excludes>
+                    <exclude>**/target/**</exclude>
+                </excludes>
+            </instrumentation>
+           </configuration>
+	</plugin>
     </plugins>
 </reporting>
 </project>
