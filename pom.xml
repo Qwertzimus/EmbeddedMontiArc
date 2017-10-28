@@ -450,7 +450,10 @@
                 <configuration>
                 </configuration>
             </plugin>
-            <plugin>
+    </plugins>
+	<pluginManagement>
+		<plugins>
+			<plugin>
                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.7</version>
@@ -465,7 +468,8 @@
              		</instrumentation>
                 </configuration>
 	</plugin>
-    </plugins>
+		</plugins>
+    </pluginManagement>
   </build>
 
   <distributionManagement>
