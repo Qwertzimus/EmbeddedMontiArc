@@ -460,7 +460,7 @@
                     	<aggregate>true</aggregate>
 			<instrumentation>
                  		<excludes>
-					<exclude>/target/generated-sources/monticore/sourcecode/de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_visitor/CommonEmbeddedMontiArcDelegatorVisitor.java </exclude>
+					<exclude>**/target/generated-sources/monticore/sourcecode/de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_visitor/CommonEmbeddedMontiArcDelegatorVisitor.java </exclude>
                  		</excludes>
              		</instrumentation>
                 </configuration>
