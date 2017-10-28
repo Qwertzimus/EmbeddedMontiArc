@@ -474,13 +474,4 @@
       <url>file://${project.build.directory}/external-dependencies</url>
     </snapshotRepository>
   </distributionManagement>
-	
-<reporting>
-    <plugins>
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>cobertura-maven-plugin</artifactId>
-	</plugin>
-    </plugins>
-</reporting>
 </project>
