@@ -460,7 +460,7 @@
                     	<aggregate>true</aggregate>
 			<instrumentation>
                  		<excludes>
-					<exclude>**/generated-sources/**</exclude>
+					<exclude>/target/generated-sources/monticore/sourcecode/de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_visitor/CommonEmbeddedMontiArcDelegatorVisitor.java </exclude>
                  		</excludes>
              		</instrumentation>
                 </configuration>
@@ -485,14 +485,6 @@
             <groupId>org.codehaus.mojo</groupId>
                <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.7</version>
-                <configuration>
-                	<format>xml</format>
-			<instrumentation>
-                		<excludes>
-                    			<exclude>**/generated-sources/**</exclude>
-                		</excludes>
-            		</instrumentation>
-           	</configuration>
 	</plugin>
     </plugins>
 </reporting>
