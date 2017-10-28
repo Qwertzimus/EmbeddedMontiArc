@@ -456,6 +456,8 @@
                 <version>2.7</version>
                 <configuration>
                 	<format>xml</format>
+			<maxmem>256m</maxmem>
+                    	<aggregate>true</aggregate>
 			<instrumentation>
                 		<excludes>
                     			<exclude>target/generated-sources/**</exclude>
