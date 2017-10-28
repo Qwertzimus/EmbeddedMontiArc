@@ -458,7 +458,7 @@
                     <format>xml</format>
 		<instrumentation>
                 <excludes>
-                    <exclude>**/target/**</exclude>
+                    <exclude>**/target/generated-sources/**</exclude>
                 </excludes>
             </instrumentation>
            </configuration>
@@ -488,7 +488,7 @@
                     <format>xml</format>
 		<instrumentation>
                 <excludes>
-                    <exclude>**/target/**</exclude>
+                    <exclude>**/target/generated-sources/**</exclude>
                 </excludes>
             </instrumentation>
            </configuration>
