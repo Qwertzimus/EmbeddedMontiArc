@@ -127,8 +127,8 @@ public final class ComponentParametersSubstitutionsBuilder extends EmbeddedMonti
     public void visit(ASTSubComponent node) {
         ComponentInstanceSymbol subComp = (ComponentInstanceSymbol) node.getSymbol().get();
         currentChild = subComp;
-        childConfigurationParameters.clear();
-        childConfigurationParameters.addAll(
+        childFormalTypeParameters.clear();
+        childFormalTypeParameters.addAll(
                 subComp.getComponentType()
                         .getReferencedSymbol()
                         .getFormalTypeParameters()
@@ -316,7 +316,7 @@ public final class ComponentParametersSubstitutionsBuilder extends EmbeddedMonti
                 baseType = ScalarStructFieldType.INTEGRAL;
                 break;
         }
-        if (baseType == null && isParentHasConfigurationParameter(typeName)) {
+        if (baseType == null && isParentHasTypeParameter(typeName)) {
             baseType = new FormalTypeParameterFieldType(typeName);
         }
         if (baseType == null) {
@@ -347,6 +347,6 @@ public final class ComponentParametersSubstitutionsBuilder extends EmbeddedMonti
     }
 
     private boolean isParentHasConfigurationParameter(String name) {
-        return formalTypeParametersSubstitutions.getParentFormalTypeParameterNames().contains(name);
+        return configurationParametersSubstitutions.getParentConfigurationParameters().containsKey(name);
     }
 }

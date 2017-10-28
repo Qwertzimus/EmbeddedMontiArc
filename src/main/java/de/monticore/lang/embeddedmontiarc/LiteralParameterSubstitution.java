@@ -36,7 +36,7 @@ public final class LiteralParameterSubstitution<T> {
     }
 
     @Nonnull
-    public final Object getLiteralValue() {
+    public final T getLiteralValue() {
         return this.literalValue;
     }
 
