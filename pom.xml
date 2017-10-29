@@ -458,16 +458,24 @@
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.7</version>
                 <configuration>
-                    	<format>xml</format>
-                    	<maxmem>256m</maxmem>
-                    	<aggregate>true</aggregate>
-			<instrumentation>
-                 		<excludes>
-					<exclude>**/target/generated-sources/monticore/sourcecode/de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_visitor/CommonEmbeddedMontiArcDelegatorVisitor.java </exclude>
-                 		</excludes>
-             		</instrumentation>
+                  <instrumentation>
+                    <excludes>
+                      <exclude>de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_parser/*.class</exclude>
+                      <exclude>de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_visitor/*.class</exclude>
+                      <exclude>de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_od/*.class</exclude>
+                      <exclude>de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_cocos/*.class</exclude>
+                      <exclude>de/monticore/lang/embeddedmontiarc/embeddedmontiarc/_ast/*.class</exclude>
+                    </excludes>
+                  </instrumentation>
                 </configuration>
-	</plugin>
+              <executions>
+                <execution>
+                  <goals>
+                    <goal>clean</goal>
+                  </goals>
+                </execution>
+              </executions>
+	        </plugin>
 		</plugins>
     </pluginManagement>
   </build>
@@ -487,9 +495,15 @@
     <plugins>
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
-               <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.7</version>
-	</plugin>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.7</version>
+            <configuration>
+              <formats>
+                <format>html</format>
+                <format>xml</format>
+              </formats>
+            </configuration>
+	    </plugin>
     </plugins>
 </reporting>
 </project>
