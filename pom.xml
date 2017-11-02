@@ -35,7 +35,6 @@
   <!-- == PROJECT DEPENDENCIES ============================================= -->
 
   <properties>
-    <kotlin.version>1.1.51</kotlin.version>
     <wagon.provider.version>2.6</wagon.provider.version>
     <!-- DSLs -->
     <javadsl.version>4.3.9</javadsl.version>
@@ -48,7 +47,6 @@
     <mc.grammars.assembly.version>0.0.6-SNAPSHOT</mc.grammars.assembly.version>
 	<languages.version>4.0.1-SNAPSHOT</languages.version>
     <SIUnit.version>0.0.6-SNAPSHOT</SIUnit.version>
-    <struct.version>0.0.3-SNAPSHOT</struct.version>
 
     <Common-MontiCar.version>0.0.3-SNAPSHOT</Common-MontiCar.version>
 
@@ -79,20 +77,6 @@
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>de.monticore.lang.monticar</groupId>
-      <artifactId>struct</artifactId>
-      <version>${struct.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>de.monticore.lang.monticar</groupId>
-      <artifactId>struct</artifactId>
-      <version>${struct.version}</version>
-      <classifier>${grammars.classifier}</classifier>
-      <scope>provided</scope>
-    </dependency>
-
     <dependency>
       <groupId>de.se_rwth.commons</groupId>
       <artifactId>se-commons-logging</artifactId>
@@ -234,19 +218,7 @@
       <artifactId>jscience</artifactId>
       <version>${jscience.version}</version>
     </dependency>
-
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-stdlib-jre8</artifactId>
-      <version>${kotlin.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-test-junit</artifactId>
-      <version>${kotlin.version}</version>
-      <scope>test</scope>
-    </dependency>
-
+  
   </dependencies>
 
 
@@ -315,38 +287,6 @@
       </plugin>
 
       <!-- Other Configuration -->
-      <plugin>
-        <artifactId>kotlin-maven-plugin</artifactId>
-        <configuration>
-          <jvmTarget>1.8</jvmTarget>
-        </configuration>
-        <groupId>org.jetbrains.kotlin</groupId>
-        <version>${kotlin.version}</version>
-        <executions>
-          <execution>
-            <id>compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <sourceDirs>
-                <source>src/main/java</source>
-                <source>target/generated-sources/monticore/sourcecode</source>
-                <source>src/main/kotlin</source>
-              </sourceDirs>
-            </configuration>
-          </execution>
-          <execution>
-            <id>test-compile</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>test-compile</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler.plugin}</version>
@@ -468,8 +408,12 @@
              		</instrumentation>
                 </configuration>
 	</plugin>
+<<<<<<< HEAD
 		</plugins>
     </pluginManagement>
+=======
+    </plugins>
+>>>>>>> parent of bb243c3... issue #2 add code to make EMA2Kotlin work
   </build>
 
   <distributionManagement>
