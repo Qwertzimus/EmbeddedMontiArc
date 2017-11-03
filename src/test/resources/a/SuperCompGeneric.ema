@@ -2,6 +2,6 @@ package a;
 
 component SuperCompGeneric<T>{
     port in T percentage[2],
-          out Boolean success;
+          out B success;
 
 }

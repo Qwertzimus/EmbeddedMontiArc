@@ -2,6 +2,6 @@ package a;
 
 component SuperComp{
     port in (1:1:100) percentage[2],
-          out Boolean success;
+          out B success;
 
 }

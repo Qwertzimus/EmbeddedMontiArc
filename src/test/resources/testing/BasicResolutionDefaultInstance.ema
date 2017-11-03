@@ -2,8 +2,8 @@ package testing;
 
 component BasicResolutionDefaultInstance {
 	port
-		in Boolean a1[2],
-		out Boolean out1;
+		in B a1[2],
+		out B out1;
 
 	instance BasicResolution br1;
 

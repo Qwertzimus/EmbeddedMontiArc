@@ -6,22 +6,22 @@ import fas.advancedLibrary.*;
 component CC_On_Off {
 	
 	port
-	    in Boolean ParkingBrake_b,
+	    in B ParkingBrake_b,
 	    in (-oo:d:oo) BrakeForce_pedal_pc,
-	    in Boolean CruiseControl_b,
+	    in B CruiseControl_b,
 	    in (-oo:d:oo) V_Vehicle_kmh,
-		in Boolean Limiter_b,
+		in B Limiter_b,
 		in (-oo:d:oo) LeverUp_Stat,
 		in (-oo:d:oo) LeverDown_Stat,
-		in Boolean FTS_active_b,
-		out Boolean CC_active_b;
+		in B FTS_active_b,
+		out B CC_active_b;
 
-	instance Not<Boolean> not1, not2, not3;
+	instance Not<B> not1, not2, not3;
 	instance Greater<(-oo:d:oo)> greater1, greater2, greater3;
 	instance Less<(-oo:d:oo)> less1;
 	instance And and1, and2;
-	instance Or<Boolean> or1, or2;
-	instance Or<Boolean,4> or3;
+	instance Or<B> or1, or2;
+	instance Or<B,4> or3;
 	instance EdgeRising eRising;
 	instance EdgeFalling eFalling;
 	instance RSFlipFlop flipFlop;

@@ -1,4 +1,4 @@
 package testing;
 component BooleanPortType{
-	port in Boolean sIn;
+	port in B sIn;
 }

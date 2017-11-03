@@ -1,11 +1,11 @@
 package testing;
 import fas.basicLibrary.Max;
 component ConnectorInstancing{
-    ports in Boolean inI1,
-          out Boolean out1;
+    ports in B inI1,
+          out B out1;
 
-    instance Max<Boolean, 5> max1;
-    instance Max<Boolean, 2> max2;
+    instance Max<B, 5> max1;
+    instance Max<B, 2> max2;
 
     connect inI1 -> max1.in1[1];
     connect inI1 -> max2.in1[1];

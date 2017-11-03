@@ -4,11 +4,11 @@ import fas.basicLibrary.*;
 
 component CountDown {
 	port
-		in Boolean E,
-		in Boolean R,
-		in Boolean Enable,
+		in B E,
+		in B R,
+		in B Enable,
 		in (-oo:d:oo) IV,
-		out Boolean y;
+		out B y;
 	
 	instance SwitchB<(-oo:d:oo)> switch_R, switch_C, switch1;
 	instance Memory<(-oo:d:oo)>(0) mem1;

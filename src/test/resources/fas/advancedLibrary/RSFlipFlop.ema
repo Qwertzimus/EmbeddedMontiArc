@@ -4,16 +4,16 @@ import fas.basicLibrary.*;
 
 component RSFlipFlop {
 	port 
-		in Boolean S, // Set
-	    in Boolean R, //Reset
-		out Boolean out_Q,
-		out Boolean Not_Q;
+		in B S, // Set
+	    in B R, //Reset
+		out B out_Q,
+		out B Not_Q;
 	
-	instance Constant<Boolean>(true) oneS;
-	instance Constant<Boolean>(false) zeroR;
-	instance SwitchB<Boolean> switch_R, switch_S;
-	instance Memory<Boolean>(false) memory_Q;
-	instance Not<Boolean> logOp_N;
+	instance Constant<B>(true) oneS;
+	instance Constant<B>(false) zeroR;
+	instance SwitchB<B> switch_R, switch_S;
+	instance Memory<B>(false) memory_Q;
+	instance Not<B> logOp_N;
 	
 	connect S -> switch_S.cond;
 	connect R -> switch_R.cond;

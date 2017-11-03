@@ -4,15 +4,15 @@ import fas.basicLibrary.*;
 
 component EdgeRising {
 	port
-		in Boolean u,
-		in Boolean R,
-		in Boolean IV,
-		out Boolean y;
+		in B u,
+		in B R,
+		in B IV,
+		out B y;
 		
 	instance And and;
-	instance Not<Boolean> not;
-	instance SwitchB<Boolean> switch_R;
-	instance Memory<Boolean>(false) memory_U;
+	instance Not<B> not;
+	instance SwitchB<B> switch_R;
+	instance Memory<B>(false) memory_U;
 	
 	connect u -> and.in1, memory_U.in1;
 	connect IV -> switch_R.in1;

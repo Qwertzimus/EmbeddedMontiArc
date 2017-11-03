@@ -5,7 +5,7 @@ import fas.basicLibrary.*;
 component Limiter_Deactive {
 	port
 		out (-oo:d:oo) VMax_kmh,
-		out Boolean Limiter_active_b;
+		out B Limiter_active_b;
 
 	instance Gain<(-oo:d:oo)> gain;
 	instance And and;

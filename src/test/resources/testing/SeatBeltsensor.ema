@@ -1,8 +1,8 @@
 package testing;
 component SeatBeltsensor{
     ports
-      in Boolean seatBelt,
-      out Boolean indicator;
+      in B seatBelt,
+      out B indicator;
 
     connect seatBelt->indicator;
 

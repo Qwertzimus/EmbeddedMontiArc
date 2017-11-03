@@ -4,16 +4,16 @@ import fas.basicLibrary.*;
 
 component V_SetValuePlusLvl2 {
 	port
-		in Boolean trigger,
-		in Boolean Enable,
+		in B trigger,
+		in B Enable,
 		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
 		in (-oo:d:oo) in1,
 		out (-oo:d:oo) DEMO_FAS_V_CCSetValue_Write;
 	
-	instance Greater<Boolean> greater1, greater2;
-	instance SwitchB<Boolean> switch1, switch2;
-	instance Memory<Boolean>(false) mem1;
-	instance Memory<Boolean>(true) mem2;
+	instance Greater<B> greater1, greater2;
+	instance SwitchB<B> switch1, switch2;
+	instance Memory<B>(false) mem1;
+	instance Memory<B>(true) mem2;
 	instance SwitchB<(-oo:d:oo)> switch3;
 	instance Mod<(-oo:d:oo)> mod1;
 	instance MinusPlus<(-oo:d:oo)> mp1;

@@ -8,7 +8,7 @@ component EmergencyBrake_Function {
 		in (-oo:d:oo) Distance_Object_m,
 		in (-oo:d:oo) V_Obj_rel_ms,
 		out (-oo:d:oo) BrakeForce_Emergency_pc,
-		out Boolean Acusti_warn_b;
+		out B Acusti_warn_b;
 		
 	instance Saturation<(-oo:d:oo)> sat1, sat2, sat3;
 	instance Division<(-oo:d:oo)> div1, div2;

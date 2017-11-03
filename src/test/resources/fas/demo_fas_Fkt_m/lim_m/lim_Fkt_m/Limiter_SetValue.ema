@@ -9,7 +9,7 @@ component Limiter_SetValue {
 		in (-oo:d:oo) LeverUp_stat,
 		in (-oo:d:oo) LeverDown_stat,
 		in (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Read,
-		in Boolean Enabled_Cond,
+		in B Enabled_Cond,
 		out (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Write;
 
 	instance Greater<(-oo:d:oo)> greater1, greater2;

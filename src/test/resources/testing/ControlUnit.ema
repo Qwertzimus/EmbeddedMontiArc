@@ -2,11 +2,11 @@
 package testing;
 component ControlUnit{
     ports
-        in Boolean lightsIn[50],
+        in B lightsIn[50],
         // could be transformed into
-        // in Boolean lightsIn1,lightsIn2,...,lightsIn50;
-        out Boolean lightsOut[50];
-        //could be transformed into out Boolean lightsOut1,lightsOut2,...,lightsOut50;
+        // in B lightsIn1,lightsIn2,...,lightsIn50;
+        out B lightsOut[50];
+        //could be transformed into out B lightsOut1,lightsOut2,...,lightsOut50;
     instance LightControlSwitch lightControlSwitch[10];
     //is equivalent to
     // component LightControlSwitch lightControlSwitch1;

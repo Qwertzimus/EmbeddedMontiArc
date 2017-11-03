@@ -6,7 +6,7 @@ component Limiter_Active {
 	port
 		in (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Read,
 		out (-oo:d:oo) VMax_kmh,
-		out Boolean Limiter_active_b;
+		out B Limiter_active_b;
 
 	instance Gain<(-oo:d:oo)> gain;
 	instance And and;

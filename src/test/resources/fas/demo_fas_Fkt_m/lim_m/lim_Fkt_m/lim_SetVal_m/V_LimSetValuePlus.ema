@@ -5,14 +5,14 @@ import fas.basicLibrary.*;
 component V_LimSetValuePlus {
 	port
 		in (-oo:d:oo) V_LimiterSetValue,
-		in Boolean trigger,
+		in B trigger,
 		in (-oo:d:oo) in1,
 		out (-oo:d:oo) out1;
 
 	instance Sum<(-oo:d:oo)> sum1;
-	instance Memory<Boolean>(false) mem1;
-	instance Memory<Boolean>(true) mem2;
-	instance Greater<Boolean> greater1, greater2;
+	instance Memory<B>(false) mem1;
+	instance Memory<B>(true) mem2;
+	instance Greater<B> greater1, greater2;
 	instance SwitchB<(-oo:d:oo)> switch1;
 
 	connect trigger -> greater1.in1, mem1.in1;
