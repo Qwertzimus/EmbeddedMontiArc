@@ -97,25 +97,12 @@ public class TypesPrinter {
         if (type instanceof ASTPrintType) {
             return ((ASTPrintType) type).printType();
         }else if(type instanceof ASTElementType){
-            ASTElementType elementType = (ASTElementType) type;
-            if (elementType.isIsBoolean()) {
-                return "scalar.B";
-            }
-            if (elementType.isIsComplex()) {
-                return "scalar.C";
-            }
-            if (elementType.isIsRational()) {
-                return "scalar.Q";
-            }
-            if (elementType.isIsWholeNumberNumber()) {
-                return "scalar.Z";
-            }
             return "ElementType";
         }
 
         Log.info(type.toString(),"Type:");
-        Log.warn("Type can not be handled!");
-        return "java.lang.Object";
+        Log.error("Type can not be handled!");
+        return "";
     }
 
     public static String printTypeParameters(ASTTypeParameters params) {

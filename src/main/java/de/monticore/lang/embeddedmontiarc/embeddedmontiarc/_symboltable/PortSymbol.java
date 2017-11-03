@@ -23,7 +23,6 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
 import de.monticore.lang.monticar.stream._symboltable.NamedStreamSymbol;
 import de.monticore.lang.montiarc.tagging._symboltable.TaggingSymbol;
-import de.monticore.lang.monticar.struct.model.type.StructFieldTypeInfo;
 import de.monticore.symboltable.CommonScope;
 import de.monticore.symboltable.MutableScope;
 import de.monticore.symboltable.SymbolKind;
@@ -54,11 +53,6 @@ public class PortSymbol extends TaggingSymbol implements ElementInstance {
     private boolean incoming;
 
     private JTypeReference<? extends JTypeSymbol> typeReference;
-
-    /**
-     * Structs do not use JTypeReference but StructFieldTypeInfo.
-     */
-    private StructFieldTypeInfo typeInfo;
 
     private MutableScope locallyDefinedStreams = new CommonScope();
 
@@ -112,14 +106,6 @@ public class PortSymbol extends TaggingSymbol implements ElementInstance {
      */
     public void setTypeReference(JTypeReference<? extends JTypeSymbol> typeReference) {
         this.typeReference = typeReference;
-    }
-
-    public StructFieldTypeInfo getTypeInfo() {
-        return typeInfo;
-    }
-
-    public void setTypeInfo(StructFieldTypeInfo typeInfo) {
-        this.typeInfo = typeInfo;
     }
 
     /**
