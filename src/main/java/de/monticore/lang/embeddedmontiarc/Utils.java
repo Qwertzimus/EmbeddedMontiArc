@@ -34,7 +34,9 @@ public final class Utils {
                 "RangesType",
                 "RangeType",
                 "UnitNumberResolution",
-                "UnitNumberTypeArgument"
+                "UnitNumberTypeArgument",
+                "AssignmentType",
+                "CommonMatrixType"
         };
         for (String typeName : builtInTypes) {
             JavaTypeSymbol s = new JavaTypeSymbol(typeName);
