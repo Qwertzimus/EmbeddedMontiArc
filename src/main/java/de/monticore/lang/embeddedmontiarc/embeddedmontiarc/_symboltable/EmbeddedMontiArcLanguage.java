@@ -22,6 +22,7 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import com.google.common.collect.ImmutableSet;
 import de.monticore.ast.ASTNode;
+import de.monticore.java.symboltable.JavaTypeSymbol;
 import de.monticore.lang.montiarc.tagging._symboltable.TagSymbol;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.types2._symboltable.UnitNumberResolutionSymbol;
@@ -71,6 +72,7 @@ public class EmbeddedMontiArcLanguage extends EmbeddedMontiArcLanguageTOP implem
         addResolvingFilter(CommonResolvingFilter.create(UnitNumberResolutionSymbol.KIND));
         //addResolvingFilter(CommonResolvingFilter.create(ComponentKind.KIND));
         //addResolvingFilter(CommonResolvingFilter.create(TagSymbol.KIND));
+        addResolvingFilter(new CommonResolvingFilter<>(JavaTypeSymbol.KIND));
         setModelNameCalculator(new EmbeddedMontiArcModelNameCalculator());
     }
 

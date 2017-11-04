@@ -20,33 +20,26 @@
  */
 package de.monticore.lang.embeddedmontiarc;
 
-import de.monticore.ModelingLanguageFamily;
-import de.monticore.io.paths.ModelPath;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.EmbeddedMontiArcLanguage;
-import de.monticore.lang.monticar.stream._symboltable.StreamLanguage;
-import de.monticore.symboltable.GlobalScope;
-import de.monticore.symboltable.Scope;
+import de.monticore.java.symboltable.JavaTypeSymbol;
+import de.monticore.symboltable.MutableScope;
 
-import java.nio.file.Paths;
+public final class Utils {
 
-/**
- * Common methods for symboltable tests
- *
- */
-public class AbstractSymtabTest {
-  protected static Scope createSymTab(String... modelPath) {
-    ModelingLanguageFamily fam = new ModelingLanguageFamily();
-    fam.addModelingLanguage(new EmbeddedMontiArcLanguage());
-    fam.addModelingLanguage(new StreamLanguage());
-    final ModelPath mp = new ModelPath();
-    for (String m : modelPath) {
-      mp.addEntry(Paths.get(m));
+    private Utils() {
     }
-    GlobalScope scope = new GlobalScope(mp, fam);
 
-    Utils.addBuiltInTypes(scope);
-
-    LogConfig.init();//TODO comment for logger output
-    return scope;
-  }
+    public static void addBuiltInTypes(MutableScope scope) {
+        String[] builtInTypes = new String[]{
+                "ElementType",
+                "RangesType",
+                "RangeType",
+                "UnitNumberResolution",
+                "UnitNumberTypeArgument"
+        };
+        for (String typeName : builtInTypes) {
+            JavaTypeSymbol s = new JavaTypeSymbol(typeName);
+            s.setPackageName("java.lang");
+            scope.add(s);
+        }
+    }
 }
