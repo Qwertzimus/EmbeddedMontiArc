@@ -109,7 +109,7 @@ public class ConstantPortSymbol extends PortSymbol {
         } else if (node.getBoolLiteral().isPresent()) {
             constantPortSymbol.initConstantPortSymbol(node.getBoolLiteral().get());
             String typeName;
-            typeName = "Boolean";
+            typeName = "B";
             constantPortSymbol.setTypeReference(symbolTableCreator.initTypeRefGeneralType(typeName));
         } else {
             Log.info("Case not handled", "ConstantPortInit");

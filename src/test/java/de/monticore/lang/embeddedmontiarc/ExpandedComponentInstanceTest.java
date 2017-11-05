@@ -98,7 +98,7 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
         assertEquals("RangeType", inst2.getSubComponent("sgc").get().getPort("tIn").get().getTypeReference().getName());
         assertEquals("RangeType", inst2.getSubComponent("sgc").get().getPort("tOut").get().getTypeReference().getName());
 
-        assertEquals("ElementType", inst2.getSubComponent("sgc2").get().getPort("tIn").get().getTypeReference().getName());
+        assertEquals("B", inst2.getSubComponent("sgc2").get().getPort("tIn").get().getTypeReference().getName());
         assertEquals("RangeType", inst2.getSubComponent("sgc2").get().getPort("tOut").get().getTypeReference().getName());
     }
 

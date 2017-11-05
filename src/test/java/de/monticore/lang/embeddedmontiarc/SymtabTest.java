@@ -282,7 +282,7 @@ public class SymtabTest extends AbstractSymtabTest {
         assertEquals(1, cs.getAllOutgoingPorts().size());
         PortSymbol port1 = cs.getOutgoingPort("steering").orElse(null);
         assertNotNull(port1);
-        assertEquals("ElementType", port1.getTypeReference().getName());
+        assertEquals("B", port1.getTypeReference().getName());
 
         Log.debug(port1.getTypeReference().getReferencedSymbol().toString() + "", "TypeReference");
 
@@ -373,22 +373,22 @@ public class SymtabTest extends AbstractSymtabTest {
         for (int i = 1; i <= 5; ++i) {
             PortSymbol port = cs.getIncomingPort("lightsIn[" + i + "]").orElse(null);
             assertEquals(true, port != null);
-            assertEquals("ElementType", port.getTypeReference().getName());
+            assertEquals("B", port.getTypeReference().getName());
         }
         assertEquals(5, cs.getAllOutgoingPorts().size());
         for (int i = 1; i <= 5; ++i) {
             PortSymbol port = cs.getOutgoingPort("lightsOut[" + i + "]").orElse(null);
             assertEquals(true, port != null);
-            assertEquals("ElementType", port.getTypeReference().getName());
+            assertEquals("B", port.getTypeReference().getName());
         }
         assertEquals(5, cs.getConnectors().size());
         for (int i = 1; i <= 5; ++i) {
             ConnectorSymbol con = cs.getConnector("lightsOut[" + i + "]").orElse(null);
             assertEquals(true, con != null);
             assertEquals("lightsIn[" + i + "]", con.getSourcePort().getName());
-            assertEquals("ElementType", con.getSourcePort().getTypeReference().getName());
+            assertEquals("B", con.getSourcePort().getTypeReference().getName());
             assertEquals("lightsOut[" + i + "]", con.getTargetPort().getName());
-            assertEquals("ElementType", con.getTargetPort().getTypeReference().getName());
+            assertEquals("B", con.getTargetPort().getTypeReference().getName());
         }
     }
 
@@ -440,14 +440,14 @@ public class SymtabTest extends AbstractSymtabTest {
         assertNotNull("PortSymbol source is null", source);
         assertTrue("PortSymbol source is notIncoming", source.isIncoming());
         assertEquals("PortSymbol source name is not correct", source.getName(), "lightsIn[1]");
-        assertEquals("PortSymbol sourceType is not correct", source.getTypeReference().getName(), "ElementType");
+        assertEquals("PortSymbol sourceType is not correct", source.getTypeReference().getName(), "B");
         assertEquals("PortSymbol connector is not correct", source.getComponent().get(), cs);
 
         PortSymbol target = conn.getTargetPort();
         assertNotNull("target is null", target);
         assertTrue("target is not incoming", target.isIncoming());
         assertEquals("target name is not correct", target.getName(), "lightsIn[1]");
-        assertEquals("target type is not Boolean", target.getTypeReference().getName(), "ElementType");
+        assertEquals("target type is not Boolean", target.getTypeReference().getName(), "B");
         assertEquals("testing.LightControlSwitch", target.getComponent().get().getFullName());
     }
 
@@ -480,14 +480,14 @@ public class SymtabTest extends AbstractSymtabTest {
         assertNotNull("PortSymbol source is null", source);
         assertTrue("PortSymbol source is notIncoming", source.isIncoming());
         assertEquals("PortSymbol source name is not correct", source.getName(), "sIn[1]");
-        assertEquals("PortSymbol sourceType is not correct", source.getTypeReference().getName(), "ElementType");
+        assertEquals("PortSymbol sourceType is not correct", source.getTypeReference().getName(), "B");
         assertEquals("PortSymbol connector is not correct", source.getComponent().get(), cs);
 
         PortSymbol target = conn.getTargetPort();
         assertNotNull("target is null", target);
         assertTrue("target is not outcoming", target.isOutgoing());
         assertEquals("target name is not correct", target.getName(), "sOut[2]");
-        assertEquals("target type is not Boolean", target.getTypeReference().getName(), "ElementType");
+        assertEquals("target type is not Boolean", target.getTypeReference().getName(), "B");
         assertEquals("testing.ConnectorArraymn", target.getComponent().get().getFullName());
 
         conn = (ConnectorSymbol) iter.next();
@@ -497,14 +497,14 @@ public class SymtabTest extends AbstractSymtabTest {
         assertNotNull("PortSymbol source is null", source);
         assertTrue("PortSymbol source is notIncoming", source.isIncoming());
         assertEquals("PortSymbol source name is not correct2", source.getName(), "sIn[2]");
-        assertEquals("PortSymbol sourceType is not correct", source.getTypeReference().getName(), "ElementType");
+        assertEquals("PortSymbol sourceType is not correct", source.getTypeReference().getName(), "B");
         assertEquals("PortSymbol connector is not correct", source.getComponent().get(), cs);
 
         target = conn.getTargetPort();
         assertNotNull("target is null", target);
         assertTrue("target is not outcoming", target.isOutgoing());
         assertEquals("target name is not correct3", target.getName(), "sOut[3]");
-        assertEquals("target type is not Boolean", target.getTypeReference().getName(), "ElementType");
+        assertEquals("target type is not Boolean", target.getTypeReference().getName(), "B");
         assertEquals("testing.ConnectorArraymn", target.getComponent().get().getFullName());
 
 
@@ -515,14 +515,14 @@ public class SymtabTest extends AbstractSymtabTest {
         assertNotNull("PortSymbol source is null", source);
         assertTrue("PortSymbol source is notIncoming", source.isIncoming());
         assertEquals("PortSymbol source name is not correct4", source.getName(), "sIn[3]");
-        assertEquals("PortSymbol sourceType is not correct", source.getTypeReference().getName(), "ElementType");
+        assertEquals("PortSymbol sourceType is not correct", source.getTypeReference().getName(), "B");
         assertEquals("PortSymbol connector is not correct", source.getComponent().get(), cs);
 
         target = conn.getTargetPort();
         assertNotNull("target is null", target);
         assertTrue("target is not outcoming", target.isOutgoing());
         assertEquals("target name is not correct5", target.getName(), "sOut[4]");
-        assertEquals("target type is not Boolean", target.getTypeReference().getName(), "ElementType");
+        assertEquals("target type is not Boolean", target.getTypeReference().getName(), "B");
         assertEquals("testing.ConnectorArraymn", target.getComponent().get().getFullName());
     }
 

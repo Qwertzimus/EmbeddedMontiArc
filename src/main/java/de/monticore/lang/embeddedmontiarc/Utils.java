@@ -30,7 +30,10 @@ public final class Utils {
 
     public static void addBuiltInTypes(MutableScope scope) {
         String[] builtInTypes = new String[]{
-                "ElementType",
+                "Q",
+                "B",
+                "C",
+                "Z",
                 "RangesType",
                 "RangeType",
                 "UnitNumberResolution",
