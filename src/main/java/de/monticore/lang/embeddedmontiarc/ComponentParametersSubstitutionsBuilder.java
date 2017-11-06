@@ -39,14 +39,14 @@ import de.monticore.lang.monticar.struct.model.type.ScalarStructFieldType;
 import de.monticore.lang.monticar.struct.model.type.StructFieldTypeInfo;
 import de.monticore.lang.monticar.struct.model.type.StructReferenceFieldType;
 import de.monticore.lang.monticar.struct.model.type.VectorStructFieldType;
+import de.monticore.lang.monticar.ts.MCFieldSymbol;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.monticore.lang.monticar.types2._ast.ASTType;
 import de.monticore.lang.monticar.types2._ast.ASTTypeArguments;
 import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
 import de.monticore.symboltable.Scope;
 import de.monticore.symboltable.Symbol;
-import de.monticore.symboltable.types.JFieldSymbol;
-import de.monticore.symboltable.types.JTypeSymbol;
-import de.monticore.symboltable.types.references.JTypeReference;
 import de.se_rwth.commons.logging.Log;
 
 import javax.annotation.Nonnull;
@@ -133,7 +133,7 @@ public final class ComponentParametersSubstitutionsBuilder extends EmbeddedMonti
                         .getReferencedSymbol()
                         .getFormalTypeParameters()
                         .stream()
-                        .map(JTypeSymbol::getName)
+                        .map(MCTypeSymbol::getName)
                         .collect(Collectors.toList())
         );
         childConfigurationParameters.clear();
@@ -142,7 +142,7 @@ public final class ComponentParametersSubstitutionsBuilder extends EmbeddedMonti
                         .getReferencedSymbol()
                         .getConfigParameters()
                         .stream()
-                        .map(JFieldSymbol::getName)
+                        .map(MCFieldSymbol::getName)
                         .collect(Collectors.toList())
         );
         List<ASTExpression> astArguments = node.getArguments();
@@ -296,7 +296,7 @@ public final class ComponentParametersSubstitutionsBuilder extends EmbeddedMonti
         literalParams.add(p);
     }
 
-    private StructFieldTypeInfo tryConvertToStructFieldTypeInfo(JTypeReference<?> type) {
+    private StructFieldTypeInfo tryConvertToStructFieldTypeInfo(MCTypeReference<?> type) {
         if (type == null || type.getName() == null) {
             return null;
         }

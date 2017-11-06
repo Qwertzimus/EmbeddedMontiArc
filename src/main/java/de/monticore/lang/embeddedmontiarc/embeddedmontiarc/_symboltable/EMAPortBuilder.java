@@ -20,18 +20,18 @@
  */
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
-import java.util.Optional;
-
 import de.monticore.ast.ASTNode;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.unit.constant.EMAConstantValue;
-import de.monticore.symboltable.types.references.JTypeReference;
+import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.se_rwth.commons.logging.Log;
+
+import java.util.Optional;
 
 
 public class EMAPortBuilder {
     protected Optional<Boolean> incoming = Optional.empty();
     protected Optional<String> name = Optional.empty();
-    protected Optional<JTypeReference> typeReference = Optional.empty();
+    protected Optional<MCTypeReference> typeReference = Optional.empty();
     protected Optional<EMAConstantValue> constantValue = Optional.empty();
     protected Optional<ASTNode> astNode = Optional.empty();
 
@@ -65,7 +65,7 @@ public class EMAPortBuilder {
         return this;
     }
 
-    public EMAPortBuilder setTypeReference(JTypeReference typeReference) {
+    public EMAPortBuilder setTypeReference(MCTypeReference typeReference) {
         this.typeReference = Optional.of(typeReference);
         return this;
     }

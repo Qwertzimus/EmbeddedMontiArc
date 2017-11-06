@@ -29,16 +29,21 @@ import de.monticore.lang.montiarc.tagging._symboltable.TaggingScopeSpanningSymbo
 import de.monticore.lang.monticar.common2._ast.ASTParameter;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
+import de.monticore.lang.monticar.ts.MCFieldSymbol;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
 import de.monticore.symboltable.ImportStatement;
 import de.monticore.symboltable.SymbolKind;
 import de.monticore.symboltable.modifiers.AccessModifier;
-import de.monticore.symboltable.types.JFieldSymbol;
-import de.monticore.symboltable.types.JTypeSymbol;
 import de.monticore.symboltable.types.references.ActualTypeArgument;
 import de.se_rwth.commons.logging.Log;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -94,7 +99,7 @@ public class ComponentSymbol extends TaggingScopeSpanningSymbol {
     /**
      * @param parameterType configuration parameter to add
      */
-    public void addConfigParameter(JFieldSymbol parameterType) {
+    public void addConfigParameter(MCFieldSymbol parameterType) {
         if (referencedComponent.isPresent())
             referencedComponent.get().addConfigParameter(parameterType);
         else {
@@ -247,7 +252,7 @@ public class ComponentSymbol extends TaggingScopeSpanningSymbol {
     /**
      * @param typeParameter generic type parameter to add
      */
-    public void addFormalTypeParameter(JTypeSymbol formalTypeParameter) {
+    public void addFormalTypeParameter(MCTypeSymbol formalTypeParameter) {
         if (referencedComponent.isPresent()) {
             referencedComponent.get().addFormalTypeParameter(formalTypeParameter);
         } else {
@@ -256,10 +261,10 @@ public class ComponentSymbol extends TaggingScopeSpanningSymbol {
         }
     }
 
-    public List<JTypeSymbol> getFormalTypeParameters() {
-        final Collection<JTypeSymbol> resolvedTypes =
-                referencedComponent.orElse(this).getSpannedScope().resolveLocally(JTypeSymbol.KIND);
-        return resolvedTypes.stream().filter(JTypeSymbol::isFormalTypeParameter)
+    public List<MCTypeSymbol> getFormalTypeParameters() {
+        final Collection<MCTypeSymbol> resolvedTypes =
+                referencedComponent.orElse(this).getSpannedScope().resolveLocally(MCTypeSymbol.KIND);
+        return resolvedTypes.stream().filter(MCTypeSymbol::isFormalTypeParameter)
                 .collect(Collectors.toList());
     }
 
@@ -512,14 +517,14 @@ public class ComponentSymbol extends TaggingScopeSpanningSymbol {
     /**
      * @return configParameters
      */
-    public List<JFieldSymbol> getConfigParameters() {
+    public List<MCFieldSymbol> getConfigParameters() {
         if (referencedComponent.isPresent()) {
             return referencedComponent.get().getConfigParameters();
         } else {
-            final Collection<JFieldSymbol> resolvedAttributes = getMutableSpannedScope()
-                    .resolveLocally(JFieldSymbol.KIND);
-            final List<JFieldSymbol> parameters = sortSymbolsByPosition(resolvedAttributes.stream()
-                    .filter(JFieldSymbol::isParameter).collect(Collectors.toList()));
+            final Collection<MCFieldSymbol> resolvedAttributes = getMutableSpannedScope()
+                    .resolveLocally(MCFieldSymbol.KIND);
+            final List<MCFieldSymbol> parameters = sortSymbolsByPosition(resolvedAttributes.stream()
+                    .filter(MCFieldSymbol::isParameter).collect(Collectors.toList()));
             return parameters;
         }
     }
@@ -528,7 +533,7 @@ public class ComponentSymbol extends TaggingScopeSpanningSymbol {
      * @return List of configuration parameters that are to be set during instantiation with the given
      * visibility
      */
-    public Collection<JFieldSymbol> getConfigParameters(AccessModifier visibility) {
+    public Collection<MCFieldSymbol> getConfigParameters(AccessModifier visibility) {
         // no need to check for reference, as getParameres() does so.
         return getConfigParameters().stream()
                 .filter(s -> s.getAccessModifier().includes(visibility))

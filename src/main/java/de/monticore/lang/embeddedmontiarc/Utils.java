@@ -20,7 +20,7 @@
  */
 package de.monticore.lang.embeddedmontiarc;
 
-import de.monticore.java.symboltable.JavaTypeSymbol;
+import de.monticore.lang.monticar.ts.MontiCarTypeSymbol;
 import de.monticore.symboltable.MutableScope;
 
 public final class Utils {
@@ -42,7 +42,7 @@ public final class Utils {
                 "CommonMatrixType"
         };
         for (String typeName : builtInTypes) {
-            JavaTypeSymbol s = new JavaTypeSymbol(typeName);
+            MontiCarTypeSymbol s = new MontiCarTypeSymbol(typeName);
             s.setPackageName("java.lang");
             scope.add(s);
         }

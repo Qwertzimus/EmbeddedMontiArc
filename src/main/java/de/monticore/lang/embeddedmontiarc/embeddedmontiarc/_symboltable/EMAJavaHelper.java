@@ -20,20 +20,24 @@
  */
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
-import de.monticore.java.symboltable.JavaSymbolFactory;
-import de.monticore.java.symboltable.JavaTypeSymbol;
-import de.monticore.java.symboltable.JavaTypeSymbolReference;
-import de.monticore.lang.monticar.resolution._ast.ASTResolutionDeclaration;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.TypesPrinter;
 import de.monticore.lang.monticar.resolution._ast.ASTTypeArgument;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.lang.monticar.ts.MontiCarSymbolFactory;
+import de.monticore.lang.monticar.ts.MontiCarTypeSymbol;
+import de.monticore.lang.monticar.ts.references.MontiCarTypeSymbolReference;
+import de.monticore.lang.monticar.types2._ast.ASTComplexArrayType;
+import de.monticore.lang.monticar.types2._ast.ASTComplexReferenceType;
+import de.monticore.lang.monticar.types2._ast.ASTNamingResolution;
+import de.monticore.lang.monticar.types2._ast.ASTSimpleReferenceType;
+import de.monticore.lang.monticar.types2._ast.ASTType;
+import de.monticore.lang.monticar.types2._ast.ASTTypeParameters;
+import de.monticore.lang.monticar.types2._ast.ASTTypeVariableDeclaration;
+import de.monticore.lang.monticar.types2._ast.ASTWildcardType;
 import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.ImportStatement;
 import de.monticore.symboltable.Scope;
-import de.monticore.symboltable.types.JTypeSymbol;
 import de.monticore.symboltable.types.references.ActualTypeArgument;
-//import de.monticore.types.TypesPrinter;
-//import de.monticore.types.types._ast.*;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.TypesPrinter;
-import de.monticore.lang.monticar.types2._ast.*;
 import de.se_rwth.commons.logging.Log;
 
 import javax.annotation.Nullable;
@@ -48,10 +52,10 @@ import java.util.stream.Collectors;
  * @author Robert Heim
  */
 public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symboltable.JavaHelper {
-    private final static JavaSymbolFactory jSymbolFactory = new JavaSymbolFactory();
+    private final static MontiCarSymbolFactory jSymbolFactory = new MontiCarSymbolFactory();
 
     /**
-     * Adds the TypeParameters to the JavaTypeSymbol if the class or interface declares TypeVariables.
+     * Adds the TypeParameters to the MontiCarTypeSymbol if the class or interface declares TypeVariables.
      * Example:
      * <p>
      * class Bla<T, S extends SomeClass<T> & SomeInterface>
@@ -60,11 +64,11 @@ public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symbolta
      *
      * @param typeSymbol
      * @param optionalTypeParameters
-     * @return JavaTypeSymbol list to be added to the scope
+     * @return MontiCarTypeSymbol list to be added to the scope
      */
     // TODO see JavaSymbolTableCreator.addTypeParameters(...),
     // see ComponentSymbol addFormalTypeParameters etc.
-    protected static List<JTypeSymbol> addTypeParametersToType(
+    protected static List<MCTypeSymbol> addTypeParametersToType(
             ComponentSymbol typeSymbol,
             Optional<ASTTypeParameters> optionalTypeParameters, Scope currentScope) {
         if (optionalTypeParameters.isPresent()) {
@@ -76,7 +80,7 @@ public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symbolta
                     // new type parameter
 
                     // TypeParameters/TypeVariables are seen as type declarations.
-                    // For each variable instantiate a JavaTypeSymbol.
+                    // For each variable instantiate a MontiCarTypeSymbol.
                     //TODO FIX if not present
                     if (astTypeParameter.getResolutionDeclaration().get().getTypeName() != null) {
                         final String typeVariableName = astTypeParameter.getResolutionDeclaration().get().getTypeName();
@@ -100,7 +104,7 @@ public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symbolta
     }
 
     private static void addFormalTypeParameter(String typeVariableName, ASTTypeVariableDeclaration astTypeParameter, Scope currentScope, ComponentSymbol typeSymbol) {
-        JavaTypeSymbol javaTypeVariableSymbol = jSymbolFactory.createTypeVariable(typeVariableName);
+        MontiCarTypeSymbol javaTypeVariableSymbol = jSymbolFactory.createTypeVariable(typeVariableName);
         // TODO implement
         // // init type parameter
         // if (astTypeParameter.getTypeBound().isPresent()) {
@@ -120,7 +124,7 @@ public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symbolta
     }
 
     /**
-     * Adds the given ASTTypes as interfaces to the JavaTypeSymbol. The JavaTypeSymbol can be a type
+     * Adds the given ASTTypes as interfaces to the MontiCarTypeSymbol. The MontiCarTypeSymbol can be a type
      * variable. Interfaces may follow after the first extended Type. We treat the first Type also as
      * interface even though it may be a class.
      * <p>
@@ -133,10 +137,10 @@ public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symbolta
      */
     // TODO this is implemented in JavaDSL, but reimplemented because of ArcTypeSymbol. This should
     // somehow be extracted and implemented only once
-    protected static void addInterfacesToTypeEMA(JavaTypeSymbol arcTypeSymbol,
+    protected static void addInterfacesToTypeEMA(MontiCarTypeSymbol arcTypeSymbol,
                                                  List<ASTType> astInterfaceTypeList, Scope currentScope) {
         for (ASTType astInterfaceType : astInterfaceTypeList) {
-            JavaTypeSymbolReference javaInterfaceTypeSymbolReference = new JavaTypeSymbolReference(
+            MontiCarTypeSymbolReference javaInterfaceTypeSymbolReference = new MontiCarTypeSymbolReference(
                     TypesPrinter.printTypeWithoutTypeArgumentsAndDimension(astInterfaceType), currentScope,
                     0);
             List<ActualTypeArgument> actualTypeArguments = new ArrayList<>();
@@ -150,8 +154,8 @@ public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symbolta
                 ASTComplexReferenceType astComplexReferenceType = (ASTComplexReferenceType) astInterfaceType;
                 for (ASTSimpleReferenceType astSimpleReferenceType : astComplexReferenceType
                         .getSimpleReferenceTypes()) {
-                    // TODO javaInterfaceTypeSymbolReference.getEnclosingScope().resolve("Boolean", JTypeSymbol.KIND).get()
-                    //    javaInterfaceTypeSymbolReference.getEnclosingScope().resolve("Boolean", JTypeSymbol.KIND))
+                    // TODO javaInterfaceTypeSymbolReference.getEnclosingScope().resolve("Boolean", MCTypeSymbol.KIND).get()
+                    //    javaInterfaceTypeSymbolReference.getEnclosingScope().resolve("Boolean", MCTypeSymbol.KIND))
                     if (astSimpleReferenceType.getTypeArguments().isPresent()) {
                         for (ASTTypeArgument argument : astSimpleReferenceType.getTypeArguments().get().getTypeArguments()) {
 
@@ -183,10 +187,10 @@ public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symbolta
         if (argument instanceof ASTSimpleReferenceType) {
             ASTSimpleReferenceType simpleArg = (ASTSimpleReferenceType) argument;
             String name = simpleArg.getNames().stream().collect(Collectors.joining("."));
-            Optional<JTypeSymbol> symbol = symbolTable.resolve(name, JTypeSymbol.KIND);
+            Optional<MCTypeSymbol> symbol = symbolTable.resolve(name, MCTypeSymbol.KIND);
             if (symbol.isPresent() && symbol.get().getEnclosingScope() != null) {
                 if (typeArgument == null) {
-                    typeArgument = new ActualTypeArgumentASTElement(isLowerBound, isUpperBound, new JavaTypeSymbolReference(
+                    typeArgument = new ActualTypeArgumentASTElement(isLowerBound, isUpperBound, new MontiCarTypeSymbolReference(
                             symbol.get().getName(),
                             symbol.get().getEnclosingScope(), dim)).setAstTypeArguments(argument);
 

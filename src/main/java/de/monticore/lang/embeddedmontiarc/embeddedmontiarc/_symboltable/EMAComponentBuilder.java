@@ -25,8 +25,8 @@ import de.monticore.symboltable.MutableScope;
 import de.monticore.symboltable.Symbol;
 import de.monticore.symboltable.resolving.CommonResolvingFilter;
 import de.monticore.symboltable.resolving.ResolvingFilter;
-import de.monticore.symboltable.types.JFieldSymbol;
-import de.monticore.symboltable.types.JTypeSymbol;
+import de.monticore.lang.monticar.ts.MCFieldSymbol;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.Collection;
@@ -63,11 +63,11 @@ public class EMAComponentBuilder extends de.monticore.lang.montiarc.montiarc._sy
     private static final ResolvingFilter<ComponentSymbol> componentResolvingFilter =
             CommonResolvingFilter.create(ComponentSymbol.KIND);
 
-    private static final ResolvingFilter<JTypeSymbol> jTypeSymbolResolvingGilter =
-            CommonResolvingFilter.create(JTypeSymbol.KIND);
+    private static final ResolvingFilter<MCTypeSymbol> jTypeSymbolResolvingGilter =
+            CommonResolvingFilter.create(MCTypeSymbol.KIND);
 
-    private static final ResolvingFilter<JFieldSymbol> jAttributeResolvingFilter =
-            CommonResolvingFilter.create(JFieldSymbol.KIND);
+    private static final ResolvingFilter<MCFieldSymbol> jAttributeResolvingFilter =
+            CommonResolvingFilter.create(MCFieldSymbol.KIND);
 
     private static final ResolvingFilter<ComponentInstanceSymbol> componentInstanceResolvingFilter =
             CommonResolvingFilter.create(ComponentInstanceSymbol.KIND);
@@ -189,76 +189,76 @@ public class EMAComponentBuilder extends de.monticore.lang.montiarc.montiarc._sy
 
     ////////////////////////// formal type parameters //////////////////////////////////////////////
 
-    public static EMAComponentBuilder addFormalTypeParameter(ComponentSymbol cs, JTypeSymbol formalTypeParameter) {
+    public static EMAComponentBuilder addFormalTypeParameter(ComponentSymbol cs, MCTypeSymbol formalTypeParameter) {
         if (!formalTypeParameter.isFormalTypeParameter()) {
-            Log.error(String.format("%s is not a formal type parameter. JTypeSymbol#isFormalTypeParameter() is false.",
+            Log.error(String.format("%s is not a formal type parameter. MCTypeSymbol#isFormalTypeParameter() is false.",
                     SymbolPrinter.printFormalTypeParameters(formalTypeParameter)));
         }
         addResolverIfMissing(cs, jTypeSymbolResolvingGilter, formalTypeParameter);
         return getInstance();
     }
 
-    public static EMAComponentBuilder addFormalTypeParameters(ComponentSymbol cs, JTypeSymbol... formalTypeParameter) {
-        for (JTypeSymbol f : formalTypeParameter) {
+    public static EMAComponentBuilder addFormalTypeParameters(ComponentSymbol cs, MCTypeSymbol... formalTypeParameter) {
+        for (MCTypeSymbol f : formalTypeParameter) {
             addFormalTypeParameter(cs, f);
         }
         return getInstance();
     }
 
-    public static EMAComponentBuilder addFormalTypeParameters(ComponentSymbol cs, Collection<JTypeSymbol> formalTypeParameter) {
+    public static EMAComponentBuilder addFormalTypeParameters(ComponentSymbol cs, Collection<MCTypeSymbol> formalTypeParameter) {
         formalTypeParameter.stream().forEachOrdered(f -> addFormalTypeParameter(cs, f));
         return getInstance();
     }
 
-    public static EMAComponentBuilder removeFormalTypeParameter(ComponentSymbol cs, JTypeSymbol formalTypeParameter) {
+    public static EMAComponentBuilder removeFormalTypeParameter(ComponentSymbol cs, MCTypeSymbol formalTypeParameter) {
         ((MutableScope) cs.getSpannedScope()).remove(formalTypeParameter);
         return getInstance();
     }
 
-    public static EMAComponentBuilder removeFormalTypeParameters(ComponentSymbol cs, JTypeSymbol... formalTypeParameter) {
-        for (JTypeSymbol f : formalTypeParameter) {
+    public static EMAComponentBuilder removeFormalTypeParameters(ComponentSymbol cs, MCTypeSymbol... formalTypeParameter) {
+        for (MCTypeSymbol f : formalTypeParameter) {
             removeFormalTypeParameter(cs, f);
         }
         return getInstance();
     }
 
-    public static EMAComponentBuilder removeFormalTypeParameters(ComponentSymbol cs, Collection<JTypeSymbol> formalTypeParameter) {
+    public static EMAComponentBuilder removeFormalTypeParameters(ComponentSymbol cs, Collection<MCTypeSymbol> formalTypeParameter) {
         formalTypeParameter.stream().forEachOrdered(f -> removeFormalTypeParameter(cs, f));
         return getInstance();
     }
 
     ////////////////////////// config parameters //////////////////////////////////////////////
 
-    public static EMAComponentBuilder addConfigParameter(ComponentSymbol cs, JFieldSymbol configParameter) {
+    public static EMAComponentBuilder addConfigParameter(ComponentSymbol cs, MCFieldSymbol configParameter) {
         addResolverIfMissing(cs, jAttributeResolvingFilter, configParameter);
         return getInstance();
     }
 
-    public static EMAComponentBuilder addConfigParameters(ComponentSymbol cs, JFieldSymbol... configParameter) {
-        for (JFieldSymbol c : configParameter) {
+    public static EMAComponentBuilder addConfigParameters(ComponentSymbol cs, MCFieldSymbol... configParameter) {
+        for (MCFieldSymbol c : configParameter) {
             addConfigParameter(cs, c);
         }
         return getInstance();
     }
 
-    public static EMAComponentBuilder addConfigParameters(ComponentSymbol cs, Collection<JFieldSymbol> configParameter) {
+    public static EMAComponentBuilder addConfigParameters(ComponentSymbol cs, Collection<MCFieldSymbol> configParameter) {
         configParameter.stream().forEachOrdered(c -> addConfigParameter(cs, c));
         return getInstance();
     }
 
-    public static EMAComponentBuilder removeConfigParameter(ComponentSymbol cs, JFieldSymbol configParameter) {
+    public static EMAComponentBuilder removeConfigParameter(ComponentSymbol cs, MCFieldSymbol configParameter) {
         ((MutableScope) cs.getSpannedScope()).remove(configParameter);
         return getInstance();
     }
 
-    public static EMAComponentBuilder removeConfigParameters(ComponentSymbol cs, JFieldSymbol... configParameter) {
-        for (JFieldSymbol c : configParameter) {
+    public static EMAComponentBuilder removeConfigParameters(ComponentSymbol cs, MCFieldSymbol... configParameter) {
+        for (MCFieldSymbol c : configParameter) {
             removeConfigParameter(cs, c);
         }
         return getInstance();
     }
 
-    public static EMAComponentBuilder removeConfigParameters(ComponentSymbol cs, Collection<JFieldSymbol> configParameter) {
+    public static EMAComponentBuilder removeConfigParameters(ComponentSymbol cs, Collection<MCFieldSymbol> configParameter) {
         configParameter.stream().forEachOrdered(c -> removeConfigParameter(cs, c));
         return getInstance();
     }

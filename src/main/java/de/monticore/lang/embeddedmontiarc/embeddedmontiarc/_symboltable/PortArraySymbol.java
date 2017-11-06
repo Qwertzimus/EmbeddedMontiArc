@@ -24,8 +24,8 @@ import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTPort;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
 import de.monticore.symboltable.*;
-import de.monticore.symboltable.types.JTypeSymbol;
-import de.monticore.symboltable.types.references.JTypeReference;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.se_rwth.commons.logging.Log;
 import org.jscience.mathematics.number.Rational;
 
@@ -122,7 +122,7 @@ public class PortArraySymbol extends PortSymbol {
         }
     }
 
-    private void createPortSymbolForArrayIndex(ComponentSymbolReference componentSymbolReference, ASTPort node, String name, Map<String, Optional<String>> stereoType, JTypeReference<? extends JTypeSymbol> typeRef) {
+    private void createPortSymbolForArrayIndex(ComponentSymbolReference componentSymbolReference, ASTPort node, String name, Map<String, Optional<String>> stereoType, MCTypeReference<? extends MCTypeSymbol> typeRef) {
         PortSymbol ps;
         if (name.startsWith("CONSTANTPORT")) {
             ps = new ConstantPortSymbol(name);
