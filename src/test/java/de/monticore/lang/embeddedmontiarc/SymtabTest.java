@@ -20,11 +20,20 @@
  */
 package de.monticore.lang.embeddedmontiarc;
 
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.*;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentInstanceSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ConnectorSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ConstantPortSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortArraySymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.UnitNumberExpressionSymbol;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.unit.constant.EMAConstantSIUnit;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.si._symboltable.SIUnitRangesSymbol;
+import de.monticore.lang.monticar.struct._symboltable.StructSymbol;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
 import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
 import de.monticore.symboltable.Scope;
 import de.se_rwth.commons.logging.Log;
@@ -32,9 +41,13 @@ import org.jscience.mathematics.number.Rational;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This is a symbol table test.
@@ -664,6 +677,31 @@ public class SymtabTest extends AbstractSymtabTest {
         UnitNumberExpressionSymbol symbol2 = (UnitNumberExpressionSymbol) iterator.next().getComponentType().getArguments().get(0).getSymbol().get();
         assertEquals("5", symbol1.getTextualRepresentation());
         assertEquals("1", symbol2.getTextualRepresentation());
+    }
+
+    @Test
+    public void testComponentWithStructPorts() {
+        Scope symTab = createSymTab("src/test/resources");
+        ComponentSymbol cmp = symTab.<ComponentSymbol>resolve(
+                "testing.ComponentWithStructPorts",
+                ComponentSymbol.KIND
+        ).orElse(null);
+        assertNotNull(cmp);
+        List<PortSymbol> inPorts = new ArrayList<>(cmp.getAllIncomingPorts());
+        assertEquals(1, inPorts.size());
+        PortSymbol in1 = cmp.getIncomingPort("in1").orElse(null);
+        assertNotNull(in1);
+        MCTypeSymbol s1 = in1.getTypeReference().getReferencedSymbol();
+        assertNotNull(s1);
+        assertEquals("structures.S1", s1.getFullName());
+        assertTrue(s1 instanceof StructSymbol);
+        List<PortSymbol> outPorts = new ArrayList<>(cmp.getAllOutgoingPorts());
+        assertEquals(1, outPorts.size());
+        PortSymbol out1 = cmp.getOutgoingPort("out1").orElse(null);
+        assertNotNull(out1);
+        MCTypeSymbol s2 = out1.getTypeReference().getReferencedSymbol();
+        assertEquals("structures.S2", s2.getFullName());
+        assertTrue(s2 instanceof StructSymbol);
     }
 }
 

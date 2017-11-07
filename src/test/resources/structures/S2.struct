@@ -1,0 +1,6 @@
+package structures;
+
+struct S2 {
+  C f1;
+  B f2;
+}
