@@ -22,7 +22,6 @@ package de.monticore.lang.embeddedmontiarc.tag;
 
 import de.monticore.ModelingLanguageFamily;
 import de.monticore.io.paths.ModelPath;
-import de.monticore.lang.embeddedmontiarc.Utils;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentSymbol;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.EmbeddedMontiArcLanguage;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
@@ -77,7 +76,7 @@ public class TagTest {
         fam.addModelingLanguage(getMontiArcLanguage());
         final ModelPath mp = new ModelPath(Paths.get(modelPath));
         GlobalScope scope = new GlobalScope(mp, fam);
-        Utils.addBuiltInTypes(scope);
+        de.monticore.lang.monticar.Utils.addBuiltInTypes(scope);
         return scope;
     }
 

@@ -44,7 +44,7 @@ public class AbstractSymtabTest {
     }
     GlobalScope scope = new GlobalScope(mp, fam);
 
-    Utils.addBuiltInTypes(scope);
+    de.monticore.lang.monticar.Utils.addBuiltInTypes(scope);
 
     LogConfig.init();//TODO comment for logger output
     return scope;
