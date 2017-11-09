@@ -45,7 +45,7 @@
     <SIUnit.version>0.0.6-SNAPSHOT</SIUnit.version>
     <struct.version>0.0.3-SNAPSHOT</struct.version>
 
-    <Common-MontiCar.version>0.0.3-SNAPSHOT</Common-MontiCar.version>
+    <Common-MontiCar.version>0.0.3</Common-MontiCar.version>
 
     <!-- .. Libraries .................................................. -->
     <guava.version>18.0</guava.version>
