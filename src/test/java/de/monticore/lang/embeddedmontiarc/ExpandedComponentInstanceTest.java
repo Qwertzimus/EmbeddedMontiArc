@@ -136,8 +136,8 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
             PortSymbol sourcePort = connectorSymbol.getSourcePort();
             PortSymbol targetPort = connectorSymbol.getTargetPort();
 
-            System.out.println("source: " + sourcePort.getFullName());
-            System.out.println("target: " + targetPort.getFullName() + "\n");
+            // System.out.println("source: " + sourcePort.getFullName());
+            // System.out.println("target: " + targetPort.getFullName() + "\n");
 
             assertNotEquals(sourcePort.getFullName(), targetPort.getFullName());
         });
