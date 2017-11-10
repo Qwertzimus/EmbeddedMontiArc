@@ -118,6 +118,34 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
     }
 
     @Test
+    public void testConnectorCorrectness() {
+        Scope symTab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
+                "testing.subComponentConnector", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+
+        assertNotNull(inst);
+
+        testConnectorCorrectnessForComponent(inst);
+    }
+
+    private void testConnectorCorrectnessForComponent(ExpandedComponentInstanceSymbol inst) {
+        inst.getConnectors().forEach(connectorSymbol -> {
+            assertNotNull(connectorSymbol.getSourcePort());
+            assertNotNull(connectorSymbol.getTargetPort());
+
+            PortSymbol sourcePort = connectorSymbol.getSourcePort();
+            PortSymbol targetPort = connectorSymbol.getTargetPort();
+
+            System.out.println("source: " + sourcePort.getFullName());
+            System.out.println("target: " + targetPort.getFullName() + "\n");
+
+            assertNotEquals(sourcePort.getFullName(), targetPort.getFullName());
+        });
+
+        inst.getSubComponents().forEach(this::testConnectorCorrectnessForComponent);
+    }
+
+    @Test
     public void testGenericA() {
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
