@@ -21,8 +21,8 @@
 package de.monticore.lang.embeddedmontiarc.helper;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
-import de.monticore.symboltable.types.JTypeSymbol;
-import de.monticore.symboltable.types.references.JTypeReference;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.lang.monticar.ts.references.MCTypeReference;
 
 import java.util.List;
 
@@ -63,11 +63,11 @@ public class PortCompatibilityChecker {
    * @return
    */
   public static boolean doPortTypesMatch(PortSymbol sourcePort,
-      List<JTypeSymbol> sourceFormalTypeParameters,
-      List<JTypeReference<? extends JTypeSymbol>> sourceTypeArguments,
+      List<MCTypeSymbol> sourceFormalTypeParameters,
+      List<MCTypeReference<? extends MCTypeSymbol>> sourceTypeArguments,
       PortSymbol targetPort,
-      List<JTypeSymbol> targetTypeFormalTypeParameters,
-      List<JTypeReference<? extends JTypeSymbol>> targetTypeArguments) {
+      List<MCTypeSymbol> targetTypeFormalTypeParameters,
+      List<MCTypeReference<? extends MCTypeSymbol>> targetTypeArguments) {
     checkNotNull(sourcePort);
     checkNotNull(targetPort);
     return TypeCompatibilityChecker.doTypesMatch(sourcePort.getTypeReference(),

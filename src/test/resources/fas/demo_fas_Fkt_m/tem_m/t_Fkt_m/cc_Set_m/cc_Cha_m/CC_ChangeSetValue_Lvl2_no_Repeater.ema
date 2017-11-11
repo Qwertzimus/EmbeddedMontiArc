@@ -11,7 +11,7 @@ component CC_ChangeSetValue_Lvl2_no_Repeater {
 		in (-oo:d:oo) LeverUp_Stat,
 		in (-oo:d:oo) LeverDown_Stat,
 		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
-		in Boolean Enable,
+		in B Enable,
 		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
 
 	instance Equals<(-oo:d:oo)> eq1, eq2, eq3, eq4;

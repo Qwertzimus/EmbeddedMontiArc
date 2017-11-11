@@ -4,15 +4,15 @@ import fas.basicLibrary.*;
 
 component V_SetValue_Minus {
 	port
-		in Boolean trigger,
-		in Boolean Enable,
+		in B trigger,
+		in B Enable,
 		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
 		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
 	
-	instance Greater<Boolean> greater1, greater2;
-	instance SwitchB<Boolean> switch1, switch2;
-	instance Memory<Boolean>(false) mem1;
-	instance Memory<Boolean>(true) mem2;
+	instance Greater<B> greater1, greater2;
+	instance SwitchB<B> switch1, switch2;
+	instance Memory<B>(false) mem1;
+	instance Memory<B>(true) mem2;
 	instance PlusMinus<(-oo:d:oo)> pm1;
 	instance SwitchB<(-oo:d:oo)> switch3;
 	

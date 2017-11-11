@@ -1,6 +1,6 @@
 package fas.basicLibrary;
 
-component LookUp<T,N1 n> (Boolean values[n]) {
+component LookUp<T,N1 n> (B values[n]) {
 	port
 		in T in1,
 		out T out1;

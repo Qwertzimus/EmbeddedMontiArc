@@ -6,16 +6,16 @@ import fas.advancedLibrary.*;
 component CC_InitialSetValue {
 	port
 		in (-oo:d:oo) V_Vehicle_kmh,
-		in Boolean trigger,
+		in B trigger,
 		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
-		in Boolean Enable,
+		in B Enable,
 		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
 	
-	instance SwitchB<Boolean> switch1, switch2;
+	instance SwitchB<B> switch1, switch2;
 	instance SwitchB<(-oo:d:oo)> switch3, switch4;
 	instance Greater<(-oo:d:oo)> greater1, greater2;
-	instance Memory<Boolean>(false) mem1;
-	instance Memory<Boolean>(true) mem2;
+	instance Memory<B>(false) mem1;
+	instance Memory<B>(true) mem2;
 	instance Smaller<(-oo:d:oo)> smaller1;
 	
 	connect trigger -> greater1.in1, switch1.in1;

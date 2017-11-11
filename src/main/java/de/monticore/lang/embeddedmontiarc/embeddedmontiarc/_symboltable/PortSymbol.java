@@ -21,17 +21,22 @@
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
-import de.monticore.lang.monticar.stream._symboltable.NamedStreamSymbol;
 import de.monticore.lang.montiarc.tagging._symboltable.TaggingSymbol;
+import de.monticore.lang.monticar.stream._symboltable.NamedStreamSymbol;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.monticore.symboltable.CommonScope;
 import de.monticore.symboltable.MutableScope;
 import de.monticore.symboltable.SymbolKind;
-import de.monticore.symboltable.types.JTypeSymbol;
-import de.monticore.symboltable.types.references.JTypeReference;
 import de.se_rwth.commons.logging.Log;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -52,7 +57,7 @@ public class PortSymbol extends TaggingSymbol implements ElementInstance {
      */
     private boolean incoming;
 
-    private JTypeReference<? extends JTypeSymbol> typeReference;
+    private MCTypeReference<? extends MCTypeSymbol> typeReference;
 
     private MutableScope locallyDefinedStreams = new CommonScope();
 
@@ -97,14 +102,14 @@ public class PortSymbol extends TaggingSymbol implements ElementInstance {
     /**
      * @return typeReference reference to the type from this port
      */
-    public JTypeReference<? extends JTypeSymbol> getTypeReference() {
+    public MCTypeReference<? extends MCTypeSymbol> getTypeReference() {
         return this.typeReference;
     }
 
     /**
      * @param typeReference reference to the type from this port
      */
-    public void setTypeReference(JTypeReference<? extends JTypeSymbol> typeReference) {
+    public void setTypeReference(MCTypeReference<? extends MCTypeSymbol> typeReference) {
         this.typeReference = typeReference;
     }
 

@@ -6,11 +6,11 @@ component BumperBot {
 
   component Sensors {
       port
-      out Boolean bumpPressed;
+      out B bumpPressed;
       
     component BumpSensor {
       port
-        out Boolean pressed;
+        out B pressed;
     }
     instance BumpSensor bumpSensor;
 
@@ -22,13 +22,13 @@ component BumperBot {
   
   component Controller {
       port
-      in Boolean bumpPressed,
+      in B bumpPressed,
       out MotorCmd rightMotorCmd,
       out MotorCmd leftMotorCmd;
 
     component BumpControl {
       port
-          in Boolean bumpPressed,
+          in B bumpPressed,
           in TimerSignal timerSig,
           out TimerCmd timerCmd,
         out MotorCmd leftMotorCmd,

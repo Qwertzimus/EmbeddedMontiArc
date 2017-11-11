@@ -2,6 +2,6 @@ package fas.basicLibrary;
 
 component Or<N1 n=2> {
 	port 
-		in Boolean in1[n],
-		out Boolean out1;
+		in B in1[n],
+		out B out1;
 }

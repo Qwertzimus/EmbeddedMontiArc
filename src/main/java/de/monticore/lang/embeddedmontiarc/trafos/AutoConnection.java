@@ -30,8 +30,8 @@ import de.monticore.lang.monticar.common2._ast.ASTArrayAccess;
 import de.monticore.lang.monticar.common2._ast.ASTQualifiedNameWithArray;
 import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
 import de.monticore.symboltable.MutableScope;
-import de.monticore.symboltable.types.JTypeSymbol;
-import de.monticore.symboltable.types.references.JTypeReference;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.*;
@@ -332,7 +332,7 @@ public class AutoConnection {
                             PorWithGenericBindings.create(port,
                                     refType.getReferencedSymbol().getFormalTypeParameters(),
                                     refType.getActualTypeArguments().stream()
-                                            .map(a -> (JTypeReference<?>) a.getType())
+                                            .map(a -> (MCTypeReference<?>) a.getType())
                                             .collect(Collectors.toList())));
                 }
             }
@@ -374,7 +374,7 @@ public class AutoConnection {
                             PorWithGenericBindings.create(port,
                                     refType.getReferencedSymbol().getFormalTypeParameters(),
                                     refType.getActualTypeArguments().stream()
-                                            .map(a -> (JTypeReference<?>) a.getType())
+                                            .map(a -> (MCTypeReference<?>) a.getType())
                                             .collect(Collectors.toList())));
                 }
             }
@@ -385,14 +385,14 @@ public class AutoConnection {
     private static class PorWithGenericBindings {
         PortSymbol port;
 
-        List<JTypeSymbol> formalTypeParameters;
+        List<MCTypeSymbol> formalTypeParameters;
 
-        List<JTypeReference<? extends JTypeSymbol>> typeArguments;
+        List<MCTypeReference<? extends MCTypeSymbol>> typeArguments;
 
         public PorWithGenericBindings(
                 PortSymbol port,
-                List<JTypeSymbol> formalTypeParameters,
-                List<JTypeReference<? extends JTypeSymbol>> typeArguments) {
+                List<MCTypeSymbol> formalTypeParameters,
+                List<MCTypeReference<? extends MCTypeSymbol>> typeArguments) {
             super();
             this.port = port;
             this.formalTypeParameters = formalTypeParameters;
@@ -400,8 +400,8 @@ public class AutoConnection {
         }
 
         public static PorWithGenericBindings create(PortSymbol port,
-                                                    List<JTypeSymbol> formalTypeParameters,
-                                                    List<JTypeReference<? extends JTypeSymbol>> typeArguments) {
+                                                    List<MCTypeSymbol> formalTypeParameters,
+                                                    List<MCTypeReference<? extends MCTypeSymbol>> typeArguments) {
             return new PorWithGenericBindings(port, formalTypeParameters, typeArguments);
         }
 

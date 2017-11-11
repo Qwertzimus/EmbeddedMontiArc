@@ -3,10 +3,10 @@ package testing;
 import fas.basicLibrary.*;
 
 component ImportTest{
-    ports in Boolean in1[2],
-        out Boolean out1;
+    ports in B in1[2],
+        out B out1;
 
-        instance And<Boolean> and1;
+        instance And<B> and1;
     connect in1[:]->and1.in1[:];
     connect and1.out1->out1;
 }

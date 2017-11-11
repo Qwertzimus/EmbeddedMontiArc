@@ -8,7 +8,7 @@ import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Ena_m.Tempomat_Deactive;
 component CC_Enabled {
 	
 	port
-		in Boolean CC_active_b,
+		in B CC_active_b,
 		in (-oo:d:oo) V_Vehicle_kmh,
 		in (-oo:d:oo) DEMO_FAS_V_CCSetValue,
 		out (-oo:d:oo) V_CC_delta_kmh;

@@ -8,20 +8,20 @@ import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_Ena_m.Limiter_Deactive_edited;
 component Limiter_Enabled_edited {
 	
 	port 
-		in Boolean Limiter_b,
+		in B Limiter_b,
 		in (-oo:d:oo) Accelaration_pedal_pc,
 		in (-oo:d:oo) DEMO_FAS_V_LimiterSetValue,
-		in Boolean Sign_b,
+		in B Sign_b,
 		out (-oo:d:oo) VMax_kmh,
-		out Boolean Limiter_active_b;
+		out B Limiter_active_b;
 
 	instance Smaller<(-oo:d:oo)> smaller1;
 	instance And and1;
-	instance Not<Boolean> not1, not2;
+	instance Not<B> not1, not2;
 	instance EdgeRising eRising;
 	instance RSFlipFlop flipFlop;
 	instance SwitchB<(-oo:d:oo)> switch1;
-	instance SwitchB<Boolean> switch2;
+	instance SwitchB<B> switch2;
 	instance Limiter_Active_edited l_Active;
 	instance Limiter_Deactive_edited l_Deactive;
 	

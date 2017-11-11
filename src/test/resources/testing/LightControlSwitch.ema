@@ -2,8 +2,8 @@
 package testing;
 component LightControlSwitch{
     ports
-        in Boolean lightsIn[5],
-        out Boolean lightsOut[5];
+        in B lightsIn[5],
+        out B lightsOut[5];
     
     connect lightsIn[:] -> lightsOut[:];
 

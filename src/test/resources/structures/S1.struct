@@ -1,0 +1,6 @@
+package structures;
+
+struct S1 {
+  Q f1;
+  Z f2;
+}

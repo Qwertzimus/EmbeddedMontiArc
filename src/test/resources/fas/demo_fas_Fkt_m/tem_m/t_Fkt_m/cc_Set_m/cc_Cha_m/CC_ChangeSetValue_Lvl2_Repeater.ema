@@ -13,18 +13,18 @@ component CC_ChangeSetValue_Lvl2_Repeater {
 		in (-oo:d:oo) LeverUp_Stat,
 		in (-oo:d:oo) LeverDown_Stat,
 		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
-		in Boolean Enable,
-		in Boolean If,
+		in B Enable,
+		in B If,
 		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
 		
 
 	instance Equals<(-oo:d:oo)> eq1, eq2, eq3, eq4;
-	instance Or4<Boolean> or;
-	instance Or3<Boolean> or2;
-	instance Not<Boolean> not1, not2;
-	instance Memory<Boolean>(0) mem1;
+	instance Or4<B> or;
+	instance Or3<B> or2;
+	instance Not<B> not1, not2;
+	instance Memory<B>(0) mem1;
 	instance CountDown cDown;
-	instance SwitchB<Boolean> switch1, switch2, switch3, switch4, switch5, switch6;
+	instance SwitchB<B> switch1, switch2, switch3, switch4, switch5, switch6;
 	instance SysInit sInit;
 	instance V_SetValue_PlusLvl2 v_SetValuePlus2;
 	instance V_SetValue_Plus v_SetValuePlus;

@@ -23,15 +23,23 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.EMAVariable;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
+import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.monticore.symboltable.MutableScope;
 import de.monticore.symboltable.Symbol;
 import de.monticore.symboltable.resolving.ResolvingFilter;
-import de.monticore.symboltable.types.JTypeSymbol;
 import de.monticore.symboltable.types.references.ActualTypeArgument;
-import de.monticore.symboltable.types.references.JTypeReference;
 import de.se_rwth.commons.logging.Log;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -45,14 +53,14 @@ public class ExpandedComponentInstanceBuilder {
     protected List<ConnectorSymbol> connectors = new ArrayList<>();
     protected Set<ResolvingFilter> resolvingFilters = new LinkedHashSet<>();
     //             FormalTypeParameter, ActualTypeArgument (is the binding of formal parameters
-    protected Map<JTypeSymbol, ActualTypeArgument> actualTypeArguments = new LinkedHashMap<>();
+    protected Map<MCTypeSymbol, ActualTypeArgument> actualTypeArguments = new LinkedHashMap<>();
     protected List<ResolutionDeclarationSymbol> resolutionDeclarationSymbols = new ArrayList<>();
     protected List<EMAVariable> parameters = new ArrayList<>();
     protected List<ASTExpression> arguments = new ArrayList<>();
 
 
-    protected static Map<JTypeSymbol, ActualTypeArgument> createMap(List<JTypeSymbol> keys, List<ActualTypeArgument> values) {
-        Map<JTypeSymbol, ActualTypeArgument> ret = new LinkedHashMap<>();
+    protected static Map<MCTypeSymbol, ActualTypeArgument> createMap(List<MCTypeSymbol> keys, List<ActualTypeArgument> values) {
+        Map<MCTypeSymbol, ActualTypeArgument> ret = new LinkedHashMap<>();
         for (int i = 0; i < keys.size(); i++) {
             ret.put(keys.get(i), values.get(i));
         }
@@ -109,12 +117,12 @@ public class ExpandedComponentInstanceBuilder {
         return this;
     }
 
-    public ExpandedComponentInstanceBuilder addActualTypeArgument(JTypeSymbol formalTypeParameter, ActualTypeArgument typeArgument) {
+    public ExpandedComponentInstanceBuilder addActualTypeArgument(MCTypeSymbol formalTypeParameter, ActualTypeArgument typeArgument) {
         this.actualTypeArguments.put(formalTypeParameter, typeArgument);
         return this;
     }
 
-    public ExpandedComponentInstanceBuilder addActualTypeArguments(List<JTypeSymbol> formalTypeParameters, List<ActualTypeArgument> actualTypeArguments) {
+    public ExpandedComponentInstanceBuilder addActualTypeArguments(List<MCTypeSymbol> formalTypeParameters, List<ActualTypeArgument> actualTypeArguments) {
         if (formalTypeParameters.size() != actualTypeArguments.size()) {
             Log.debug(formalTypeParameters.toString(), "FormalTypeParameters");
             Log.debug(actualTypeArguments.toString(), "ActualTypeArguments");
@@ -140,13 +148,13 @@ public class ExpandedComponentInstanceBuilder {
     /**
      * adds ports if they do not exist and replace generics of ports
      */
-    public ExpandedComponentInstanceBuilder addPortsIfNameDoesNotExists(Collection<PortSymbol> ports, List<JTypeSymbol> formalTypeParameters, List<ActualTypeArgument> actualTypeArguments) {
+    public ExpandedComponentInstanceBuilder addPortsIfNameDoesNotExists(Collection<PortSymbol> ports, List<MCTypeSymbol> formalTypeParameters, List<ActualTypeArgument> actualTypeArguments) {
         List<PortSymbol> pList = ports.stream().collect(Collectors.toList());
         createMap(formalTypeParameters, actualTypeArguments).forEach((k, v) ->
                 ports.stream().filter(p -> p.getTypeReference().getReferencedSymbol().getName().equals(k.getName()))
                         .forEachOrdered(p -> {
                             PortSymbol pCloned = EMAPortBuilder.clone(p);
-                            pCloned.setTypeReference((JTypeReference<? extends JTypeSymbol>) v.getType());
+                            pCloned.setTypeReference((MCTypeReference<? extends MCTypeSymbol>) v.getType());
                             Collections.replaceAll(pList, p, pCloned);
                         })
         );
@@ -207,7 +215,7 @@ public class ExpandedComponentInstanceBuilder {
     }
 
     protected void exchangeGenerics(ExpandedComponentInstanceSymbol inst,
-                                    Map<JTypeSymbol, ActualTypeArgument> mapTypeArguments) {
+                                    Map<MCTypeSymbol, ActualTypeArgument> mapTypeArguments) {
         Log.debug(inst.toString(), "exchangeGenerics inst");
         // TODO work with full names, but then you got the problem with generics.GenericInstance.Generic.T != generics.SuperGenericComparableComp2.T
         // because when delegating the name of the referenced type must be created
@@ -217,7 +225,7 @@ public class ExpandedComponentInstanceBuilder {
             inst.getPorts().stream()
                     //          .filter(p -> p.getTypeReference().getReferencedSymbol().getFullName().equals(k.getFullName()))
                     .filter(p -> p.getTypeReference().getReferencedSymbol().getName().equals(k.getName()))
-                    .forEachOrdered(p -> p.setTypeReference((JTypeReference<? extends JTypeSymbol>) v.getType()));
+                    .forEachOrdered(p -> p.setTypeReference((MCTypeReference<? extends MCTypeSymbol>) v.getType()));
 
             // 2) propagate component instance definition generics
             inst.getSubComponents().stream()

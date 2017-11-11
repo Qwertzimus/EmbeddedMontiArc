@@ -10,20 +10,20 @@ import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_ChangeSetValue_edited;
 component CC_SetValue_edited {
 	
 	port
-		in Boolean Limiter_b,
-		in Boolean CC_enabled_b,
-		in Boolean CruiseControl_b,
+		in B Limiter_b,
+		in B CC_enabled_b,
+		in B CruiseControl_b,
 		in (-oo:d:oo) V_Vehicle_kmh,
 		in (-oo:d:oo) LeverUp_Stat,
 		in (-oo:d:oo) LeverDown_Stat,
-		in Boolean Enable,
+		in B Enable,
 		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
 
 	instance GreaterEquals<(-oo:d:oo)> greaterEq;
 	instance And and1, and2;
 	instance And3 and3;
 	instance Or<(-oo:d:oo)> or1;
-	instance Not<Boolean> not1, not2, not3, not4;
+	instance Not<B> not1, not2, not3, not4;
 	instance SwitchB<(-oo:d:oo)> switch1, switch2;
 	instance Memory<(-oo:d:oo)>(0) mem1;
 	instance EdgeRising eRising;

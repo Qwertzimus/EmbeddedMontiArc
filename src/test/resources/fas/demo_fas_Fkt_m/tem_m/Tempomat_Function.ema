@@ -7,21 +7,21 @@ import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.CC_Enabled;
 
 component Tempomat_Function {
 	port
-		in Boolean ParkingBrake_b,
+		in B ParkingBrake_b,
 	    in (-oo:d:oo) BrakeForce_pedal_pc,
-		in Boolean CruiseControl_b,
+		in B CruiseControl_b,
 		in (-oo:d:oo) V_Vehicle_kmh,
-		in Boolean Limiter_b,
-		in Boolean FTS_active_b,
+		in B Limiter_b,
+		in B FTS_active_b,
 		in (-oo:d:oo) LeverUp_Stat,
 		in (-oo:d:oo) LeverDown_Stat,
 		out (-oo:d:oo) V_CC_delta_kmh,
-		out Boolean CC_active_b;
+		out B CC_active_b;
 	
 	instance SwitchB<(-oo:d:oo)> switch1, switch2, switch3, switch4, switch5;
-	instance SwitchB<Boolean> switch6, switch7, switch8, switch9, switch10;
+	instance SwitchB<B> switch6, switch7, switch8, switch9, switch10;
 	instance Memory<(-oo:d:oo)>(0) mem1, mem2, mem3, mem4;
-	instance Memory<Boolean>(false) mem5, mem6, mem7, mem8;
+	instance Memory<B>(false) mem5, mem6, mem7, mem8;
 	instance CC_On_Off cc_OnOff;
 	instance CC_SetValue cc_Set;
 	instance CC_Enabled cc_enable;

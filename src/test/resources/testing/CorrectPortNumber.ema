@@ -2,8 +2,8 @@ package testing;
 
 component CorrectPortNumber{
     port
-        in Boolean sIn[5],
-        out Boolean sOut[5];
+        in B sIn[5],
+        out B sOut[5];
 
 
     connect sIn[1:2] -> sOut[4:5];

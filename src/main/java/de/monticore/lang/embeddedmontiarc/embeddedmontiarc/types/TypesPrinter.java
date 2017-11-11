@@ -97,7 +97,20 @@ public class TypesPrinter {
         if (type instanceof ASTPrintType) {
             return ((ASTPrintType) type).printType();
         }else if(type instanceof ASTElementType){
-            return "ElementType";
+            ASTElementType t = (ASTElementType) type;
+            if (t.isIsBoolean()) {
+                return "B";
+            }
+            if (t.isIsRational()) {
+                return "Q";
+            }
+            if (t.isIsComplex()) {
+                return "C";
+            }
+            if (t.isIsWholeNumberNumber()) {
+                return "Z";
+            }
+            throw new UnsupportedOperationException("unknown ElementType: " + t);
         }
 
         Log.info(type.toString(),"Type:");

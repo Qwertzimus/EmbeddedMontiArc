@@ -1,11 +1,11 @@
 package testing;
 
 component SubComponent{
-    ports in Boolean in1,
-          out Boolean out1;
+    ports in B in1,
+          out B out1;
     component A{
-        ports in Boolean in1,
-              out Boolean out1;
+        ports in B in1,
+              out B out1;
     }
     instance A a;
 

@@ -22,12 +22,9 @@ package de.monticore.lang.embeddedmontiarc.tag;
 
 import de.monticore.ModelingLanguageFamily;
 import de.monticore.io.paths.ModelPath;
-import de.monticore.java.lang.JavaDSLLanguage;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.*;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ConnectorSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.EmbeddedMontiArcLanguage;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
 import de.monticore.lang.embeddedmontiarc.tag.drawing.ComponentLayoutSymbol;
 import de.monticore.lang.embeddedmontiarc.tag.drawing.ComponentLayoutSymbolCreator;
 import de.monticore.lang.embeddedmontiarc.tag.drawing.ConnectorLayoutSymbol;
@@ -39,25 +36,14 @@ import de.monticore.symboltable.GlobalScope;
 import de.monticore.symboltable.Scope;
 import de.monticore.symboltable.resolving.CommonResolvingFilter;
 import de.se_rwth.commons.logging.Log;
-
-import java.util.Map;
-
-import nfp.PowerConsumptionTagSchema.*;
+import nfp.PowerConsumptionTagSchema.PowerConsumptionTagSchema;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.measure.unit.Unit;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
-
-//import de.monticore.lang.montiarc.tag.drawing.ComponentLayoutSymbolCreator;
-//import de.monticore.lang.montiarc.tag.drawing.ConnectorLayoutSymbolCreator;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by Michael von Wenckstern on 30.05.2016.
@@ -88,9 +74,9 @@ public class TagTest {
         ModelingLanguageFamily fam = new ModelingLanguageFamily();
 
         fam.addModelingLanguage(getMontiArcLanguage());
-        fam.addModelingLanguage(new JavaDSLLanguage());
-        final ModelPath mp = new ModelPath(Paths.get(modelPath), Paths.get("src/main/resources/defaultTypes"));
+        final ModelPath mp = new ModelPath(Paths.get(modelPath));
         GlobalScope scope = new GlobalScope(mp, fam);
+        de.monticore.lang.monticar.Utils.addBuiltInTypes(scope);
         return scope;
     }
 

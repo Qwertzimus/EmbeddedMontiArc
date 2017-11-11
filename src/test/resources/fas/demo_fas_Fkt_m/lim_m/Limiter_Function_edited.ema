@@ -10,22 +10,22 @@ import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_InitialSetValue;
 
 component Limiter_Function_edited {
 	port 
-		in Boolean Limiter_b,
+		in B Limiter_b,
 		in (-oo:d:oo) Accelaration_pedal_pc,
 		in (-oo:d:oo) V_Vehicle_kmh,
 		in (-oo:d:oo) LeverUp_stat,
 		in (-oo:d:oo) LeverDown_stat,
 		in (-oo:d:oo) V_Sign_kmh,
-		in Boolean Sign_b,
-		in Boolean Enable,
+		in B Sign_b,
+		in B Enable,
 		out (-oo:d:oo) VMax_kmh,
-	    out Boolean Limiter_active_b,
+	    out B Limiter_active_b,
 		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
 		  
 	instance SwitchB<(-oo:d:oo)> switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8;
-	instance SwitchB<Boolean> switch9, switch10, switch11;
+	instance SwitchB<B> switch9, switch10, switch11;
 	instance Memory<(-oo:d:oo)>(0) mem1, mem2, mem3, mem4, mem5, mem6, mem7, mem8;
-	instance Memory<Boolean>(false) mem9, mem10, mem11;
+	instance Memory<B>(false) mem9, mem10, mem11;
 	instance And and1;
 	instance Min<(-oo:d:oo)> min1;
 	instance Limiter_Enabled_edited lim_Enabled;

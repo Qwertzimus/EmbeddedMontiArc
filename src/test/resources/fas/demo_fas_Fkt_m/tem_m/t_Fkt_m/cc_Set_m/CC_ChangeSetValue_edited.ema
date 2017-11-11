@@ -10,18 +10,18 @@ component CC_ChangeSetValue_edited {
 		in (-oo:d:oo) LeverUp_Stat,
 		in (-oo:d:oo) LeverDown_Stat,
 		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
-		in Boolean Enable,
-		in Boolean If,
+		in B Enable,
+		in B If,
 		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
 
 	instance CC_ChangeSetValue_Lvl2_no_Repeater cc_ChangeSet_noRepeater;
 	instance CC_ChangeSetValue_Lvl2_Repeater cc_ChangeSet_Repeater;
 	instance SwitchB<(-oo:d:oo)> switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8, switch9, switch10, switch11;
-	instance SwitchB<Boolean> switch12;
-	instance Memory<Boolean>(false) mem1;
+	instance SwitchB<B> switch12;
+	instance Memory<B>(false) mem1;
 	instance Memory<(-oo:d:oo)>(0) mem2, mem3, mem4, mem5, mem6, mem7, mem8, mem9, mem10, mem11;
-	instance Equals<Boolean> eq1;
-	instance Not<Boolean> not1, not2, not3, not4;
+	instance Equals<B> eq1;
+	instance Not<B> not1, not2, not3, not4;
 	
 	connect If -> switch12.in1;
 	connect mem1.out1 -> switch12.in3;

@@ -5,14 +5,14 @@ import fas.basicLibrary.*;
 component Limiter_InitialSetValue {
 	
 	port 
-		in Boolean Limiter_b,
+		in B Limiter_b,
 		in (-oo:d:oo) V_Vehicle_kmh,
 		in (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Read,
 		out (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Write;
 				
-	instance Greater<Boolean> greater1, greater2;
-	instance Memory<Boolean>(false) mem1;
-	instance Memory<Boolean>(true) mem2;
+	instance Greater<B> greater1, greater2;
+	instance Memory<B>(false) mem1;
+	instance Memory<B>(true) mem2;
 	instance SwitchB<(-oo:d:oo)> switch1;
 	
 	connect V_Vehicle_kmh -> switch1.in1;

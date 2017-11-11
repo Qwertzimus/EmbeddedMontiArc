@@ -7,8 +7,8 @@ component Distancewarner_Function {
 	port 
 		in (-oo:d:oo) V_Vehicle_ms,
 		in (-oo:d:oo) Distance_Object_m,
-		out Boolean Opti_warn_b,
-		out Boolean Acusti_warn_b;
+		out B Opti_warn_b,
+		out B Acusti_warn_b;
 
 	instance Multiplication<(-oo:d:oo)> multiplication1, multiplication2;
 	instance SmallerEquals<(-oo:d:oo)> smaller1, smaller2;

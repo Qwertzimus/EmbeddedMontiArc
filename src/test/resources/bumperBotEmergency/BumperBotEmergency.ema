@@ -6,18 +6,18 @@ component BumperBotEmergency {
 
   component Sensors {
       port
-      out Boolean bumpPressed,
-      out Boolean emergencyPressed;
+      out B bumpPressed,
+      out B emergencyPressed;
 
     component BumpSensor {
       port
-        out Boolean pressed;
+        out B pressed;
     }
     instance BumpSensor bumpSensor;
 
     component EmergencySwitch {
       port
-        out Boolean pressed;
+        out B pressed;
     }
     instance EmergencySwitch emergencySwitch;
 
@@ -31,14 +31,14 @@ component BumperBotEmergency {
   
   component Controller {
       port
-      in Boolean bumpPressed,
-      in Boolean emergencyPressed,
+      in B bumpPressed,
+      in B emergencyPressed,
       out MotorCmd rightMotorCmd,
       out MotorCmd leftMotorCmd;
 
     component BumpControl {
       port
-          in Boolean bumpPressed,
+          in B bumpPressed,
           in TimerSignal timerSig,
           out TimerCmd timerCmd,
         out MotorCmd leftMotorCmd,
@@ -68,7 +68,7 @@ component BumperBotEmergency {
         in MotorCmd fstAltLeftMotorCmd,
         in MotorCmd sndAltRightMotorCmd,
         in MotorCmd sndAltLeftMotorCmd,
-        in Boolean selection;
+        in B selection;
     }
     instance MotorArbiter motorArbiter;
     

@@ -8,15 +8,15 @@ component EmergencyBrake {
 		in (-oo:d:oo) V_Vehicle_ms,
 		in (-oo:d:oo) Distance_Object_m,
 		in (-oo:d:oo) V_Obj_rel_ms,
-		in Boolean cond,
+		in B cond,
 		out (-oo:d:oo) BrakeForce_Emergency_pc,
-		out Boolean Acusti_warn_b;
+		out B Acusti_warn_b;
 	
 	instance EmergencyBrake_Function eBrake_Function;
 	instance SwitchB<(-oo:d:oo)> switch1;
-	instance SwitchB<Boolean> switch2;
+	instance SwitchB<B> switch2;
 	instance Memory<(-oo:d:oo)>(0) mem1;
-	instance Memory<Boolean>(false) mem2;
+	instance Memory<B>(false) mem2;
 	
 	connect V_Vehicle_ms -> eBrake_Function.V_Vehicle_ms;
 	connect Distance_Object_m -> eBrake_Function.Distance_Object_m;
