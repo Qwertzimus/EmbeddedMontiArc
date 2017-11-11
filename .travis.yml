@@ -1,4 +1,5 @@
 script:
+- git checkout ${TRAVIS_BRANCH}
 - mvn clean install cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report --settings "settings.xml"
 after_success:
 - mvn deploy --debug --settings "./settings.xml"
