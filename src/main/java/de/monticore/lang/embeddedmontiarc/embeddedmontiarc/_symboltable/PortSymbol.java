@@ -21,11 +21,11 @@
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
-import de.monticore.lang.montiarc.tagging._symboltable.TaggingSymbol;
 import de.monticore.lang.monticar.stream._symboltable.NamedStreamSymbol;
 import de.monticore.lang.monticar.ts.MCTypeSymbol;
 import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.monticore.symboltable.CommonScope;
+import de.monticore.symboltable.CommonSymbol;
 import de.monticore.symboltable.MutableScope;
 import de.monticore.symboltable.SymbolKind;
 import de.se_rwth.commons.logging.Log;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 /**
  * Symboltable entry for ports.
  */
-public class PortSymbol extends TaggingSymbol implements ElementInstance {
+public class PortSymbol extends CommonSymbol implements ElementInstance {
     public static final EmbeddedPortKind KIND = EmbeddedPortKind.INSTANCE;
 
     private final Map<String, Optional<String>> stereotype = new HashMap<>();

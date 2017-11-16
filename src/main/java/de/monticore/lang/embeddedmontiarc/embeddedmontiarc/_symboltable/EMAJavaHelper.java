@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
  *
  * @author Robert Heim
  */
-public class EMAJavaHelper extends de.monticore.lang.montiarc.montiarc._symboltable.JavaHelper {
+public class EMAJavaHelper {
     private final static MontiCarSymbolFactory jSymbolFactory = new MontiCarSymbolFactory();
 
     /**

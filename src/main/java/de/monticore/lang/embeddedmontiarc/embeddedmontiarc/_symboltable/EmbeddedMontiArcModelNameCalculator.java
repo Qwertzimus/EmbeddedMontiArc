@@ -20,12 +20,17 @@
  */
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
 import com.google.common.collect.ImmutableSet;
+import de.monticore.CommonModelNameCalculator;
 import de.monticore.symboltable.SymbolKind;
 import de.se_rwth.commons.Joiners;
 import de.se_rwth.commons.Splitters;
-
-import java.util.*;
 
 /**
  * Helps loading inner components, by mapping their full-qualified names to the full-qualified name
@@ -39,7 +44,7 @@ import java.util.*;
  * @author Robert Heim, Michael von Wenckstern
  */
 public class EmbeddedMontiArcModelNameCalculator
-    extends de.monticore.lang.montiarc.montiarc._symboltable.MontiArcModelNameCalculator {
+    extends CommonModelNameCalculator {
 
   @Override
   public Set<String> calculateModelNames(final String name, final SymbolKind kind) {
