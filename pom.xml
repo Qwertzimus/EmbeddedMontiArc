@@ -180,12 +180,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>montiarc.languages</groupId>
-      <artifactId>tagging</artifactId>
-      <version>${languages.version}</version>
-    </dependency>
-
     <!-- .. Test Libraries ............................................... -->
     <dependency>
       <groupId>junit</groupId>
