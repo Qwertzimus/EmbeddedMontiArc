@@ -25,12 +25,12 @@ import de.monticore.lang.embeddedmontiarc.EmbeddedMontiArcConstants;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.EMAVariable;
 import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
 import de.monticore.lang.embeddedmontiarc.helper.Timing;
-import de.monticore.lang.montiarc.tagging._symboltable.TaggingScopeSpanningSymbol;
 import de.monticore.lang.monticar.common2._ast.ASTParameter;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.ts.MCFieldSymbol;
 import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.symboltable.CommonScopeSpanningSymbol;
 import de.monticore.symboltable.ImportStatement;
 import de.monticore.symboltable.SymbolKind;
 import de.monticore.symboltable.modifiers.AccessModifier;
@@ -54,7 +54,7 @@ import static de.monticore.symboltable.Symbols.sortSymbolsByPosition;
  *
  * @author Robert Heim
  */
-public class ComponentSymbol extends TaggingScopeSpanningSymbol {
+public class ComponentSymbol extends CommonScopeSpanningSymbol {
 
     public static final ComponentKind KIND = new ComponentKind();
     private final List<EMAAComponentImplementationSymbol> implementations = new ArrayList<>();

@@ -22,10 +22,10 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.EMAVariable;
 import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
-import de.monticore.lang.montiarc.tagging._symboltable.TaggingScopeSpanningSymbol;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
+import de.monticore.symboltable.CommonScopeSpanningSymbol;
 import de.monticore.symboltable.MutableScope;
 import de.monticore.symboltable.types.references.ActualTypeArgument;
 import de.se_rwth.commons.logging.Log;
@@ -88,7 +88,7 @@ import java.util.stream.Collectors;
  *         standard symbol table mechanism
  */
 public class ExpandedComponentInstanceSymbol
-        extends TaggingScopeSpanningSymbol implements ElementInstance {
+        extends CommonScopeSpanningSymbol implements ElementInstance {
 
     public static final EMAExpandedComponentInstanceKind KIND = new EMAExpandedComponentInstanceKind();
 

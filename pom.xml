@@ -186,19 +186,6 @@
       <version>${languages.version}</version>
     </dependency>
 
-    <dependency>
-      <groupId>montiarc.languages</groupId>
-      <artifactId>montiarc-fe</artifactId>
-      <version>${languages.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>montiarc.languages</groupId>
-      <artifactId>montiarc-fe</artifactId>
-      <classifier>${grammars.classifier}</classifier>
-      <version>${languages.version}</version>
-    </dependency>
-
     <!-- .. Test Libraries ............................................... -->
     <dependency>
       <groupId>junit</groupId>

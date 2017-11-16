@@ -35,7 +35,7 @@ import java.util.function.Predicate;
  *
  * @see <a href="https://sselab.de/lab2/private/trac/MontiArc4/ticket/36">Ticket 36</a>
  */
-public class EmbeddedMontiArcArtifactScope extends de.monticore.lang.montiarc.montiarc._symboltable.MontiArcArtifactScope {
+public class EmbeddedMontiArcArtifactScope extends ArtifactScope  {
 
   private CommonQualifiedNamesCalculator qualifiedNamesCalculator = new CommonQualifiedNamesCalculator();
 

@@ -41,7 +41,7 @@ import java.util.Collection;
  *         TODO static methods should call a protected doMethod() to allow extending this class
  *         TODO the builder should also be used to create a new ComponentSymbol with a build() method
  */
-public class EMAComponentBuilder extends de.monticore.lang.montiarc.montiarc._symboltable.ComponentBuilder {
+public class EMAComponentBuilder {
     protected static EMAComponentBuilder instance = null;
 
     protected static EMAComponentBuilder getInstance() {
