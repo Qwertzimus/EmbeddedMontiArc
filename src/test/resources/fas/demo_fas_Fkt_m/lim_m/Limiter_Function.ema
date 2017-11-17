@@ -9,31 +9,35 @@ import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.SysInit;
 import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.Limiter_InitialSetValue;
 
 component Limiter_Function {
-	port 
+	port
 		in B Limiter_b,
-		in (-oo:d:oo) Accelaration_pedal_pc,
-		in (-oo:d:oo) V_Vehicle_kmh,
-		in (-oo:d:oo) LeverUp_stat,
-		in (-oo:d:oo) LeverDown_stat,
-		in (-oo:d:oo) V_Sign_kmh,
+		in Z(0:255) Accelaration_pedal_pc,
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh,
+		in Z(0:7) LeverUp_stat,
+		in Z(0:7) LeverDown_stat,
+		in Z(0:255) V_Sign_kmh,
 		in B Sign_b,
 		in B Enable,
-		out (-oo:d:oo) VMax_kmh,
+		out (0m/s:0.28m/s:1820.39m/s) VMax_kmh,
 	    out B Limiter_active_b,
-		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue;
 
-	instance SwitchB<(-oo:d:oo)> switch1, switch2, switch3, switch4, switch5, switch6, switch7, switch8;
-	instance SwitchB<B> switch9, switch10, switch11;
-	instance Memory<(-oo:d:oo)>(0) mem1, mem2, mem3, mem4, mem5, mem6, mem7, mem8;
-	instance Memory<B>(false) mem9, mem10, mem11;
+	instance SwitchB<Z(0:255)> switch1, switch2;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch3, switch6, switch7, switch8;
+	instance SwitchB<Z(0:7)> switch4, switch5;
+	instance SwitchB<Boolean> switch9, switch10, switch11;
+	instance Memory<Z(0:255)>(0) mem1, mem2;
+	instance Memory<Z(0:7)> mem4, mem5;
+	instance Memory<(0m/s:0.28m/s:1820.39m/s)> mem3, mem6, mem7, mem8;
+	instance Memory<Boolean>(false) mem9, mem10, mem11;
 	instance And and1;
-	instance Min<(-oo:d:oo)> min1;
+	instance Min<Z(0:255)> min1;
 	instance Limiter_Enabled lim_Enabled;
 	instance Limiter_StartUpSetValue lim_StartUpSetValue;
 	instance Limiter_InitialSetValue lim_InitialSetValue;
 	instance SysInit sys;
 	instance Limiter_SetValue lim_SetValue;
-	
+
 	connect V_Sign_kmh -> switch1.in1;
 	connect mem1.out1 -> switch1.in3;
 	connect switch1.out1 -> mem1.in1, min1.in1;

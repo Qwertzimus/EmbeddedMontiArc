@@ -3,18 +3,18 @@ package fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m;
 import fas.basicLibrary.*;
 
 component Limiter_InitialSetValue {
-	
-	port 
+
+	port
 		in B Limiter_b,
-		in (-oo:d:oo) V_Vehicle_kmh,
-		in (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Read,
-		out (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Write;
-				
-	instance Greater<B> greater1, greater2;
-	instance Memory<B>(false) mem1;
-	instance Memory<B>(true) mem2;
-	instance SwitchB<(-oo:d:oo)> switch1;
-	
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh,
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_LimiterSetValue_Read,
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_LimiterSetValue_Write;
+
+	instance Greater<Boolean> greater1, greater2;
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch1;
+
 	connect V_Vehicle_kmh -> switch1.in1;
 	connect Limiter_b -> greater1.in1, mem1.in1;
 	connect mem1.out1 -> greater1.in2;

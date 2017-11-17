@@ -1,0 +1,8 @@
+package fas.basicLibrary;
+
+component LookUpM<T,X,N1 n> (B values[n]) {
+	port
+		in T in1,
+		out X out1;
+
+}

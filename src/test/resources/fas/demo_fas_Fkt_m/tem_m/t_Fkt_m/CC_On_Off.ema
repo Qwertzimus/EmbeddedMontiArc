@@ -4,28 +4,29 @@ import fas.basicLibrary.*;
 import fas.advancedLibrary.*;
 
 component CC_On_Off {
-	
+
 	port
 	    in B ParkingBrake_b,
-	    in (-oo:d:oo) BrakeForce_pedal_pc,
+	    in Z(0:255) BrakeForce_pedal_pc,
 	    in B CruiseControl_b,
-	    in (-oo:d:oo) V_Vehicle_kmh,
+	    in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh,
 		in B Limiter_b,
-		in (-oo:d:oo) LeverUp_Stat,
-		in (-oo:d:oo) LeverDown_Stat,
+		in Z(0:7) LeverUp_Stat,
+		in Z(0:7) LeverDown_Stat,
 		in B FTS_active_b,
 		out B CC_active_b;
 
-	instance Not<B> not1, not2, not3;
-	instance Greater<(-oo:d:oo)> greater1, greater2, greater3;
-	instance Less<(-oo:d:oo)> less1;
+	instance Not<Boolean> not1, not2, not3;
+	instance Greater<Z(0:7)> greater1, greater2;
+	instance Greater<Z(0:255)> greater3;
+	instance Less<(0m/s:0.28m/s:1820.39m/s)> less1;
 	instance And and1, and2;
-	instance Or<B> or1, or2;
-	instance Or<B,4> or3;
+	instance Or or1, or2;
+	instance Or<4> or3;
 	instance EdgeRising eRising;
 	instance EdgeFalling eFalling;
 	instance RSFlipFlop flipFlop;
-			
+
 	connect Limiter_b -> not1.in1;
 	connect not1.out1 -> and1.in1;
 	connect LeverUp_Stat -> greater1.in1;

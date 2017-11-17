@@ -8,16 +8,16 @@ component CountDown_RE {
 		in B in_R,
 		in B in_IV,
 		out B out_y;
-	
+
 	instance Greater<(-oo : oo )> relOp_C, relOp_Y;
 	instance And logOp_C;
 	instance PlusMinus<(-oo s:oo s)> sum_C;
-	instance SwitchM<B> switch_C, switch_R;
+	instance SwitchM<Boolean> switch_C, switch_R;
 	instance Constant<(-oo s: oo s)>(0 s) zero_C;
 	instance Constant<(-oo s: oo s)>(eps*100000) zero_Y;
 	instance Constant<(1 s: 1 s)>(1) one_C;
-	instance Memory<B>(false) memory_C;
-	
+	instance Memory<Boolean>(false) memory_C;
+
 	connect in_IV -> switch_R.in1;
 	connect in_R -> switch_R.cond;
 	connect in_E -> logOp_C.in1;

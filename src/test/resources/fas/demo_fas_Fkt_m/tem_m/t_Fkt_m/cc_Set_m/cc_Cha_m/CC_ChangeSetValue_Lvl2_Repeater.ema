@@ -7,30 +7,30 @@ import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_Rep.V_SetValue_Pl
 import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_Rep.V_SetValue_MinusLvl2;
 import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_Rep.V_SetValue_Minus;
 import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_Rep.CountDown;
-	
+
 component CC_ChangeSetValue_Lvl2_Repeater {
 	port
-		in (-oo:d:oo) LeverUp_Stat,
-		in (-oo:d:oo) LeverDown_Stat,
-		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
+		in Z(0:7) LeverUp_Stat,
+		in Z(0:7) LeverDown_Stat,
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Read,
 		in B Enable,
 		in B If,
-		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
-		
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue;
 
-	instance Equals<(-oo:d:oo)> eq1, eq2, eq3, eq4;
-	instance Or4<B> or;
-	instance Or3<B> or2;
-	instance Not<B> not1, not2;
-	instance Memory<B>(0) mem1;
+
+	instance Equals<Z(0:7)> eq1, eq2, eq3, eq4;
+	instance Or<4> or;
+	instance Or<3> or2;
+	instance Not<Boolean> not1, not2;
+	instance Memory<Boolean>(0) mem1;
 	instance CountDown cDown;
-	instance SwitchB<B> switch1, switch2, switch3, switch4, switch5, switch6;
+	instance SwitchB<Boolean> switch1, switch2, switch3, switch4, switch5, switch6;
 	instance SysInit sInit;
 	instance V_SetValue_PlusLvl2 v_SetValuePlus2;
 	instance V_SetValue_Plus v_SetValuePlus;
 	instance V_SetValue_Minus v_SetValueMinus;
 	instance V_SetValue_MinusLvl2 v_SetValueMinus2;
-		
+
 	connect LeverUp_Stat -> eq1.in1, eq2.in1;
 	connect LeverDown_Stat -> eq3.in1, eq4.in1;
 	connect 1 -> eq1.in2;

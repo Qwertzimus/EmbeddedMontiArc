@@ -6,15 +6,16 @@ import fas.demo_fas_Fkt_m.lim_m.lim_Fkt_m.lim_SetVal_m.V_LimSetValueMinus;
 
 component Limiter_SetValue {
 	port
-		in (-oo:d:oo) LeverUp_stat,
-		in (-oo:d:oo) LeverDown_stat,
-		in (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Read,
+		in Z(0:7) LeverUp_stat,
+		in Z(0:7) LeverDown_stat,
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_LimiterSetValue_Read,
 		in B Enabled_Cond,
-		out (-oo:d:oo) DEMO_FAS_V_LimiterSetValue_Write;
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_LimiterSetValue_Write;
 
-	instance Greater<(-oo:d:oo)> greater1, greater2;
-	instance Memory<(-oo:d:oo)>(0) mem1, mem2;
-	instance SwitchB<(-oo:d:oo)> switch1, switch2, switch3;
+	instance Greater<Z(0:7)> greater1, greater2;
+	instance Memory<Z(0:7)>(0) mem1, mem2;
+	instance SwitchB<Z(0:7)> switch1, switch2;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch3;
 	instance V_LimSetValuePlus plus;
 	instance V_LimSetValueMinus minus;
 
