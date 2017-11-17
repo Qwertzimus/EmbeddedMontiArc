@@ -1,0 +1,8 @@
+package fas.basicLibrary;
+
+component ConditionB<T>(String condition) {
+  port
+    in T in1,
+    in B in2,
+    out B out1;
+}

@@ -4,39 +4,39 @@ import fas.basicLibrary.*;
 
 component Distronic_Enabled {
 	port
-		in (-oo:d:oo) V_Vehicle_ms,
-		in (-oo:d:oo) Distance_Object_m,
-		in (-oo:d:oo) Distance_stat,
-		in (-oo:d:oo) V_Obj_rel_kmh,
-		out (-oo:d:oo) BrakeForce_Distronic_pc,
-		out (-oo:d:oo) Decelerator_pc;
-	
-	instance SwitchMultiport3<(-oo:d:oo)> switch1;
-	instance SwitchB<(-oo:d:oo)> switch2;
-	instance Multiplication<(-oo:d:oo)> mult1, mult2, mult3;
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_ms,
+		in (0m:200m) Distance_Object_m,
+		in Z(0:255) Distance_stat,
+		in (-1820.39m/s:0.28m/s:1820.39m/s) V_Obj_rel_kmh,
+		out Z(0:255) BrakeForce_Distronic_pc,
+		out Z(0:255) Decelerator_pc;
+
+	instance SwitchMultiport<Q(0:255),3> switch1;
+	instance SwitchB<Z(0:255)> switch2;
+	instance Multiplication<(0m/s:0.28m/s:1820.39m/s)> mult1, mult2, mult3;
 	instance PlusMinusPlus<(-oo:d:oo)> pmp1;
-	instance LookUp<(-oo:d:oo)> look1, look2, look3, look4, look5;
-	instance Smaller<(-oo:d:oo)> smaller1;
-	
+	instance LookUpM<(-1820.39m/s:0.28m/s:1820.39m/s),Z(0:255)> look1, look2, look3, look4, look5;
+	instance Smaller<(0m:200m)> smaller1;
+
 	connect Distance_stat -> switch1.in1;
 	connect 3 /*demo_fas_Distance_Threshold_Far*/ -> switch1.in2;
 	connect 2.5 /*demo_fas_Distance_Threshold_Med*/ -> switch1.in3;
 	connect 2 /*demo_fas_Distance_Threshold_Near*/ -> switch1.in4;
-	connect switch1.out1 -> mult1.in2;
-	connect V_Vehicle_ms -> mult1.in1;
+	connect switch1.out1 -> mult1.in1[0];
+	connect V_Vehicle_ms -> mult1.in1[1];
 	connect Distance_Object_m -> smaller1.in1, pmp1.in1;
 	connect mult1.out1 -> pmp1.in2;
 	connect V_Obj_rel_kmh -> look1.in1, look2.in1, look3.in1;
 	connect look1.out1 -> pmp1.in3;
 	connect pmp1.out1 -> look4.in1, look5.in1;
-	connect look4.out1 -> mult2.in1;
-	connect look2.out1 -> mult2.in2;
+	connect look4.out1 -> mult2.in1[0];
+	connect look2.out1 -> mult2.in1[1];
 	connect 2.5 -> smaller1.in2;
 	connect 100 -> switch2.in1;
 	connect smaller1.out1 -> switch2.cond;
 	connect mult2.out1 -> switch2.in3;
-	connect look5.out1 -> mult3.in1;
-	connect look3.out1 -> mult3.in2;
+	connect look5.out1 -> mult3.in1[0];
+	connect look3.out1 -> mult3.in1[1];
 	connect switch2.out1 -> BrakeForce_Distronic_pc;
 	connect mult3.out1 -> Decelerator_pc;
 }

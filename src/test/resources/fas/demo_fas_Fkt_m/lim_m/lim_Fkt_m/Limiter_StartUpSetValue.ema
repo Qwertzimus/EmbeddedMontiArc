@@ -5,13 +5,13 @@ import fas.basicLibrary.*;
 component Limiter_StartUpSetValue {
 	port
 		in B trigger,
-		out (-oo:d:oo) DEMO_FAS_V_CCSetValue_Write;
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Write;
 
-	instance Memory<B>(false) mem1;
-	instance Memory<B>(true) mem2;
-	instance Greater<B> greater1, greater2;
-	instance SwitchB<(-oo:d:oo)> switch1;
-			
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+	instance Greater<Boolean> greater1, greater2;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch1;
+
 	connect 300 -> switch1.in1;
 	connect trigger -> mem1.in1, greater1.in1;
 	connect mem1.out1 -> greater1.in2;

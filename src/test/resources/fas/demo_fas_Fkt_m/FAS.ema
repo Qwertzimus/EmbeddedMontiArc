@@ -5,23 +5,26 @@ import fas.basicLibrary.*;
 component FAS {
     port
         in B ParkingBrake_b,
-        in (-oo:d:oo) BrakeForce_pedal_pc,
-	    in (-oo:d:oo) Accelaration_pedal_pc,
+        // Winkel BrakeForce_pedal = (0°:0.2°:45°), codiert in 8-bit
+        in Z(0:255) BrakeForce_pedal_pc, // BRMS_STATUS
+        // Winkel Accelaration_pedal = (0°:0.2°:45°)
+	    in Z(0:255) Accelaration_pedal_pc, // GAS_STATUS
         in B CruiseControl_b,
 		in B Limiter_b,
-		in (-oo:d:oo) LeverUp_stat,
-		in (-oo:d:oo) LeverDown_stat,
-		in (-oo:d:oo) V_Vehicle_kmh,
-		in (-oo:d:oo) V_Sign_kmh,
+		in Z(0:7) LeverUp_stat, // TMP_POS
+		in Z(0:7) LeverDown_stat, // TMP_POS
+        // Geschwindigkeit = (0km/h:0.1km/h:6553.4km/h)
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh, // R_Fahrzeuggeschwindigkeit_kmh
+		in Z(0:255) V_Sign_kmh, // R_TrafficSign, 8-bit Datenstruktur
 		in B Sign_b,
-		in (-oo:d:oo) Distance_stat,
-        in (-oo:d:oo) V_Obj_rel_kmh,
-        in (-oo:d:oo) Distance_Object_m,
+		in Z(0:255) Distance_stat, // RDR_DETECT, 8-bit Datenstruktur
+        in (0m/s:2.8m/s:1820.39m/s) V_Obj_rel_kmh,
+        in (0m:1m:200m) Distance_Object_m, // siehe: RDR_DETECT
         out B CC_active_b,
-        out (-oo:d:oo) Accelaration_pc,
-        out (-oo:d:oo) BrakeForce_pc,
-        out (-oo:d:oo) CCSetValue_kmh,
-        out (-oo:d:oo) LimiterSetValue_kmh,
+        out Z(0:255) Accelaration_pc,
+        out Z(0:255) BrakeForce_pc,
+        out (0m/s:2.8m/s:1820.39m/s) CCSetValue_kmh,
+        out (0m/s:2.8m/s:1820.39m/s) LimiterSetValue_kmh,
         out B Limiter_active_b,
         out B Opti_warn_b,
         out B Acusti_warn_b;
@@ -34,8 +37,8 @@ component FAS {
     //component FollowToStop followToStop;
     instance EmergencyBrake emergencyBrake;
     instance VelocityControl velocityControl;
-    instance Or<B> or;
-	instance MultDiv<(-oo:d:oo)> multDiv1, multDiv2;
+    instance Or or;
+	instance MultDiv<(0m/s:0.28m/s:1820.39m/s)> multDiv1, multDiv2;
 
     connect BrakeForce_pedal_pc -> brakeAssistant.BrakeForce_pedal_pc;
 
@@ -47,7 +50,7 @@ component FAS {
     connect LeverUp_stat -> tempo.LeverUp_stat;
     connect LeverDown_stat -> tempo.LeverDown_stat;
     //connect followToStop.FTS_active_b -> tempo.FTS_active_b;
-    
+
     connect Limiter_b -> lim.Limiter_b;
     connect Accelaration_pedal_pc -> lim.Accelaration_pedal_pc;
     connect V_Vehicle_kmh -> lim.V_Vehicle_kmh;
@@ -58,10 +61,10 @@ component FAS {
 
 	connect V_Vehicle_kmh -> multDiv1.in1;
 	connect 3.6 -> multDiv1.in2;
-	
+
 	connect V_Obj_rel_kmh -> multDiv2.in1;
 	connect 3.6 -> multDiv2.in2;
-	
+
     connect multDiv1.out1 -> distWarner.V_Vehicle_ms;
     connect Distance_Object_m -> distWarner.Distance_Object_m;
 
@@ -72,7 +75,7 @@ component FAS {
     connect V_Obj_rel_kmh -> dist.V_Obj_rel_kmh;
     //connect followToStop.FTS_active_b -> dist.FTS_active_b;
     //connect followToStop.FTS_Abstand_soll_m -> dist.FTS_Abstand_soll_m;
-	
+
 	connect V_Vehicle_kmh -> followToStop.V_Vehicle_kmh;
 	connect V_Obj_rel_kmh -> followToStop.V_Obj_rel_kmh;
 

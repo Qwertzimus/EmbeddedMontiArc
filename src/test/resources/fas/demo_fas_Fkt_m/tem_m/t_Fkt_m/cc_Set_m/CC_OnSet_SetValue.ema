@@ -5,18 +5,18 @@ import fas.advancedLibrary.*;
 
 component CC_OnSet_SetValue {
 	port
-		in (-oo:d:oo) V_Vehicle_kmh,
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh,
 		in B trigger,
-		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Read,
 		in B Enable,
-		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
-	
-	instance SwitchB<B> switch1, switch2;
-	instance SwitchB<(-oo:d:oo)> switch3;
-	instance Greater<(-oo:d:oo)> greater1, greater2;
-	instance Memory<B>(false) mem1;
-	instance Memory<B>(true) mem2;
-	
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue;
+
+	instance SwitchB<Boolean> switch1, switch2;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch3;
+	instance Greater<Boolean> greater1, greater2;
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+
 	connect trigger -> greater1.in1, switch1.in1;
 	connect Enable -> switch1.cond, switch2.cond;
 	connect DEMO_FAS_V_CCSetValue_Read -> switch3.in3;

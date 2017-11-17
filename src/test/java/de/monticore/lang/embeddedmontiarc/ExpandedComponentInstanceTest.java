@@ -23,6 +23,7 @@ package de.monticore.lang.embeddedmontiarc;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.*;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.symboltable.Scope;
+import de.monticore.symboltable.Symbol;
 import de.se_rwth.commons.logging.Log;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -37,7 +38,16 @@ import static org.junit.Assert.*;
  * @author Michael von Wenckstern
  */
 public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
-    //@Ignore
+
+    @Test
+    public void testFAS() throws Exception {
+        Scope symTab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
+            "fas.demo_fas_Fkt_m.fAS", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+        assertNotNull(inst);
+    }
+
+
     @Test
     public void testComponentSub2() throws Exception {
         Scope symTab = createSymTab("src/test/resources");

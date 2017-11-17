@@ -10,9 +10,9 @@ component EdgeFalling {
 		out B y;
 		
 	instance And and;
-	instance Not<B> not;
-	instance SwitchB<B> switch_R;
-	instance Memory<B>(false) memory_U;
+	instance Not<Boolean> not;
+	instance SwitchB<Boolean> switch_R;
+	instance Memory<Boolean>(false) memory_U;
 	
 	connect u -> not.in1;
 	connect not.out1 -> and.in1;

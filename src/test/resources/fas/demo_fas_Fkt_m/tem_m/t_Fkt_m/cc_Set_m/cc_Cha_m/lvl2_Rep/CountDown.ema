@@ -7,15 +7,15 @@ component CountDown {
 		in B E,
 		in B R,
 		in B Enable,
-		in (-oo:d:oo) IV,
+		in Z(1:10) IV, // delay auto repeat
 		out B y;
-	
-	instance SwitchB<(-oo:d:oo)> switch_R, switch_C, switch1;
-	instance Memory<(-oo:d:oo)>(0) mem1;
-	instance Greater<(-oo:d:oo)> relOp_Y, relOp_C;
-	instance PlusMinus<(-oo:d:oo)> sum_C;
+
+	instance SwitchB<Z(1:10)> switch_R, switch_C, switch1;
+	instance Memory<Z(1:10)>(0) mem1;
+	instance Greater<Z(1:10)> relOp_Y, relOp_C;
+	instance PlusMinus<Z(1:10)> sum_C;
 	instance And logOp_C;
-	
+
 	connect IV -> switch_R.in1;
 	connect R -> switch_R.cond;
 	connect switch_C.out1 -> switch_R.in3;
@@ -32,4 +32,3 @@ component CountDown {
 	connect Enable -> switch1.cond;
 	connect 0.0001 -> relOp_Y.in2;
 }
-	

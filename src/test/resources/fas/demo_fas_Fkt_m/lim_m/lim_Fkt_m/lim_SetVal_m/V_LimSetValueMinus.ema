@@ -4,15 +4,15 @@ import fas.basicLibrary.*;
 
 component V_LimSetValueMinus {
 	port
-		in (-oo:d:oo) V_LimiterSetValue,
+		in (0m/s:0.28m/s:1820.39m/s) V_LimiterSetValue,
 		in B trigger,
-		out (-oo:d:oo) out1;
+		out (0m/s:0.28m/s:1820.39m/s) out1;
 
-	instance PlusMinus<(-oo:d:oo)> plusMinus1;
-	instance Memory<B>(false) mem1;
-	instance Memory<B>(true) mem2;
-	instance Greater<B> greater1, greater2;
-	instance SwitchB<(-oo:d:oo)> switch1;
+	instance PlusMinus<(0m/s:0.28m/s:1820.39m/s)> plusMinus1;
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+	instance Greater<Boolean> greater1, greater2;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch1;
 
 	connect trigger -> greater1.in1, mem1.in1;
 	connect mem1.out1 -> greater1.in2;
