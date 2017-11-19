@@ -6,19 +6,19 @@ component V_SetValuePlusLvl2 {
 	port
 		in B trigger,
 		in B Enable,
-		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
-		in (-oo:d:oo) in1,
-		out (-oo:d:oo) DEMO_FAS_V_CCSetValue_Write;
-	
-	instance Greater<B> greater1, greater2;
-	instance SwitchB<B> switch1, switch2;
-	instance Memory<B>(false) mem1;
-	instance Memory<B>(true) mem2;
-	instance SwitchB<(-oo:d:oo)> switch3;
-	instance Mod<(-oo:d:oo)> mod1;
-	instance MinusPlus<(-oo:d:oo)> mp1;
-	instance Sum<(-oo:d:oo)> sum1;
-	
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Read,
+		in (0m/s:0.28m/s:1820.39m/s) in1,
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Write;
+
+	instance Greater<Boolean> greater1, greater2;
+	instance SwitchB<Boolean> switch1, switch2;
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch3;
+	instance Mod<(0m/s:0.28m/s:1820.39m/s)> mod1;
+	instance MinusPlus<(0m/s:0.28m/s:1820.39m/s)> mp1;
+	instance Sum<(0m/s:0.28m/s:1820.39m/s)> sum1;
+
 	connect trigger -> greater1.in1, switch1.in1;
 	connect switch1.out1 -> mem1.in1;
 	connect mem1.out1 -> switch1.in3, greater1.in2;

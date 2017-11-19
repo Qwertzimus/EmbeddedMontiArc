@@ -8,32 +8,32 @@ import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_StartUpSetValue;
 import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.CC_ChangeSetValue;
 
 component CC_SetValue {
-	
+
 	port
 		in B Limiter_b,
 		in B CC_enabled_b,
 		in B CruiseControl_b,
-		in (-oo:d:oo) V_Vehicle_kmh,
-		in (-oo:d:oo) LeverUp_Stat,
-		in (-oo:d:oo) LeverDown_Stat,
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh,
+		in Z(0:7) LeverUp_Stat,
+		in Z(0:7) LeverDown_Stat,
 		in B Enable,
-		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue;
 
-	instance GreaterEquals<(-oo:d:oo)> greaterEq;
+	instance GreaterEquals<(0m/s:0.28m/s:1820.39m/s)> greaterEq;
 	instance And and1, and2;
-	instance And3 and3;
-	instance Or<(-oo:d:oo)> or1;
-	instance Not<B> not1, not2, not3, not4;
-	instance SwitchB<(-oo:d:oo)> switch1, switch2;
-	instance Memory<(-oo:d:oo)>(0) mem1;
+	instance And<3> and3;
+	instance Or or1;
+	instance Not<Boolean> not1, not2, not3, not4;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch1, switch2;
+	instance Memory<(0m/s:0.28m/s:1820.39m/s)>(0) mem1;
 	instance EdgeRising eRising;
 	instance RSFlipFlop flipFlop;
 	instance SysInit sInit;
 	instance CC_OnSet_SetValue cc_OnSet;
-	instance CC_ChangeSetValue cc_ChangeSet;
+	instance CC_ChangeSetValue_edited cc_ChangeSet;
 	instance CC_InitialSetValue cc_InitialSet;
 	instance CC_StartUpSetValue cc_StartUpSet;
-	
+
 	connect Limiter_b -> not1.in1;
 	connect CruiseControl_b -> not2.in1, and1.in1;
 	connect V_Vehicle_kmh -> cc_InitialSet.V_Vehicle_kmh, greaterEq.in1, cc_OnSet.V_Vehicle_kmh;

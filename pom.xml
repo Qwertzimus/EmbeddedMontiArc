@@ -47,7 +47,6 @@
 	<languages.version>4.0.1-SNAPSHOT</languages.version>
     <SIUnit.version>0.1.1-fGWiGhVOHEqxe9fiCfQF6Q</SIUnit.version>
     <struct.version>0.1.1-fGWiGhVOHEqxe9fiCfQF6Q</struct.version>
-
     <Common-MontiCar.version>0.1.1-fGWiGhVOHEqxe9fiCfQF6Q</Common-MontiCar.version>
 
     <!-- .. Libraries .................................................. -->
@@ -178,25 +177,6 @@
       <version>${Common-MontiCar.version}</version>
       <classifier>${grammars.classifier}</classifier>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>montiarc.languages</groupId>
-      <artifactId>tagging</artifactId>
-      <version>${languages.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>montiarc.languages</groupId>
-      <artifactId>montiarc-fe</artifactId>
-      <version>${languages.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>montiarc.languages</groupId>
-      <artifactId>montiarc-fe</artifactId>
-      <classifier>${grammars.classifier}</classifier>
-      <version>${languages.version}</version>
     </dependency>
 
     <!-- .. Test Libraries ............................................... -->

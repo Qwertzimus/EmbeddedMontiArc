@@ -8,18 +8,18 @@ import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Set_m.cc_Cha_m.lvl2_noR.V_SetValueMin
 
 component CC_ChangeSetValue_Lvl2_no_Repeater {
 	port
-		in (-oo:d:oo) LeverUp_Stat,
-		in (-oo:d:oo) LeverDown_Stat,
-		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
+		in Z(0:7) LeverUp_Stat,
+		in Z(0:7) LeverDown_Stat,
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Read,
 		in B Enable,
-		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue;
 
-	instance Equals<(-oo:d:oo)> eq1, eq2, eq3, eq4;
+	instance Equals<Z(0:7)> eq1, eq2, eq3, eq4;
 	instance V_SetValuePlusLvl2 v_SetValuePlus2;
 	instance V_SetValuePlus v_SetValuePlus;
 	instance V_SetValueMinus v_SetValueMinus;
 	instance V_SetValueMinusLvl2 v_SetValueMinus2;
-	
+
 	connect LeverUp_Stat -> eq1.in1, eq2.in1;
 	connect LeverDown_Stat -> eq3.in1, eq4.in1;
 	connect 2 -> eq1.in2;

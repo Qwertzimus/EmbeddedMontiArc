@@ -20,9 +20,9 @@
  */
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
-import de.monticore.lang.montiarc.montiarc._symboltable.PortKind;
+import de.monticore.symboltable.SymbolKind;
 
-public class ConstantPortKind extends PortKind {
+public class ConstantPortKind implements SymbolKind {
 
     public static final ConstantPortKind INSTANCE = new ConstantPortKind();
     public ConstantPortKind(){

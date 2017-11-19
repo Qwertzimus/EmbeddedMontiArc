@@ -6,8 +6,8 @@ component SysInit {
 	port
 		out B y;
 		
-	instance Constant<B>(false) zero_Init;
-	instance Memory<B>(true) memory_Init;
+	instance Constant<Boolean>(false) zero_Init;
+	instance Memory<Boolean>(true) memory_Init;
 		
 	connect zero_Init.out1 -> memory_Init.in1;
 	connect memory_Init.out1 -> y;

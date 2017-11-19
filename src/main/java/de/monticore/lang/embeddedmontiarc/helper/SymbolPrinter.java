@@ -22,14 +22,13 @@ package de.monticore.lang.embeddedmontiarc.helper;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.*;
 import de.monticore.lang.monticar.ValueSymbol;
-import de.monticore.lang.montiarc.tagging._symboltable.IsTaggable;
 import de.monticore.lang.monticar.helper.IndentPrinter;
 import de.monticore.lang.monticar.ts.MCTypeSymbol;
+import de.monticore.symboltable.Symbol;
 import de.monticore.symboltable.types.TypeSymbol;
 import de.monticore.symboltable.types.references.ActualTypeArgument;
 import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.monticore.symboltable.types.references.TypeReference;
-import de.se_rwth.commons.logging.Log;
 
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +39,7 @@ import java.util.stream.Collectors;
  * class for pretty printing symbols, this class does not use the AST
  */
 public class SymbolPrinter {
+
 
     /**
      * help function for nested type arguments such as List<NewType<String, List<String>>>
@@ -228,18 +228,19 @@ public class SymbolPrinter {
         return ip.getContent();
     }
 
-    public static void printTags(IsTaggable hasTags, IndentPrinter ip) {
-        if (!hasTags.getTags().isEmpty()) {
-            ip.println("/* tags: ");
-            ip.indent();
-            ip.indent();
-            ip.print(hasTags.getTags().stream().map(t -> t.toString()).
-                    collect(Collectors.joining("\n")));
-            ip.print("  */");
-            ip.unindent();
-            ip.unindent();
-            ip.println();
-        }
+    public static void printTags(Symbol hasTags, IndentPrinter ip) {
+        // needs to be changed so that this method can be overwritten --> remove static
+//        if (!hasTags.getTags().isEmpty()) {
+//            ip.println("/* tags: ");
+//            ip.indent();
+//            ip.indent();
+//            ip.print(hasTags.getTags().stream().map(t -> t.toString()).
+//                    collect(Collectors.joining("\n")));
+//            ip.print("  */");
+//            ip.unindent();
+//            ip.unindent();
+//            ip.println();
+//        }
     }
 
     public static void printPackageInfo(ComponentSymbol cmp, IndentPrinter ip, boolean skipPackageImport) {

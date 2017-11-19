@@ -6,18 +6,18 @@ component V_SetValueMinus {
 	port
 		in B trigger,
 		in B Enable,
-		in (-oo:d:oo) DEMO_FAS_V_CCSetValue_Read,
-		out (-oo:d:oo) DEMO_FAS_V_CCSetValue;
-	
-	instance Greater<B> greater1, greater2;
-	instance SwitchB<B> switch1, switch2;
-	instance Memory<B>(false) mem1;
-	instance Memory<B>(true) mem2;
-	instance PlusMinus<(-oo:d:oo)> pm1;
-	instance SwitchB<(-oo:d:oo)> switch3;
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue_Read,
+		out (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue;
+
+	instance Greater<Boolean> greater1, greater2;
+	instance SwitchB<Boolean> switch1, switch2;
+	instance Memory<Boolean>(false) mem1;
+	instance Memory<Boolean>(true) mem2;
+	instance PlusMinus<(0m/s:0.28m/s:1820.39m/s)> pm1;
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch3;
 	//Tag auf >=20 setzen
-	instance SwitchM<(-oo:d:oo)> switch4;
-	
+	instance SwitchM<(0m/s:0.28m/s:1820.39m/s)> switch4;
+
 	connect trigger -> greater1.in1, switch1.in1;
 	connect switch1.out1 -> mem1.in1;
 	connect mem1.out1 -> switch1.in3, greater1.in2;

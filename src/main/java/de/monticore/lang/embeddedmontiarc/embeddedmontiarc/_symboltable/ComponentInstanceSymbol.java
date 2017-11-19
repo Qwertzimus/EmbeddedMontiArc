@@ -20,23 +20,23 @@
  */
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
-import de.monticore.lang.monticar.ValueSymbol;
-import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
-import de.monticore.lang.montiarc.tagging._symboltable.TaggingScopeSpanningSymbol;
-import de.monticore.symboltable.types.TypeSymbol;
-import de.monticore.symboltable.types.references.TypeReference;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
+import de.monticore.lang.monticar.ValueSymbol;
+import de.monticore.symboltable.CommonScopeSpanningSymbol;
+import de.monticore.symboltable.types.TypeSymbol;
+import de.monticore.symboltable.types.references.TypeReference;
 
 /**
  * Represents an instance of a component.
  *
  * @author Robert Heim
  */
-public class ComponentInstanceSymbol extends TaggingScopeSpanningSymbol implements ElementInstance {
+public class ComponentInstanceSymbol extends CommonScopeSpanningSymbol implements ElementInstance {
 
     public static final EMAComponentInstanceKind KIND = EMAComponentInstanceKind.INSTANCE;
 

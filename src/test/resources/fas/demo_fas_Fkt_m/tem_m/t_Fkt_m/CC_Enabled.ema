@@ -6,18 +6,18 @@ import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Ena_m.Tempomat_Active;
 import fas.demo_fas_Fkt_m.tem_m.t_Fkt_m.cc_Ena_m.Tempomat_Deactive;
 
 component CC_Enabled {
-	
+
 	port
 		in B CC_active_b,
-		in (-oo:d:oo) V_Vehicle_kmh,
-		in (-oo:d:oo) DEMO_FAS_V_CCSetValue,
-		out (-oo:d:oo) V_CC_delta_kmh;
-			
-	instance SwitchB<(-oo:d:oo)> switch1, switch2, switch3;
-	instance Memory<(-oo:d:oo)>(0) mem1, mem2;
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_kmh,
+		in (0m/s:0.28m/s:1820.39m/s) DEMO_FAS_V_CCSetValue,
+		out (-1820.39m/s:0.28m/s:1820.39m/s) V_CC_delta_kmh;
+
+	instance SwitchB<(0m/s:0.28m/s:1820.39m/s)> switch1, switch2, switch3;
+	instance Memory<(0m/s:0.28m/s:1820.39m/s)>(0) mem1, mem2;
 	instance Tempomat_Active t_Active;
 	instance Tempomat_Deactive t_Deactive;
-	
+
 	connect CC_active_b -> switch1.cond, switch2.cond, switch3.cond;
 	connect V_Vehicle_kmh -> switch1.in1;
 	connect DEMO_FAS_V_CCSetValue -> switch2.in1;

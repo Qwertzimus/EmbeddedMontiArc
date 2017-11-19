@@ -4,19 +4,19 @@ import fas.basicLibrary.*;
 
 component EmergencyBrake_Function {
 	port
-		in (-oo:d:oo) V_Vehicle_ms,
-		in (-oo:d:oo) Distance_Object_m,
-		in (-oo:d:oo) V_Obj_rel_ms,
-		out (-oo:d:oo) BrakeForce_Emergency_pc,
+		in (0m/s:0.28m/s:1820.39m/s) V_Vehicle_ms,
+		in (0m:200m) Distance_Object_m,
+		in (-1820.39m/s:0.28m/s:1820.39m/s) V_Obj_rel_ms,
+		out Z(0:255) BrakeForce_Emergency_pc,
 		out B Acusti_warn_b;
-		
-	instance Saturation<(-oo:d:oo)> sat1, sat2, sat3;
-	instance Division<(-oo:d:oo)> div1, div2;
-	instance MinusPlus<(-oo:d:oo)> minPlus1, minPlus2;
-	instance Smaller<(-oo:d:oo)> smaller1, smaller2;
-	instance SwitchB<(-oo:d:oo)> switch1, switch2;
-	instance Max<(-oo:d:oo)> max1;
-	
+
+	instance Saturation<(1m/s:0.28m/s:1820.39m/s)> sat1, sat2, sat3;
+	instance Division<(0m/s:0.28m/s:1820.39m/s)> div1, div2;
+	instance MinusPlus<(0m/s:0.28m/s:1820.39m/s)> minPlus1, minPlus2;
+	instance Smaller<(0m/s:0.28m/s:1820.39m/s)> smaller1, smaller2;
+	instance SwitchB<Z(0:40:80)> switch1, switch2;
+	instance Max<Z(0:40:80)> max1;
+
 	connect Distance_Object_m -> div1.in1;
 	connect V_Obj_rel_ms -> sat1.in1;
 	connect sat1.out1 -> div1.in2;
@@ -39,5 +39,5 @@ component EmergencyBrake_Function {
 	connect switch1.out1 -> max1.in1;
 	connect switch2.out1 -> max1.in2;
 	connect max1.out1 -> BrakeForce_Emergency_pc;
-	
+
 }
