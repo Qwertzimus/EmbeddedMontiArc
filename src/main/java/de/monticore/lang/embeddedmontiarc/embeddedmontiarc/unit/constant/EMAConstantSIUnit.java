@@ -50,10 +50,17 @@ public class EMAConstantSIUnit extends EMAConstantValue {
 
     /**
      * Does not return the unit, just the value
+     *
      * @return
      */
     @Override
-    public String getValueAsString(){
-        return getRational().toString();
+    public String getValueAsString() {
+        String result = "";
+        if (getRational().getDivisor().intValue() == 1) {
+            result += getRational().intValue();
+        } else {
+            result += getRational().doubleValue();
+        }
+        return result;
     }
 }
