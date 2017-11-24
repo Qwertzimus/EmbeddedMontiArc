@@ -22,6 +22,8 @@ package de.monticore.lang.embeddedmontiarc;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.*;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
+import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
+import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
 import de.monticore.symboltable.Scope;
 import de.monticore.symboltable.Symbol;
 import de.se_rwth.commons.logging.Log;
@@ -43,7 +45,7 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
     public void testFAS() throws Exception {
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
-            "fas.demo_fas_Fkt_m.fAS", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+                "fas.demo_fas_Fkt_m.fAS", ExpandedComponentInstanceSymbol.KIND).orElse(null);
         assertNotNull(inst);
     }
 
@@ -223,6 +225,28 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
         assertNotNull(inst);
         System.out.println(inst);
 
+    }
+
+    @Test
+    public void testTypeVariableGenericsInstanciation2() {
+        Scope symTab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol csInner = symTab.<ExpandedComponentInstanceSymbol>resolve("testing.basicResolutionInstance.br1", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+        assertNotNull(csInner);
+
+        Log.debug(csInner.getFullName() + " " + csInner.getComponentType().getReferencedSymbol().howManyResolutionDeclarationSymbol(), "Amount ResolutionDeclarationSymbols :");
+
+
+        ResolutionDeclarationSymbol jt = csInner.getResolutionDeclarationSymbol("n");
+        assertNotNull(jt);
+        //This works for all generic indices
+        int result = InstanceInformation.getInstanceNumberFromASTSubComponent(csInner.getInstanceInformation().get().getASTSubComponent(), 0);
+        assertEquals(6, result);
+        //not working in expandedcomponentInstanceSymbols, use InstanceInformation.getInstanceNumber... as seen above
+        //assertEquals(6, ((ASTUnitNumberResolution) jt.getASTResolution()).getNumber().get().intValue());
+        assertEquals("br1", csInner.getName());
+        assertEquals(6, csInner.getComponentType().getIncomingPorts().size());
+        result = InstanceInformation.getInstanceNumberFromASTSubComponent(csInner.getInstanceInformation().get().getASTSubComponent(), 1);
+        assertEquals(3, result);
     }
 /*
   @Test

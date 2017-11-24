@@ -20,14 +20,7 @@
  */
 package de.monticore.lang.embeddedmontiarc;
 
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentInstanceSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ConnectorSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ConstantPortSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortArraySymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.UnitNumberExpressionSymbol;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.*;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.unit.constant.EMAConstantSIUnit;
 import de.monticore.lang.monticar.mcexpressions._ast.ASTExpression;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
@@ -638,6 +631,35 @@ public class SymtabTest extends AbstractSymtabTest {
         assertEquals(2, ((ASTUnitNumberResolution) jt.getASTResolution()).getNumber().get().intValue());
         assertEquals("br1", csInner.getName());
         assertEquals(2, csInner.getComponentType().getIncomingPorts().size());
+
+
+        ResolutionDeclarationSymbol jk = csInner.getComponentType().getResolutionDeclarationSymbol("k").get();
+        assertNotNull(jk);
+        assertEquals(1, ((ASTUnitNumberResolution) jk.getASTResolution()).getNumber().get().intValue());
+
+    }
+
+    @Test
+    public void testTypeVariableGenericsInstanciation2() {
+        Scope symTab = createSymTab("src/test/resources");
+        ComponentSymbol cs = symTab.<ComponentSymbol>resolve("testing.BasicResolutionInstance", ComponentSymbol.KIND).orElse(null);
+        assertNotNull(cs);
+        ComponentInstanceSymbol csInner = symTab.<ComponentInstanceSymbol>resolve("testing.BasicResolutionDefaultInstance.br1", ComponentInstanceSymbol.KIND).orElse(null);
+        assertNotNull(csInner);
+
+        Log.debug(csInner.getFullName() + " " + csInner.getComponentType().getReferencedSymbol().howManyResolutionDeclarationSymbol(), "Amount ResolutionDeclarationSymbols :");
+
+
+        ResolutionDeclarationSymbol jt = csInner.getComponentType().getResolutionDeclarationSymbol("n").get();
+        assertNotNull(jt);
+        assertEquals(6, ((ASTUnitNumberResolution) jt.getASTResolution()).getNumber().get().intValue());
+        assertEquals("br1", csInner.getName());
+        assertEquals(6, csInner.getComponentType().getIncomingPorts().size());
+
+
+        ResolutionDeclarationSymbol jk = csInner.getComponentType().getResolutionDeclarationSymbol("k").get();
+        assertNotNull(jk);
+        assertEquals(3, InstanceInformation.getInstanceNumberFromASTSubComponent(csInner.getInstanceInformation().get().getASTSubComponent(),1));
 
     }
 

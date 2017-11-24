@@ -21,6 +21,7 @@
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTSubComponent;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTSubComponentInstance;
 import de.monticore.lang.monticar.resolution._ast.ASTTypeArgument;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.types2._ast.ASTSimpleReferenceType;
@@ -124,9 +125,15 @@ public class InstanceInformation {
             int counter = 0;
             for (ASTTypeArgument astTypeArgument : simpleReferenceType.getTypeArguments().get().getTypeArguments()) {
                 int result = handleSimpleReferenceType(astTypeArgument, index, counter);
-                if (result != -1)
+                if (result != -1 && counter == index)
                     return result;
+                else {
+                    //Log.error("HERE");
+                }
+                ++counter;
             }
+        } else {
+            //Log.error("No arguments");
         }
         return -1;
     }
@@ -137,15 +144,15 @@ public class InstanceInformation {
             if (((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().isPresent()) {
                 if (counter == index)
                     result = ((ASTUnitNumberTypeArgument) astTypeArgument).getUnitNumber().getNumber().get().intValue();
-                ++counter;
             }
 
         } else if (astTypeArgument instanceof ASTUnitNumberResolution) {
             if (((ASTUnitNumberResolution) astTypeArgument).getUnitNumber().isPresent()) {
                 if (counter == index)
                     result = ((ASTUnitNumberResolution) astTypeArgument).getNumber().get().intValue();
-                ++counter;
             }
+        } else {
+            //Log.error(astTypeArgument.getClass().toString());
         }
         return result;
     }
@@ -190,5 +197,14 @@ public class InstanceInformation {
             }
 
         }
+    }
+
+    @Override
+    public String toString() {
+        String subComponentString = "";
+        for (ASTSubComponentInstance astSubComponentInstance : astSubComponent.getInstances()) {
+            subComponentString += " " + astSubComponentInstance;
+        }
+        return "ComponentName: " + getCompName() + " " + subComponentString;
     }
 }

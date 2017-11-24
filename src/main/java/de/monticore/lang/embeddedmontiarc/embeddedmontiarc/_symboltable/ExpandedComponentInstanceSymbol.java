@@ -134,6 +134,15 @@ public class ExpandedComponentInstanceSymbol
         return resolutionDeclarationSymbols;
     }
 
+    public ResolutionDeclarationSymbol getResolutionDeclarationSymbol(String name) {
+        for (ResolutionDeclarationSymbol resolutionDeclarationSymbol : resolutionDeclarationSymbols) {
+            if (resolutionDeclarationSymbol.getNameToResolve().equals(name))
+                return resolutionDeclarationSymbol;
+        }
+
+        return null;
+    }
+
     public Optional<InstanceInformation> getInstanceInformation() {
         return InstancingRegister.getInstanceInformation(getName());
     }

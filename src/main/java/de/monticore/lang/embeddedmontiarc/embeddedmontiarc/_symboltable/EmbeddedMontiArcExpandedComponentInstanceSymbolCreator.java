@@ -117,7 +117,7 @@ public class EmbeddedMontiArcExpandedComponentInstanceSymbolCreator {
                     createInstance(inst.getComponentType(), filters, inst.getComponentType().getReferencedSymbol().getResolutionDeclarationSymbols())
                             .setName(inst.getName())
                             .addActualTypeArguments(inst.getComponentType().getFormalTypeParameters(),
-                                    inst.getComponentType().getActualTypeArguments()).addResolvingFilters(filters).addResolutionDeclarationSymbols(inst.getComponentType().getReferencedSymbol().getResolutionDeclarationSymbols()).addParameters(inst.getComponentType().getReferencedSymbol().getParameters()).addArguments(inst.getComponentType().getReferencedSymbol().getArguments()).build());
+                                    inst.getComponentType().getActualTypeArguments()).addResolvingFilters(filters).addResolutionDeclarationSymbols(inst.getComponentType().getResolutionDeclarationSymbols()).addParameters(inst.getComponentType().getReferencedSymbol().getParameters()).addArguments(inst.getComponentType().getReferencedSymbol().getArguments()).build());
             Log.debug(inst.getInstanceInformation().get().getInstanceNumberForArgumentIndex(0) + "", "InstanceInformation:");
 
             Log.debug(inst.toString(), "ComponentInstance CreateInstance PostSub");
