@@ -1,0 +1,11 @@
+package testing;
+
+component MySuperSexyComponent {
+  port
+    in B in1,
+    in Q (0.0 : 0.001 : 1.0) in2,
+    in Z (0 : oo) in3,
+    out B out1,
+    out Q (-1.0 : 0.001 : 0.0) out2,
+    out Z (-oo : 0) out3;
+}

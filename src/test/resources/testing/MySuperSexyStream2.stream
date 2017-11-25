@@ -1,0 +1,10 @@
+package testing;
+
+stream MySuperSexyStream2 for MySuperSexyComponent {
+  in1: false tick false tick false;
+  in2: 0.123 tick 0.345 tick 0.678;
+  in3: 1000 tick 10000 tick 100000;
+  out1: true tick true tick true;
+  out2: 0.123 +/- 0.1 tick 0.345 +/- 0.01 tick 0.678 +/- 0.001;
+  out3: 0 tick -1 +/- 1 tick -2 +/- 1;
+}
