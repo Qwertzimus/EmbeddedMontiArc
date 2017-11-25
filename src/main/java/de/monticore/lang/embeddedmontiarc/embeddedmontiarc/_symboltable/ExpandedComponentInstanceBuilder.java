@@ -303,8 +303,10 @@ public class ExpandedComponentInstanceBuilder {
 
     public ExpandedComponentInstanceBuilder addResolutionDeclarationSymbols(List<ResolutionDeclarationSymbol> resolutionDeclarationSymbols) {
         for (ResolutionDeclarationSymbol symbol : resolutionDeclarationSymbols) {
-            if (!this.resolutionDeclarationSymbols.contains(symbol))
+            if (!this.resolutionDeclarationSymbols.contains(symbol)) {
+                Log.info("name: "+symbol.getNameToResolve() +" astResolution: "+symbol.getASTResolution().toString(),"Added ResolutionDeclarationSymbol To ExpandedComponentInstanceBuilder");
                 this.resolutionDeclarationSymbols.add(symbol);
+            }
         }
 
         return this;

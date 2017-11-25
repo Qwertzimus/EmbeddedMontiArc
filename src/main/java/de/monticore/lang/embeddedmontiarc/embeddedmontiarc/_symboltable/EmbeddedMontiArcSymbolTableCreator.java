@@ -54,18 +54,7 @@ import de.monticore.lang.monticar.ts.MontiCarSymbolFactory;
 import de.monticore.lang.monticar.ts.references.CommonMCTypeReference;
 import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.monticore.lang.monticar.ts.references.MontiCarTypeSymbolReference;
-import de.monticore.lang.monticar.types2._ast.ASTComplexArrayType;
-import de.monticore.lang.monticar.types2._ast.ASTComplexReferenceType;
-import de.monticore.lang.monticar.types2._ast.ASTImportStatement;
-import de.monticore.lang.monticar.types2._ast.ASTReferenceType;
-import de.monticore.lang.monticar.types2._ast.ASTSimpleReferenceType;
-import de.monticore.lang.monticar.types2._ast.ASTType;
-import de.monticore.lang.monticar.types2._ast.ASTTypeNameResolutionDeclaration;
-import de.monticore.lang.monticar.types2._ast.ASTTypeParameters;
-import de.monticore.lang.monticar.types2._ast.ASTTypeVariableDeclaration;
-import de.monticore.lang.monticar.types2._ast.ASTUnitNumberResolution;
-import de.monticore.lang.monticar.types2._ast.ASTUnitNumberTypeArgument;
-import de.monticore.lang.monticar.types2._ast.ASTWildcardType;
+import de.monticore.lang.monticar.types2._ast.*;
 import de.monticore.symboltable.ArtifactScope;
 import de.monticore.symboltable.ImportStatement;
 import de.monticore.symboltable.MutableScope;
@@ -790,6 +779,11 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         InstanceInformation instanceInformation = new InstanceInformation();
         instanceInformation.setCompName(name);
         instanceInformation.setASTSubComponent(node);
+        String reslString = "";
+        for (ResolutionDeclarationSymbol resolutionDeclarationSymbol : componentTypeReference.getResolutionDeclarationSymbols()) {
+            reslString+="Name:"+resolutionDeclarationSymbol.getNameToResolve()+"value: "+((ASTUnitNumberResolution)resolutionDeclarationSymbol.getASTResolution()).getNumber().get().intValue();
+        }
+        Log.info(reslString, "CompInst");
         InstancingRegister.addInstanceInformation(instanceInformation);
         Log.debug(name, "created SubComponentInstance:");
     }
@@ -1135,6 +1129,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         if (astType instanceof ASTSimpleReferenceType) {
             ASTSimpleReferenceType astSimpleReferenceType = (ASTSimpleReferenceType) astType;
             if (!astSimpleReferenceType.getTypeArguments().isPresent()) {
+                //Log.error("Not TypeArgs present");
                 return;
             }
             setActualTypeArguments(typeReference,
@@ -1146,6 +1141,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
                 // TODO
         /* ASTComplexReferenceType represents types like class or interface types which always have
          * ASTSimpleReferenceType as qualification. For example: a.b.c<Arg>.d.e<Arg> */
+
             }
         }
 

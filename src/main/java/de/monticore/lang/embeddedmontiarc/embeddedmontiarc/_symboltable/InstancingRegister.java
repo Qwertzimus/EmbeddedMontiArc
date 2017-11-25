@@ -21,6 +21,7 @@
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
+import de.se_rwth.commons.logging.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class InstancingRegister {
 
     public static void addInstanceInformation(InstanceInformation i) {
         instanceInformation.add(i);
+        Log.info(i.toString(), "Added InstanceInformation");
     }
 
     public static Optional<InstanceInformation> getInstanceInformation(String name) {
@@ -42,5 +44,9 @@ public class InstancingRegister {
                 return Optional.of(i);
         }
         return Optional.empty();
+    }
+
+    public static void reset() {
+        instanceInformation.clear();
     }
 }
