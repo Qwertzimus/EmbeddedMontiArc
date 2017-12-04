@@ -24,6 +24,6 @@ jobs:
       - checkout
 
       # run tests!
-      - run: mvn clean install cobertura:cobertura org.eluder.coveralls:coveralls-maven-plugin:report --settings "settings.xml"
+      - run: mvn clean install --settings "settings.xml"
 
 
