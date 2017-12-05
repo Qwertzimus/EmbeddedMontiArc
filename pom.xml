@@ -30,7 +30,7 @@
 
   <groupId>de.monticore.lang.monticar</groupId>
   <artifactId>embedded-montiarc</artifactId>
-  <version>0.0.5</version>
+  <version>0.0.6-SNAPSHOT</version>
 
 
   <!-- == PROJECT DEPENDENCIES ============================================= -->
@@ -48,7 +48,7 @@
 	<languages.version>4.0.1-SNAPSHOT</languages.version>
     <SIUnit.version>0.0.7</SIUnit.version>
     <struct.version>0.0.4</struct.version>
-    <Common-MontiCar.version>0.0.4</Common-MontiCar.version>
+    <Common-MontiCar.version>0.0.6-SNAPSHOT</Common-MontiCar.version>
 
     <!-- .. Libraries .................................................. -->
     <guava.version>18.0</guava.version>
