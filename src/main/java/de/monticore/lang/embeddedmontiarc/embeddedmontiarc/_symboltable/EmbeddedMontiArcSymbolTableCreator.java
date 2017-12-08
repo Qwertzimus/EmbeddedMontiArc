@@ -119,6 +119,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
     @Override
     public void visit(ASTEMACompilationUnit compilationUnit) {
+        System.out.println("visiting " + compilationUnit.getComponent().getName()); //,"MontiArcSymbolTableCreator");
         Log.debug("Building Symboltable for Component: " + compilationUnit.getComponent().getName(),
                 EmbeddedMontiArcSymbolTableCreator.class.getSimpleName());
         compilationUnitPackage = Names.getQualifiedName(compilationUnit.getPackage());
