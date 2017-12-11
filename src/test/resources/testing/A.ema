@@ -1,0 +1,18 @@
+package testing;
+
+component A {
+        port
+            in Boolean in1,
+            out Boolean out1;
+
+        component SubA {
+            port
+                in Boolean in1,
+                out Boolean out1;
+
+        }
+        instance SubA subA;
+
+        connect in1 -> subA.in1;
+        connect subA.out1 -> out1;
+}

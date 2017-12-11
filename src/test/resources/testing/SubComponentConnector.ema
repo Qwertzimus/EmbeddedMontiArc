@@ -1,0 +1,13 @@
+package testing;
+
+component SubComponentConnector{
+    port
+        in Boolean in1,
+        out Boolean out1;
+
+
+    instance A a;
+
+    connect in1 -> a.in1;
+    connect a.out1 -> out1;
+}
