@@ -46,7 +46,7 @@
     <mc.grammars.assembly.version>0.0.6-SNAPSHOT</mc.grammars.assembly.version>
 	<languages.version>4.0.1-SNAPSHOT</languages.version>
     <SIUnit.version>0.0.7</SIUnit.version>
-    <struct.version>0.1.1-fGWiGhVOHEqxe9fiCfQF6Q</struct.version>
+    <struct.version>0.0.5</struct.version>
     <Common-MontiCar.version>0.0.7</Common-MontiCar.version>
 
     <!-- .. Libraries .................................................. -->
