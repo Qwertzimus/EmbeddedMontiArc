@@ -47,7 +47,7 @@
 	<languages.version>4.0.1-SNAPSHOT</languages.version>
     <SIUnit.version>0.0.7</SIUnit.version>
     <struct.version>0.1.1-fGWiGhVOHEqxe9fiCfQF6Q</struct.version>
-    <Common-MontiCar.version>0.1.1-fGWiGhVOHEqxe9fiCfQF6Q</Common-MontiCar.version>
+    <Common-MontiCar.version>0.0.7</Common-MontiCar.version>
 
     <!-- .. Libraries .................................................. -->
     <guava.version>18.0</guava.version>
