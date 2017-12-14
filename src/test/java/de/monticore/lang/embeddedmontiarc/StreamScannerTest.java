@@ -44,30 +44,30 @@ public class StreamScannerTest {
     private static final Path BASE_PATH = Paths.get("src/test/resources");
 
     @Test
-    public void testMySuperSexyComponent() {
+    public void testMySuperNiceComponent() {
         Scope symTab = createSymTab(BASE_PATH.toString());
         StreamScanner scanner = new StreamScanner(BASE_PATH, symTab);
         Map<ComponentSymbol, Set<ComponentStreamUnitsSymbol>> result = scanner.scan();
         Assert.assertNotNull(result);
         Assert.assertFalse(result.isEmpty());
-        ComponentSymbol mySuperSexyComponent = symTab.<ComponentSymbol>resolve("testing.MySuperSexyComponent", ComponentSymbol.KIND).orElse(null);
-        Assert.assertNotNull(mySuperSexyComponent);
-        Set<ComponentStreamUnitsSymbol> mySuperSexyStreams = result.get(mySuperSexyComponent);
-        Assert.assertNotNull(mySuperSexyStreams);
-        Assert.assertFalse(mySuperSexyStreams.isEmpty());
-        Assert.assertEquals(2, mySuperSexyStreams.size());
-        Iterator<ComponentStreamUnitsSymbol> it = mySuperSexyStreams.iterator();
-        ComponentStreamUnitsSymbol mySuperSexyStream1 = it.next();
-        ComponentStreamUnitsSymbol mySuperSexyStream2 = it.next();
-        if (!"MySuperSexyStream1".equals(mySuperSexyStream1.getName())) {
-            ComponentStreamUnitsSymbol swap = mySuperSexyStream1;
-            mySuperSexyStream1 = mySuperSexyStream2;
-            mySuperSexyStream2 = swap;
+        ComponentSymbol mySuperNiceComponent = symTab.<ComponentSymbol>resolve("testing.MySuperNiceComponent", ComponentSymbol.KIND).orElse(null);
+        Assert.assertNotNull(mySuperNiceComponent);
+        Set<ComponentStreamUnitsSymbol> mySuperNiceStreams = result.get(mySuperNiceComponent);
+        Assert.assertNotNull(mySuperNiceStreams);
+        Assert.assertFalse(mySuperNiceStreams.isEmpty());
+        Assert.assertEquals(2, mySuperNiceStreams.size());
+        Iterator<ComponentStreamUnitsSymbol> it = mySuperNiceStreams.iterator();
+        ComponentStreamUnitsSymbol mySuperNiceStream1 = it.next();
+        ComponentStreamUnitsSymbol mySuperNiceStream2 = it.next();
+        if (!"MySuperNiceStream1".equals(mySuperNiceStream1.getName())) {
+            ComponentStreamUnitsSymbol swap = mySuperNiceStream1;
+            mySuperNiceStream1 = mySuperNiceStream2;
+            mySuperNiceStream2 = swap;
         }
-        Assert.assertEquals("testing.MySuperSexyStream1", mySuperSexyStream1.getFullName());
-        Assert.assertEquals("testing.MySuperSexyStream2", mySuperSexyStream2.getFullName());
-        Assert.assertEquals(6, mySuperSexyStream1.getNamedStreams().size());
-        Assert.assertEquals(6, mySuperSexyStream2.getNamedStreams().size());
+        Assert.assertEquals("testing.MySuperNiceStream1", mySuperNiceStream1.getFullName());
+        Assert.assertEquals("testing.MySuperNiceStream2", mySuperNiceStream2.getFullName());
+        Assert.assertEquals(6, mySuperNiceStream1.getNamedStreams().size());
+        Assert.assertEquals(6, mySuperNiceStream2.getNamedStreams().size());
     }
 
     private static Scope createSymTab(String... modelPath) {
