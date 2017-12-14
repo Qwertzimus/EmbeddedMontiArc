@@ -119,7 +119,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
     @Override
     public void visit(ASTEMACompilationUnit compilationUnit) {
-        System.out.println("visiting " + compilationUnit.getComponent().getName());
+        //System.out.println("visiting " + compilationUnit.getComponent().getName());
         Log.debug("Building Symboltable for Component: " + compilationUnit.getComponent().getName(),
                 EmbeddedMontiArcSymbolTableCreator.class.getSimpleName());
         compilationUnitPackage = Names.getQualifiedName(compilationUnit.getPackage());
@@ -153,7 +153,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             return;
         }
         // creates all instances which are created through the top level component
-        System.out.println("endVisit of " + node.getComponent().getSymbol().get().getFullName()); //,"MontiArcSymbolTableCreator");
+        //System.out.println("endVisit of " + node.getComponent().getSymbol().get().getFullName()); //,"MontiArcSymbolTableCreator");
         //    new Error().printStackTrace();
         instanceSymbolCreator.createInstances(
                 (ComponentSymbol) (Log.errorIfNull(node.getComponent().getSymbol().orElse(null)))
@@ -423,7 +423,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             } else if (portName.getPortArray().get().getLowerbound().isPresent()) {
                 names = getmnPortNameParts(name, portName);
             } else {
-                System.out.println(portName.toString());
+                //System.out.println(portName.toString());
                 int size = countPortArrayInstances(name, portName.getCompName().orElse(null), portName.getCompArray().orElse(null));
 
                 Log.debug("Size" + size, "PortNameParts");
@@ -477,7 +477,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             present = curScope.resolve(portName + "[" + (counter + 1) + "]", PortSymbol.KIND).isPresent();
             if (present) ++counter;
             else {
-                System.out.println(curScope.toString());
+                //System.out.println(curScope.toString());
                 Log.debug("Could not resolve " + portName + "[" + (counter + 1) + "]", "countPortArrayInstances");
             }
         }
@@ -485,7 +485,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             //TODO
             present = true;
             Log.debug("compInstanceName: " + compName, "Resolving");
-            System.out.println(compName);
+            //System.out.println(compName);
             ComponentInstanceSymbol symbol;
             symbol = curScope.<ComponentInstanceSymbol>resolve(compName, ComponentInstanceSymbol.KIND).get();
             for (PortSymbol portSymbol : symbol.getComponentType().getAllPorts()) {
