@@ -77,28 +77,43 @@ public final class StreamScanner {
 
         @Override
         public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-            if (!attrs.isSymbolicLink() && attrs.isRegularFile()) {
-                File f = file.toFile();
-                if (f.exists() && f.isFile() && f.getName().toLowerCase().endsWith(StreamLanguage.FILE_ENDING)) {
-                    Path relativePath = scanner.basePath.relativize(file);
-                    String streamModelName = getStreamModelName(relativePath);
-                    ComponentStreamUnitsSymbol s = scanner.symTab.<ComponentStreamUnitsSymbol>resolve(streamModelName, ComponentStreamUnitsSymbol.KIND).orElse(null);
-                    if (s != null) {
-                        ComponentSymbol relatedComponent = s.<ComponentSymbol>getComponentSymbol(ComponentSymbol.KIND).orElse(null);
-                        if (relatedComponent != null) {
-                            if (!mapping.containsKey(relatedComponent)) {
-                                mapping.put(relatedComponent, new HashSet<>());
-                            }
-                            mapping.get(relatedComponent).add(s);
-                        } else {
-                            Log.warn("could not resolve component for which stream is defined in " + f.getAbsolutePath());
-                        }
-                    } else {
-                        Log.warn("could not resolve stream model defined in file " + f.getAbsolutePath());
-                    }
-                }
+            if (attrs.isSymbolicLink() || !attrs.isRegularFile()) {
+                return FileVisitResult.CONTINUE;
+            }
+            File f = file.toFile();
+            if (!isProcessFile(f)) {
+                return FileVisitResult.CONTINUE;
+            }
+            Path relativePath = scanner.basePath.relativize(file);
+            String streamModelName = getStreamModelName(relativePath);
+            ComponentStreamUnitsSymbol s = scanner.symTab.<ComponentStreamUnitsSymbol>resolve(streamModelName, ComponentStreamUnitsSymbol.KIND).orElse(null);
+            if (s != null) {
+                processComponentStreamUnitsSymbol(s, f);
+            } else {
+                Log.warn("could not resolve stream model defined in file " + f.getAbsolutePath());
             }
             return FileVisitResult.CONTINUE;
+        }
+
+        private void processComponentStreamUnitsSymbol(ComponentStreamUnitsSymbol s, File f) {
+            ComponentSymbol relatedComponent = s.<ComponentSymbol>getComponentSymbol(ComponentSymbol.KIND).orElse(null);
+            if (relatedComponent == null) {
+                Log.warn("could not resolve component for which stream is defined in " + f.getAbsolutePath());
+                return;
+            }
+            Set<ComponentStreamUnitsSymbol> streams = mapping.computeIfAbsent(relatedComponent, k -> new HashSet<>());
+            streams.add(s);
+        }
+
+        private static boolean isProcessFile(File f) {
+            if (f == null) {
+                return false;
+            }
+            if (!f.exists() || !f.isFile()) {
+                return false;
+            }
+            String fName = f.getName().toLowerCase();
+            return fName.endsWith(StreamLanguage.FILE_ENDING);
         }
 
         private static String getStreamModelName(Path p) {
