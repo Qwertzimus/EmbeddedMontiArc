@@ -1,6 +1,6 @@
 package testing;
 
-component MySuperSexyComponent {
+component MySuperNiceComponent {
   port
     in B in1,
     in Q (0.0 : 0.001 : 1.0) in2,

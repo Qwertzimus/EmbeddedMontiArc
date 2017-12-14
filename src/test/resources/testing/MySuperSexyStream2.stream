@@ -1,6 +1,6 @@
 package testing;
 
-stream MySuperSexyStream2 for MySuperSexyComponent {
+stream MySuperNiceStream2 for MySuperNiceComponent {
   in1: false tick false tick false;
   in2: 0.123 tick 0.345 tick 0.678;
   in3: 1000 tick 10000 tick 100000;
