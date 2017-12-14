@@ -1,0 +1,10 @@
+package testing;
+
+stream MySuperNiceStream1 for MySuperNiceComponent {
+  in1: true tick false tick true;
+  in2: 0.500 tick 0.003 tick 0.750;
+  in3: 0 tick 1 tick 2;
+  out1: false tick true tick false;
+  out2: -0.500 tick -0.003 tick -0.750;
+  out3: 0 tick -1 tick -2;
+}
