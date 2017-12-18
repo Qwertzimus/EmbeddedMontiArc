@@ -1,5 +1,4 @@
 package a;
 
-component SuperCompGenericGenericExtensionInstance extends SuperCompGenericGenericExtension<5>{
+component SuperCompGenericGenericExtensionInstance implements SuperCompGenericGenericExtension<5>{
 
-}

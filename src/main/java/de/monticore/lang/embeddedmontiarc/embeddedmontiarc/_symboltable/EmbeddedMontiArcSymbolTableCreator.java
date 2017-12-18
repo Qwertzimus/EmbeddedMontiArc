@@ -21,7 +21,6 @@
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponentHead;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTConnector;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTEMACompilationUnit;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTMontiArcAutoConnect;
@@ -798,9 +797,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
     }
 
     private void handleResolutionDeclaration(ComponentSymbol typeSymbol,
-                                             Optional<ASTTypeParameters> optionalTypeParameters, Scope currentScope, ASTComponent node) {
-        if (optionalTypeParameters.isPresent()) {
-            ASTTypeParameters astTypeParameters = optionalTypeParameters.get();
+                                             ASTTypeParameters astTypeParameters, Scope currentScope, ASTComponent node) {
             for (ASTTypeVariableDeclaration astTypeParameter : astTypeParameters
                     .getTypeVariableDeclarations()) {
                 if (astTypeParameter.resolutionDeclarationIsPresent() && astTypeParameter.getResolutionDeclaration().get() instanceof ASTTypeNameResolutionDeclaration) {
@@ -817,7 +814,6 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
                     addToScopeAndLinkWithNode(resDeclSymRef, astTypeParameter);
                 }
             }
-        }
     }
 
 
@@ -839,11 +835,11 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
 
         //Handle ResolutionDeclaration of stuff like <N1 n=5>
-        handleResolutionDeclaration(component, node.getHead().getGenericTypeParameters(), currentScope().get(), node);
+        handleResolutionDeclaration(component, node.getGenericTypeParameters(), currentScope().get(), node);
 
         Log.debug(component.toString(), "ComponentPreGeneric");
         // generic type parameters
-        EMAJavaHelper.addTypeParametersToType(component, node.getHead().getGenericTypeParameters(),
+        EMAJavaHelper.addTypeParametersToType(component, node.getGenericTypeParameters(),
                 currentScope().get());
 
         Log.debug(component.toString(), "ComponentPostGeneric");
@@ -904,11 +900,10 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         autoConnectionTrafo.transform(node, componentStack.peek());
     }
 
-    private void setParametersOfComponent(final ComponentSymbol componentSymbol,
-                                          final ASTComponentHead astMethod) {
+    private void setParametersOfComponent(final ComponentSymbol componentSymbol) {
         Log.debug(componentSymbol.toString(), "ComponentPreParam");
-        Log.debug(astMethod.toString(), "ASTComponentHead");
-        for (ASTParameter astParameter : astMethod.getParameters()) {
+        ASTComponent cmp = (ASTComponent)componentSymbol.getAstNode().get();
+        for (ASTParameter astParameter : cmp.getParameters()) {
             final String paramName = astParameter.getName();
             Log.debug(astParameter.toString(), "ASTParam");
             int dimension = TypesHelper.getArrayDimensionIfArrayOrZero(astParameter.getType());
@@ -929,7 +924,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
     }
 
     private boolean needsInstanceCreation(ASTComponent node, ComponentSymbol symbol) {
-        boolean instanceNameGiven = node.getInstanceName().isPresent();
+        boolean instanceNameGiven = false;// node.getInstanceName().isPresent();
         boolean autoCreationPossible = symbol.getFormalTypeParameters().size() == 0;
 
         return autoInstantiate && (instanceNameGiven || autoCreationPossible);

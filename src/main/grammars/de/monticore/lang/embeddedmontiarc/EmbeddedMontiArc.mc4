@@ -22,7 +22,7 @@ package de.monticore.lang.embeddedmontiarc;
 /**
  * Grammar for EmbeddedMontiArc.
  *
- * @author Sascha Schneiders, Sining Wang, Yu Qiao
+ * @author Michael von Wenckstern, Nina Pichler, Sascha Schneiders, Sining Wang, Yu Qiao
  */
 grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticore.lang.monticar.Ranges, de.monticore.lang.monticar.MCExpressions, de.monticore.lang.monticar.Types2 {
 
@@ -69,15 +69,7 @@ Stereotype =
   * @attribute body contains the architectural elements 
   *   inherited by this component
   */
-  symbol scope Component implements Element =
-    Stereotype?
-    "component" Name
-    head:ComponentHead
-    (instanceName:Name actualTypeArgument:TypeArguments?)?
-    body:ComponentBody;
-
-
-  /**
+    /**
   * A components head is used to define generic type 
   * parameters that may be used as port types in the 
   * component, to define configuration parameters that may 
@@ -94,10 +86,16 @@ Stereotype =
   * @attribute superComponent the type of the super 
   *   component
   */
-  ComponentHead =
-    ((genericTypeParameters:TypeParameters)|())?
+  symbol scope Component implements Element =
+    Stereotype?
+    "component" Name
+    genericTypeParameters:TypeParameters // TypeParameters is optional itself
     ("(" (Parameter || ",")+ ")")?
-    ("extends" superComponent:ReferenceType)?;
+    ("implements" superComponent:ReferenceType)?
+    body:ComponentBody;
+
+
+
 
 
 

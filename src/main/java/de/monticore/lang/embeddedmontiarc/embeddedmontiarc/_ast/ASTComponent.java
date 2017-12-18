@@ -23,7 +23,10 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast;
 //import de.monticore.common.common._ast.ASTStereotype;
 //import de.monticore.types.types._ast.ASTTypeArguments;
 
+import de.monticore.lang.monticar.common2._ast.ASTParameter;
+import de.monticore.lang.monticar.types2._ast.ASTReferenceType;
 import de.monticore.lang.monticar.types2._ast.ASTTypeArguments;
+import de.monticore.lang.monticar.types2._ast.ASTTypeParameters;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +46,20 @@ public class ASTComponent extends ASTComponentTOP {
   }
 
   protected ASTComponent(
-      ASTStereotype stereotype,
-      String name,
-      ASTComponentHead head,
-      String instanceName,
-      ASTTypeArguments actualTypeArgument,
-      ASTComponentBody body) {
-    super(stereotype, name, head, instanceName, actualTypeArgument, body);
+          ASTStereotype stereotype
+          ,
+          String name
+          ,
+          ASTTypeParameters genericTypeParameters
+          ,
+          List<ASTParameter> parameters
+          ,
+          ASTReferenceType superComponent
+          ,
+          ASTComponentBody body
+
+  )  {
+    super(stereotype, name, genericTypeParameters, parameters, superComponent, body);
   }
 
   // do not use symbol table, since symbol table must not be created
