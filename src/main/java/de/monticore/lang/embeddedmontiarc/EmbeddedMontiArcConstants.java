@@ -21,7 +21,6 @@
 package de.monticore.lang.embeddedmontiarc;
 
 import de.monticore.lang.embeddedmontiarc.helper.AutoconnectMode;
-import de.monticore.lang.embeddedmontiarc.helper.Timing;
 
 import java.io.File;
 
@@ -39,13 +38,6 @@ public final class EmbeddedMontiArcConstants {
    * Default auto connect mode = OFF.
    */
   public static final AutoconnectMode DEFAULT_AUTO_CONNECT = AutoconnectMode.OFF;
-
-  /**
-   * Default time paradigm = timed.
-   *
-   * @since 2.3.0
-   */
-  public static final Timing DEFAULT_TIME_PARADIGM = Timing.INSTANT;
 
   /**
    * Default documentation directory.

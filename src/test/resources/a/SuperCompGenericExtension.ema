@@ -1,5 +1,5 @@
 package a;
 
-component SuperCompGenericExtension extends SuperCompGeneric<(0:1:100)>{
+component SuperCompGenericExtension implements SuperCompGeneric<(0:1:100)>{
 
 }

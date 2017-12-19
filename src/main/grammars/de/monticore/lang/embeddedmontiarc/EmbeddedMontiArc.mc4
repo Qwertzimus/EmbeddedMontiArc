@@ -22,9 +22,9 @@ package de.monticore.lang.embeddedmontiarc;
 /**
  * Grammar for EmbeddedMontiArc.
  *
- * @author Sascha Schneiders, Sining Wang, Yu Qiao
+ * @author Michael von Wenckstern, Nina Pichler, Sascha Schneiders, Sining Wang, Yu Qiao
  */
-grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticore.lang.monticar.Ranges, de.monticore.lang.monticar.MCExpressions, de.monticore.lang.monticar.Types2 {
+grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticore.lang.monticar.Ranges {
 
   /** ASTEMACompilationUnit represents the complete component
    * @attribute package          The package declaration of this component
@@ -41,9 +41,6 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
   /* ===== Modified but based on old ARCD Grammar =========*/
   /* ======================================================*/
 
-
-Stereotype =
-    Name ;
   /**
   * A component may contain arbitrary many Elements. 
   * This interface may be used as an extension point to 
@@ -58,7 +55,6 @@ Stereotype =
   * procedure to a whole application. A component may be 
   * either decomposed to subcomponents or is atomic. 
   *
-  * @attribute stereotype an optional stereotype
   * @attribute name type name of this component
   * @attribute head is used to set generic types, a  
   *   configuration and a parent component
@@ -68,16 +64,6 @@ Stereotype =
   *   allowed for inner component definitions. 
   * @attribute body contains the architectural elements 
   *   inherited by this component
-  */
-  symbol scope Component implements Element =
-    Stereotype?
-    "component" Name
-    head:ComponentHead
-    (instanceName:Name actualTypeArgument:TypeArguments?)?
-    body:ComponentBody;
-
-
-  /**
   * A components head is used to define generic type 
   * parameters that may be used as port types in the 
   * component, to define configuration parameters that may 
@@ -94,11 +80,13 @@ Stereotype =
   * @attribute superComponent the type of the super 
   *   component
   */
-  ComponentHead =
-    ((genericTypeParameters:TypeParameters)|())?
+  
+  symbol scope Component implements Element =
+    "component" Name
+    genericTypeParameters:TypeParameters // TypeParameters is optional itself
     ("(" (Parameter || ",")+ ")")?
-    ("extends" superComponent:ReferenceType)?;
-
+    ("implements" superComponent:ReferenceType)?
+    body:ComponentBody;
 
 
   /**
@@ -115,21 +103,18 @@ Stereotype =
   /**
   * An Interface defines an interface of a component 
   * containing in- and outgoing ports.
-  * 
-  * @attribute stereotype an optional stereotype
   * @attribute ports a list of ports that are contained in 
   *   this interface
   */
   Interface implements Element =
-    Stereotype?
-    ("port"|"ports") ports:(Port || ",")+ ";";
+    ("port"|"ports") 
+    ports:(Port || ",")+ ";";
   
  /**a
   * An incoming port is used to receive messages, an 
   * outgoing port is used to send messages of a specific 
   * type. Ports can now also be specified as an array.
   *
-  * @attribute stereotype an optional stereotype
   * @attribute incoming true, if this is an incoming port
   * @attribute outgoing true, if this is an outgoing port
   * @attribute type the message type of this port
@@ -138,38 +123,15 @@ Stereotype =
   /**might support auto type adding based on last previous type
    * declaration later on
    */
- /* Port =
-  * Stereotype?
-  * (incoming:["in"] | outgoing:["out"])
-  * Type Name? ( "[" UnitN "]" )? ;
-*/
    Port =
-          Stereotype?
           (incoming:["in"] | outgoing:["out"])
            Type   (Name? | Name ( "[" UnitNumberResolution "]" )?);
-
-  /**
-  * Sets the timing of a component.
-  *
-  * @attribute stereotype optional stereotype
-  * @attribute instant a timed component
-  * @attribute delayed a timed component with delay
-  * @attribute causalsync a causal synchronous component
-  * @attribute sync a synchronous component
-  * TODO move to sub language?!
-  */
-  MontiArcTiming implements MontiArcConfig  =
-    "timing" Stereotype?
-    (["instant"] | ["delayed"] | ["untimed"] | ["causalsync"] | ["sync"]) ";";
-
 
 
   /**
     * A subcomponent is used to create one or more instances
     *  of another component. This way the hierarchical
     * structure of a component is defined.
-    *
-    * @attribute stereotype an optional stereotype
     * @attribute type the type of the instantiated component
     * @attribute arguments list of configuration parameters
     *   that are to be set, if the instantiated component is
@@ -178,7 +140,6 @@ Stereotype =
     *   created
     */
     SubComponent implements Element =
-      Stereotype?
       "instance"
       type:ReferenceType
       ("(" arguments:(Expression || ",")+ ")" )?
@@ -199,7 +160,7 @@ Stereotype =
   // TODO better/more intuitive name? e.g. "refConnector" (not really good...)
   SubComponentInstance =
     Name
-        ("[" UnitNumberResolution "]")?;
+    ("[" UnitNumberResolution "]")?;
 
   /**
   * A connector connects one source port with one or many
@@ -211,13 +172,8 @@ Stereotype =
   *   instance names
   */
   Connector implements Element=
-    Stereotype?
     "connect" (source:QualifiedNameWithArray  | (boolLiteral:BooleanLiteral) | (stringLiteral:StringLiteral)| UnitNumberResolution) "->"
     targets:(QualifiedNameWithArray || ",")+ ";";
-
-
-
-
 
 
   /* ======================================================*/
@@ -232,21 +188,8 @@ Stereotype =
   interface MontiArcConfig extends Element;
         
   /**
-  * An invariant constrains the behavior of a component.
-  *
-  * @attribute kind the optional kind of this invariant.
-  * @attribute name name of the invariant
-  * @attribute invariantExpression the invariant defined 
-  *   in the language 'kind'
-  */
-  /*MontiArcInvariant implements Element =
-    (kind:Name)? "inv" Name ":"
-    invariantExpression:InvariantContent ";";
- */
-  /**
   * AutoConnect is used to connect ports automatically.
   *
-  * @attribute stereotype optional stereotype
   * @attribute type autoconnect unambigous ports with the 
   *   same type
   * @attribute port autoconnect unambigous ports with the 
@@ -254,27 +197,25 @@ Stereotype =
   * @attribute off do not use autoconnection (default)
   */
   MontiArcAutoConnect implements MontiArcConfig = 
-    "autoconnect" Stereotype?
+    "autoconnect" 
     (["type"] | ["port"] | ["off"]) ";";
      
   /**
    * AutoInstantiate is used to automatically instantiate inner components.
    *
-   * @attribute stereotype optional stereotype
    * @attribute type autoinstantiate for inner components
    * @attribute on to enable automatically instantiating inner components
    * @attribute off do not use autoinstantiate (default)
    */
    MontiArcAutoInstantiate implements MontiArcConfig =
-     "autoinstantiate" Stereotype?
+     "autoinstantiate" 
      (["on"] | ["off"]) ";";
 
 
 
    //TODO investigate what is wrong with monticore
    //this is needed otherwise something with the generated parser is wrong
-   Ranges implements PrintType,TypeArgument="["
-                                Range+
-                            "]";
+   Ranges implements PrintType,TypeArgument=
+   	"[" Range+ "]";
 
 }

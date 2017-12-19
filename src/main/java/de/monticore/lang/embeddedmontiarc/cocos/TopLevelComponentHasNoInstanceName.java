@@ -22,7 +22,6 @@ package de.monticore.lang.embeddedmontiarc.cocos;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentCoCo;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentSymbol;
 import de.se_rwth.commons.logging.Log;
 
 /**
@@ -30,7 +29,7 @@ import de.se_rwth.commons.logging.Log;
  */
 public class TopLevelComponentHasNoInstanceName
     implements EmbeddedMontiArcASTComponentCoCo {
-
+  
   /**
    * @see EmbeddedMontiArcASTComponentCoCo#check(ASTComponent)
    */
@@ -42,13 +41,6 @@ public class TopLevelComponentHasNoInstanceName
               "The context condition \"%s\" can't be checked that way.",
           node.getName(), TopLevelComponentHasNoInstanceName.class.getName()));
     }
-
-    ComponentSymbol symbol = (ComponentSymbol) node.getSymbol().get();
-    if (!symbol.isInnerComponent() && node.instanceNameIsPresent()) {
-      Log.error(
-          String.format("0x3F207 Top level component \"%s\" has an instance name", node.getName()),
-          node.get_SourcePositionStart());
-    }
+    
   }
-
 }
