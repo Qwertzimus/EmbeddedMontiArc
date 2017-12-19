@@ -20,8 +20,8 @@
  */
 package de.monticore.lang.embeddedmontiarc.cocos;
 
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponentHead;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentHeadCoCo;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentCoCo;
 //import de.monticore.types.types._ast.ASTTypeParameters;
 //import de.monticore.types.types._ast.ASTTypeVariableDeclaration;
 import de.monticore.lang.monticar.types2._ast.ASTTypeParameters;
@@ -34,14 +34,14 @@ import java.util.List;
 /**
  * @author (last commit) Crispin Kirchner
  */
-public class TypeParameterNamesUnique implements EmbeddedMontiArcASTComponentHeadCoCo {
+public class TypeParameterNamesUnique implements EmbeddedMontiArcASTComponentCoCo {
 
     /**
      * @see de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentCoCo#check(de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent)
      */
     @Override
-    public void check(ASTComponentHead node) {
-        ASTTypeParameters typeParameters = node.getGenericTypeParameters().orElse(null);
+    public void check(ASTComponent node) {
+        ASTTypeParameters typeParameters = node.getGenericTypeParameters();
         if (typeParameters == null) {
             return;
         }

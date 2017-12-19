@@ -24,7 +24,7 @@ package de.monticore.lang.embeddedmontiarc;
  *
  * @author Michael von Wenckstern, Nina Pichler, Sascha Schneiders, Sining Wang, Yu Qiao
  */
-grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticore.lang.monticar.Ranges, de.monticore.lang.monticar.MCExpressions, de.monticore.lang.monticar.Types2 {
+grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticore.lang.monticar.Ranges {
 
   /** ASTEMACompilationUnit represents the complete component
    * @attribute package          The package declaration of this component
@@ -86,6 +86,7 @@ Stereotype =
   * @attribute superComponent the type of the super 
   *   component
   */
+  
   symbol scope Component implements Element =
     Stereotype?
     "component" Name
@@ -93,10 +94,6 @@ Stereotype =
     ("(" (Parameter || ",")+ ")")?
     ("implements" superComponent:ReferenceType)?
     body:ComponentBody;
-
-
-
-
 
 
   /**
@@ -120,7 +117,8 @@ Stereotype =
   */
   Interface implements Element =
     Stereotype?
-    ("port"|"ports") ports:(Port || ",")+ ";";
+    ("port"|"ports") 
+    ports:(Port || ",")+ ";";
   
  /**a
   * An incoming port is used to receive messages, an 
@@ -136,11 +134,6 @@ Stereotype =
   /**might support auto type adding based on last previous type
    * declaration later on
    */
- /* Port =
-  * Stereotype?
-  * (incoming:["in"] | outgoing:["out"])
-  * Type Name? ( "[" UnitN "]" )? ;
-*/
    Port =
           Stereotype?
           (incoming:["in"] | outgoing:["out"])
@@ -197,7 +190,7 @@ Stereotype =
   // TODO better/more intuitive name? e.g. "refConnector" (not really good...)
   SubComponentInstance =
     Name
-        ("[" UnitNumberResolution "]")?;
+    ("[" UnitNumberResolution "]")?;
 
   /**
   * A connector connects one source port with one or many
@@ -212,10 +205,6 @@ Stereotype =
     Stereotype?
     "connect" (source:QualifiedNameWithArray  | (boolLiteral:BooleanLiteral) | (stringLiteral:StringLiteral)| UnitNumberResolution) "->"
     targets:(QualifiedNameWithArray || ",")+ ";";
-
-
-
-
 
 
   /* ======================================================*/
@@ -271,8 +260,7 @@ Stereotype =
 
    //TODO investigate what is wrong with monticore
    //this is needed otherwise something with the generated parser is wrong
-   Ranges implements PrintType,TypeArgument="["
-                                Range+
-                            "]";
+   Ranges implements PrintType,TypeArgument=
+   	"[" Range+ "]";
 
 }

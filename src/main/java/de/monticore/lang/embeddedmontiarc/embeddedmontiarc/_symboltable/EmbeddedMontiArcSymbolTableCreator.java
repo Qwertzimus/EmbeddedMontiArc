@@ -845,12 +845,12 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         Log.debug(component.toString(), "ComponentPostGeneric");
         // parameters
         //Log.debug(node.getHead().toString(),"ASTComponentHead");
-        setParametersOfComponent(component, node.getHead());
+        setParametersOfComponent(component,node);
         //Log.debug(component.toString(),"ComponentPostParam");
 
         // super component
-        if (node.getHead().getSuperComponent().isPresent()) {
-            ASTReferenceType superCompRef = node.getHead().getSuperComponent().get();
+        if (node.getSuperComponent().isPresent()) {
+            ASTReferenceType superCompRef = node.getSuperComponent().get();
             String superCompName = ArcTypePrinter.printTypeWithoutTypeArgumentsAndDimension(superCompRef);
 
             ComponentSymbolReference ref = new ComponentSymbolReference(superCompName,
@@ -900,9 +900,8 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         autoConnectionTrafo.transform(node, componentStack.peek());
     }
 
-    private void setParametersOfComponent(final ComponentSymbol componentSymbol) {
+    private void setParametersOfComponent(final ComponentSymbol componentSymbol, ASTComponent cmp) {
         Log.debug(componentSymbol.toString(), "ComponentPreParam");
-        ASTComponent cmp = (ASTComponent)componentSymbol.getAstNode().get();
         for (ASTParameter astParameter : cmp.getParameters()) {
             final String paramName = astParameter.getName();
             Log.debug(astParameter.toString(), "ASTParam");
@@ -937,43 +936,6 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
         removeCurrentScope();
 
-        // for inner components the symbol must be fully created to reference it. Hence, in endVisit we
-        // can reference it and put the instance of the inner component into its parent scope.
-
-        if (component.isInnerComponent()) {
-            String referencedComponentTypeName = component.getFullName();
-            ComponentSymbolReference refEntry = new ComponentSymbolReference(
-                    referencedComponentTypeName, component.getSpannedScope());
-            refEntry.setReferencedComponent(Optional.of(component));
-
-            if (needsInstanceCreation(node, component)) {
-                // create instance
-                String instanceName = node.getInstanceName()
-                        .orElse(StringTransformations.uncapitalize(component.getName()));
-
-                if (node.getActualTypeArgument().isPresent()) {
-                    setActualTypeArguments(refEntry, node.getActualTypeArgument().get().getTypeArguments());
-                }
-
-                ComponentInstanceSymbol instanceSymbol = new ComponentInstanceSymbol(instanceName,
-                        refEntry);
-                Log.debug("Created component instance " + instanceSymbol.getName()
-                                + " referencing component type " + referencedComponentTypeName,
-                        EmbeddedMontiArcSymbolTableCreator.class.getSimpleName());
-
-                addToScope(instanceSymbol);
-            }
-
-            // collect inner components that do not have generic types or a
-            // configuration
-            if (component.getFormalTypeParameters().isEmpty()
-                    && component.getConfigParameters().isEmpty()
-                    && !node.getInstanceName().isPresent()) {
-                // Pair<ComponentSymbol, ASTComponent> p = new Pair<>(owningComponent, node);
-                // TODO store as inner component?
-                // innerComponents.put(component, p);
-            }
-        }
     }
 
     // TODO remove after GV's refactoring of such methodology to mc4/types.

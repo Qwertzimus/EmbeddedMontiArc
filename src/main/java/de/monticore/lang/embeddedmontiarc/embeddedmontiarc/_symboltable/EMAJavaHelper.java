@@ -70,9 +70,9 @@ public class EMAJavaHelper {
     // see ComponentSymbol addFormalTypeParameters etc.
     protected static List<MCTypeSymbol> addTypeParametersToType(
             ComponentSymbol typeSymbol,
-            Optional<ASTTypeParameters> optionalTypeParameters, Scope currentScope) {
-        if (optionalTypeParameters.isPresent()) {
-            ASTTypeParameters astTypeParameters = optionalTypeParameters.get();
+            ASTTypeParameters optionalTypeParameters, Scope currentScope) {
+
+            ASTTypeParameters astTypeParameters = optionalTypeParameters;
             for (ASTTypeVariableDeclaration astTypeParameter : astTypeParameters
                     .getTypeVariableDeclarations()) {
                 if (astTypeParameter.resolutionDeclarationIsPresent()) {
@@ -98,7 +98,7 @@ public class EMAJavaHelper {
                     final String typeVariableName = astTypeParameter.getNamingResolution().get().getName();
                     addFormalTypeParameter(typeVariableName, astTypeParameter, currentScope, typeSymbol);
                 }
-            }
+
         }
         return typeSymbol.getFormalTypeParameters();
     }

@@ -2,3 +2,4 @@ package a;
 
 component SuperCompGenericGenericExtensionInstance implements SuperCompGenericGenericExtension<5>{
 
+}

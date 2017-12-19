@@ -21,8 +21,8 @@
 package de.monticore.lang.embeddedmontiarc.cocos;
 
 import de.monticore.lang.monticar.common2._ast.ASTParameter;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponentHead;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentHeadCoCo;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentCoCo;
 import de.se_rwth.commons.logging.Log;
 
 import java.util.ArrayList;
@@ -31,13 +31,10 @@ import java.util.List;
 /**
  * @author Crispin Kirchner
  */
-public class ParameterNamesUnique implements EmbeddedMontiArcASTComponentHeadCoCo {
+public class ParameterNamesUnique implements EmbeddedMontiArcASTComponentCoCo {
 
-  /**
-   * @see EmbeddedMontiArcASTComponentHeadCoCo#check(ASTComponentHead)
-   */
-  @Override
-  public void check(ASTComponentHead node) {
+
+  public void check(ASTComponent node) {
     List<ASTParameter> parameters = node.getParameters();
 
     List<String> parameterNames = new ArrayList<>();
