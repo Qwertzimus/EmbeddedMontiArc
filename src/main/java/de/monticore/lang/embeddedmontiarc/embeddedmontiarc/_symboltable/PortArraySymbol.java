@@ -108,7 +108,7 @@ public class PortArraySymbol extends PortSymbol {
             for (int i = 0; i <= size; ++i) {
                 if (oldSize < i) {
                     //Log.debug();
-                    createPortSymbolForArrayIndex(componentSymbolReference, (ASTPort) firstPort.getAstNode().get(), this.getName() + "[" + i + "]", firstPort.getStereotype(), firstPort.getTypeReference());
+                    createPortSymbolForArrayIndex(componentSymbolReference, (ASTPort) firstPort.getAstNode().get(), this.getName() + "[" + i + "]", firstPort.getTypeReference());
                 }
             }
             //just add missing ports here and fix actual size after expandedcomponentinstance creation
@@ -122,7 +122,7 @@ public class PortArraySymbol extends PortSymbol {
         }
     }
 
-    private void createPortSymbolForArrayIndex(ComponentSymbolReference componentSymbolReference, ASTPort node, String name, Map<String, Optional<String>> stereoType, MCTypeReference<? extends MCTypeSymbol> typeRef) {
+    private void createPortSymbolForArrayIndex(ComponentSymbolReference componentSymbolReference, ASTPort node, String name, MCTypeReference<? extends MCTypeSymbol> typeRef) {
         PortSymbol ps;
         if (name.startsWith("CONSTANTPORT")) {
             ps = new ConstantPortSymbol(name);
@@ -132,9 +132,6 @@ public class PortArraySymbol extends PortSymbol {
         ps.setNameDependsOn(nameSizeDependsOn);
         ps.setTypeReference(typeRef);
         ps.setDirection(node.isIncoming());
-
-        stereoType
-                .forEach(ps::addStereotype);
 
         getEnclosingScope().getAsMutableScope().add(ps);
 
