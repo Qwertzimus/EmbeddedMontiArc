@@ -1,4 +1,0 @@
-package testing;
-component SIDegreePortTest{
-      port in (0° : 0.1°: 45° ) angle;
-}
