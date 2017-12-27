@@ -22,6 +22,7 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.ast.ASTNode;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.unit.constant.EMAConstantValue;
+import de.monticore.lang.monticar.ts.MCASTTypeSymbol;
 import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.se_rwth.commons.logging.Log;
 
@@ -40,9 +41,13 @@ public class EMAPortBuilder {
             return new EMAPortBuilder().setName(port.getName()).setDirection(port.isIncoming()).
                     setTypeReference(port.getTypeReference()).setConstantValue(((ConstantPortSymbol) port).getConstantValue()).setASTNode(port.getAstNode())
                     .buildConstantPort();
-        else
+        else {
+            if(port.getNameWithoutArrayBracketPart().equals("degree")){
+                System.out.println("info:"+((MCASTTypeSymbol)port.getTypeReference().getReferencedSymbol()).getAstType().toString());
+            }
             return new EMAPortBuilder().setName(port.getName()).setDirection(port.isIncoming())
                     .setTypeReference(port.getTypeReference()).setASTNode(port.getAstNode()).build();
+        }
     }
 
     public EMAPortBuilder setDirection(boolean incoming) {
