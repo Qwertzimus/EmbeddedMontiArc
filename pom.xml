@@ -30,31 +30,28 @@
 
   <groupId>de.monticore.lang.monticar</groupId>
   <artifactId>embedded-montiarc</artifactId>
-  <version>0.0.8</version>
+  <version>0.0.10-SNAPSHOT</version>
 
   <!-- == PROJECT DEPENDENCIES ============================================= -->
 
   <properties>
     <wagon.provider.version>2.6</wagon.provider.version>
-    <!-- DSLs -->
-    <cd4a.version>1.3.10</cd4a.version>
 
 
     <!-- .. SE-Libraries .................................................. -->
-    <monticore.version>4.5.2.1</monticore.version>
+    <monticore.version>4.5.4-SNAPSHOT</monticore.version>
     <se-commons.version>1.7.7</se-commons.version>
     <mc.grammars.assembly.version>0.0.6-SNAPSHOT</mc.grammars.assembly.version>
 	<languages.version>4.0.1-SNAPSHOT</languages.version>
-    <SIUnit.version>0.0.7</SIUnit.version>
-    <struct.version>0.0.5</struct.version>
-    <Common-MontiCar.version>0.0.7</Common-MontiCar.version>
+    <SIUnit.version>0.0.10-SNAPSHOT</SIUnit.version>
+    <struct.version>0.0.10-SNAPSHOT</struct.version>
+    <Common-MontiCar.version>0.0.10-SNAPSHOT</Common-MontiCar.version>
 
     <!-- .. Libraries .................................................. -->
     <guava.version>18.0</guava.version>
     <junit.version>4.12</junit.version>
     <logback.version>1.1.2</logback.version>
 	<jscience.version>4.3.1</jscience.version>
-    <antlr.version>4.5.1</antlr.version>
     <jsr305.version>3.0.0</jsr305.version>
     <!-- .. Plugins ....................................................... -->
     <monticore.plugin>4.5.3-SNAPSHOT</monticore.plugin>
@@ -76,6 +73,13 @@
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>4.7.1</version>
+    </dependency>
+
     <dependency>
       <groupId>de.monticore.lang.monticar</groupId>
       <artifactId>struct</artifactId>
@@ -125,22 +129,9 @@
     </dependency>
 
     <dependency>
-      <groupId>de.monticore.lang</groupId>
-      <artifactId>cd4analysis</artifactId>
-      <version>${cd4a.version}</version>
-    </dependency>
-
-
-    <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>jsr305</artifactId>
       <version>${jsr305.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.antlr</groupId>
-      <artifactId>antlr4-runtime</artifactId>
-      <version>${antlr.version}</version>
     </dependency>
 
     <dependency>
@@ -260,11 +251,29 @@
           </execution>
         </executions>
       </plugin>
+
       <!-- MontiCore Generation -->
       <plugin>
         <groupId>de.monticore.mojo</groupId>
         <artifactId>monticore-maven-plugin</artifactId>
         <version>${monticore.plugin}</version>
+        <configuration>
+          <skip>false</skip>
+          <script>de/monticore/monticore_noemf.groovy</script>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4</artifactId>
+            <version>4.7.1</version>
+          </dependency>
+          <!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
+          <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.7.1</version>
+          </dependency>
+        </dependencies>
         <executions>
           <execution>
             <goals>
@@ -273,6 +282,7 @@
           </execution>
         </executions>
       </plugin>
+
 
       <!-- Other Configuration -->
       <plugin>

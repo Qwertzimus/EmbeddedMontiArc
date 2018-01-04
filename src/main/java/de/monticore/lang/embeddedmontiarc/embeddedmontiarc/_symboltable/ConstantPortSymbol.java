@@ -30,7 +30,7 @@ import org.jscience.mathematics.number.Rational;
 
 import javax.measure.unit.Unit;
 
-import siunit.monticoresiunit.si._ast.ASTUnitNumber;
+import de.monticore.lang.numberunit._ast.ASTUnitNumber;
 
 /**
  * The ConstantPortSymbol is a port which has a constant value assigned and is used

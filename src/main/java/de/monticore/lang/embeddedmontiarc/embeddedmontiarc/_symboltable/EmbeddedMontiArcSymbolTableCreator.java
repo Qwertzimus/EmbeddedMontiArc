@@ -87,7 +87,7 @@ import de.monticore.symboltable.types.references.TypeReference;
 import de.se_rwth.commons.Names;
 import de.se_rwth.commons.StringTransformations;
 import de.se_rwth.commons.logging.Log;
-import siunit.monticoresiunit.si._ast.ASTUnitNumber;
+import de.monticore.lang.numberunit._ast.ASTUnitNumber;
 
 //import de.monticore.common.common._ast.ASTStereoValue;
 //import de.monticore.types.TypesHelper;
