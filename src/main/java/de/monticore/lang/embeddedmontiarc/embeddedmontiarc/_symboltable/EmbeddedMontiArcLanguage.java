@@ -22,6 +22,7 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import com.google.common.collect.ImmutableSet;
 import de.monticore.ast.ASTNode;
+import de.monticore.lang.monticar.ts.MCASTTypeSymbol;
 import de.monticore.lang.monticar.ts.MontiCarTypeSymbol;
 import de.monticore.lang.monticar.si._symboltable.ResolutionDeclarationSymbol;
 import de.monticore.lang.monticar.types2._symboltable.UnitNumberResolutionSymbol;
@@ -62,6 +63,7 @@ public class EmbeddedMontiArcLanguage extends EmbeddedMontiArcLanguageTOP {
         addResolvingFilter(CommonResolvingFilter.create(SIUnitRangesSymbol.KIND));
         addResolvingFilter(CommonResolvingFilter.create(MCTypeSymbol.KIND));
         addResolvingFilter(CommonResolvingFilter.create(MCFieldSymbol.KIND));
+        addResolvingFilter(CommonResolvingFilter.create(MCASTTypeSymbol.KIND));
         addResolvingFilter(CommonResolvingFilter.create(JMethodSymbol.KIND));
         addResolvingFilter(CommonResolvingFilter.create(ResolutionDeclarationSymbol.KIND));
         addResolvingFilter(CommonResolvingFilter.create(UnitNumberResolutionSymbol.KIND));
