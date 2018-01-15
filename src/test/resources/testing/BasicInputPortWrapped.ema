@@ -1,0 +1,11 @@
+package testing;
+
+component BasicInputPortWrapped{
+    ports in Q(0 m/s^2 : 50 m/s^2) basicIn1,
+             in Q(0 m/s^2 : 50 m/s^2) basicIn2;
+
+    instance BasicInputPort in1;
+
+    connect basicIn1 -> in1.basicIn1;
+    connect basicIn2 -> in1.basicIn2;
+}

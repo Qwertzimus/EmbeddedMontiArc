@@ -1,0 +1,6 @@
+package testing;
+
+component BasicInputPort{
+    ports in Q(0 m/s^2 : 50 m/s^2) basicIn1,
+         in Q(0 m/s^2 : 50 m/s^2) basicIn2;
+}

@@ -1,0 +1,9 @@
+package test.a;
+
+component PassThrough {
+  ports
+    in Q pin1[4],
+    out Q pout1[4];
+
+  connect in1[:] -> out1[:];
+}

@@ -659,7 +659,7 @@ public class SymtabTest extends AbstractSymtabTest {
 
         ResolutionDeclarationSymbol jk = csInner.getComponentType().getResolutionDeclarationSymbol("k").get();
         assertNotNull(jk);
-        assertEquals(3, InstanceInformation.getInstanceNumberFromASTSubComponent(csInner.getInstanceInformation().get().getASTSubComponent(),1));
+        assertEquals(3, InstanceInformation.getInstanceNumberFromASTSubComponent(csInner.getInstanceInformation().get().getASTSubComponent(), 1));
 
     }
 
@@ -699,6 +699,53 @@ public class SymtabTest extends AbstractSymtabTest {
         UnitNumberExpressionSymbol symbol2 = (UnitNumberExpressionSymbol) iterator.next().getComponentType().getArguments().get(0).getSymbol().get();
         assertEquals("5", symbol1.getTextualRepresentation());
         assertEquals("1", symbol2.getTextualRepresentation());
+    }
+
+    @Test
+    public void testBasicInputPortWrapped() {
+        Scope symTab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol cs = symTab.<ExpandedComponentInstanceSymbol>resolve("testing.basicInputPortWrapped", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+        assertNotNull(cs);
+
+        assertEquals(2, cs.getConnectors().size());
+
+    }
+
+
+    @Test
+    public void testColonTest() {
+        Scope symTab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol cs = symTab.<ExpandedComponentInstanceSymbol>resolve("test.a.colonTest", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+        assertNotNull(cs);
+
+        assertEquals(8, cs.getConnectors().size());
+        Iterator<ConnectorSymbol> connectorSymbolIter = cs.getConnectors().iterator();
+
+        ConnectorSymbol cur = connectorSymbolIter.next();
+        assertEquals("pass.pout1[1]",cur.getSource());
+        assertEquals("out1[1]",cur.getTarget());
+        cur = connectorSymbolIter.next();
+        assertEquals("pass.pout1[2]",cur.getSource());
+        assertEquals("out1[2]",cur.getTarget());
+        cur = connectorSymbolIter.next();
+        assertEquals("pass.pout1[3]",cur.getSource());
+        assertEquals("out1[3]",cur.getTarget());
+        cur = connectorSymbolIter.next();
+        assertEquals("pass.pout1[4]",cur.getSource());
+        assertEquals("out1[4]",cur.getTarget());
+        cur = connectorSymbolIter.next();
+        assertEquals("in1[1]",cur.getSource());
+        assertEquals("pass.pin1[1]",cur.getTarget());
+        cur = connectorSymbolIter.next();
+        assertEquals("in1[2]",cur.getSource());
+        assertEquals("pass.pin1[2]",cur.getTarget());
+        cur = connectorSymbolIter.next();
+        assertEquals("in1[1]",cur.getSource());
+        assertEquals("pass.pin1[3]",cur.getTarget());
+        cur = connectorSymbolIter.next();
+        assertEquals("in1[2]",cur.getSource());
+        assertEquals("pass.pin1[4]",cur.getTarget());
+
     }
 
     @Test

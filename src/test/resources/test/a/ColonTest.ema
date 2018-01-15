@@ -1,0 +1,12 @@
+package test.a;
+component ColonTest {
+  ports
+    in Q in1[2],
+    out Q out1[4];
+
+  instance PassThrough pass;
+
+  connect in1[:] -> pass.pin1[1:2];
+  connect in1[:] -> pass.pin1[3:4];
+  connect pass.pout1[:] -> out1[:];
+}

@@ -472,12 +472,14 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
     private int countPortArrayInstances(String portName, String compName, ASTArrayAccess arrayPart) {
         MutableScope curScope = currentScope().get();
+
         boolean present = true;
         int counter = 0;
         if (arrayPart != null) {
             compName += getNameArrayPart(arrayPart);
         }
         while (present) {
+            Log.debug(compName, "ComponentName:");
             present = curScope.resolve(portName + "[" + (counter + 1) + "]", PortSymbol.KIND).isPresent();
             if (present)
                 ++counter;
@@ -492,17 +494,18 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             present = true;
             Log.debug("compInstanceName: " + compName, "Resolving");
             Log.debug(compName, "ComponentName");
-            ComponentInstanceSymbol symbol;
-            symbol = curScope.<ComponentInstanceSymbol>resolve(compName, ComponentInstanceSymbol.KIND)
-                    .get();
-            for (PortSymbol portSymbol : symbol.getComponentType().getAllPorts()) {
+            if (compName != null) {
+                ComponentInstanceSymbol symbol;
+                symbol = curScope.<ComponentInstanceSymbol>resolve(compName, ComponentInstanceSymbol.KIND)
+                        .get();
+                for (PortSymbol portSymbol : symbol.getComponentType().getAllPorts()) {
 
-                Log.debug(portSymbol.toString(), "PortInfo");
-                if (portSymbol.getNameWithoutArrayBracketPart().startsWith(portName)) {
-                    ++counter;
+                    Log.debug(portSymbol.toString(), "PortInfo");
+                    if (portSymbol.getNameWithoutArrayBracketPart().startsWith(portName)) {
+                        ++counter;
+                    }
                 }
             }
-
         }
 
         return counter;
@@ -939,7 +942,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
     // TODO remove after GV's refactoring of such methodology to mc4/types.
     @Deprecated
     private MCTypeReference<? extends MCTypeSymbol> addTypeArgumentsToTypeSymbol(MCTypeReference<? extends MCTypeSymbol> typeReference,
-                                              ASTType astType) {
+                                                                                 ASTType astType) {
         if (astType instanceof ASTSimpleReferenceType) {
             ASTSimpleReferenceType astSimpleReferenceType = (ASTSimpleReferenceType) astType;
             if (!astSimpleReferenceType.getTypeArguments().isPresent()) {
@@ -1017,7 +1020,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             addTypeArgumentsToTypeSymbol(typeReference, astComplexArrayType.getComponentType());
             int dimension = astComplexArrayType.getDimensions();
             typeReference.setDimension(dimension);
-        }else {
+        } else {
             String name = typeReference.getName();
             assert typeReference.getEnclosingScope() instanceof MutableScope;
             MutableScope enclosingScope = (MutableScope) typeReference.getEnclosingScope();
