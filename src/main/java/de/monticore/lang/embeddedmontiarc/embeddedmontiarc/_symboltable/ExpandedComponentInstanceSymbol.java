@@ -289,41 +289,47 @@ public class ExpandedComponentInstanceSymbol
      * @return
      */
     public List<ConnectorSymbol> getSubComponentConnectors() {
-        List<ConnectorSymbol> list = new ArrayList<>();
+        Set<ConnectorSymbol> set = new LinkedHashSet<>();
 
-        for (ConnectorSymbol connectorSymbol : getConnectors()) {
-            for (ExpandedComponentInstanceSymbol symbol : getSubComponents()) {
-                for (ExpandedComponentInstanceSymbol symbol2 : getSubComponents()) {
-                    if (symbol.containsPort(connectorSymbol.getSourcePort())
-                            && symbol2.containsPort(connectorSymbol.getTargetPort())) {
-                        if (!list.contains(connectorSymbol))
-                            list.add(connectorSymbol);
-                    }
+        Collection<ConnectorSymbol> connectors = getConnectors();
+        Collection<ExpandedComponentInstanceSymbol> subComponents = getSubComponents();
+
+        for (ConnectorSymbol connector : connectors) {
+            PortSymbol sourcePort = connector.getSourcePort();
+            PortSymbol targetPort = connector.getTargetPort();
+            Optional<ExpandedComponentInstanceSymbol> sourceCmpOpt = sourcePort.getComponentInstance();
+            Optional<ExpandedComponentInstanceSymbol> targetCmpOpt = targetPort.getComponentInstance();
+
+            if (sourceCmpOpt.isPresent() && targetCmpOpt.isPresent()) {
+                ExpandedComponentInstanceSymbol sourceCmp = sourceCmpOpt.get();
+                ExpandedComponentInstanceSymbol targetCmp = targetCmpOpt.get();
+                if (subComponents.contains(sourceCmp) && subComponents.contains(targetCmp)) {
+                    set.add(connector);
                 }
             }
         }
-        return list;
+
+        return new ArrayList<>(set);
     }
 
 
     public List<ExpandedComponentInstanceSymbol> getIndependentSubComponents() {
-        List<ExpandedComponentInstanceSymbol> instances = new ArrayList<>();
-        for (ExpandedComponentInstanceSymbol symbol : getSubComponents()) {
-            boolean noInputDependency = true;
-            for (PortSymbol portSymbol : symbol.getOutgoingPorts()) {
-                for (ConnectorSymbol connectorSymbol : getSubComponentConnectors()) {
-                    if (portSymbol.equals(connectorSymbol.getSourcePort()) || portSymbol.equals(connectorSymbol.getTargetPort())) {
-                        noInputDependency = false;
-                    }
-                }
-            }
-            if (noInputDependency) {
-                instances.add(symbol);
-            }
+        Collection<ExpandedComponentInstanceSymbol> subComponents = getSubComponents();
+        List<ConnectorSymbol> subComponentConnectors = getSubComponentConnectors();
 
-
+        Set<ExpandedComponentInstanceSymbol> nonIndependentSubComponents = new HashSet<>();
+        for (ConnectorSymbol connector : subComponentConnectors) {
+            PortSymbol sourcePort = connector.getSourcePort();
+            Optional<ExpandedComponentInstanceSymbol> sourceCmpOpt = sourcePort.getComponentInstance();
+            if (sourceCmpOpt.isPresent()) {
+                ExpandedComponentInstanceSymbol sourceCmp = sourceCmpOpt.get();
+                nonIndependentSubComponents.add(sourceCmp);
+            }
         }
-        return instances;
+
+        List<ExpandedComponentInstanceSymbol> independentSubComponents = new ArrayList<>(subComponents);
+        independentSubComponents.removeAll(nonIndependentSubComponents);
+        return new ArrayList<>(independentSubComponents);
     }
 
     public boolean isTemplateComponent() {
