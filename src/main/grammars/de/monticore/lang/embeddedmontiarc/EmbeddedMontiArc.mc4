@@ -84,7 +84,7 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
   symbol scope Component implements Element =
    NEWLINETOKEN* "component" Name
     genericTypeParameters:TypeParameters // TypeParameters is optional itself
-    ("(" (Parameter || ",")+ ")")?
+    ( NEWLINETOKEN* "(" NEWLINETOKEN* (Parameter || ",")+  NEWLINETOKEN*")" NEWLINETOKEN*)? NEWLINETOKEN*
     ("implements" superComponent:ReferenceType)? NEWLINETOKEN*
     body:ComponentBody;
 
