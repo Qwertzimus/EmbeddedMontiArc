@@ -35,7 +35,7 @@ public class SourceTargetNumberMatch implements EmbeddedMontiArcASTConnectorCoCo
 
         sourceNum = getSourceNum(node);
 
-        for (ASTQualifiedNameWithArray target : node.getTargets()) {
+        for (ASTQualifiedNameWithArray target : node.getTargets().getQualifiedNameWithArrays()) {
 
             targetNum = getTargetNum(target);
 

@@ -531,7 +531,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
         Log.info("" + sourceNames.size(), "SourcePorts");
         int counter = 0, targetnum = 0;
-        for (ASTQualifiedNameWithArray target : node.getTargets()) {
+        for (ASTQualifiedNameWithArray target : node.getTargets().getQualifiedNameWithArrays()) {
             counter = 0;
             targetnum = 0;
             for (String sourceName : sourceNames) {
@@ -562,7 +562,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
         int counter = 0, targetnum = 0;
         ConstantPortSymbol constantPortSymbol = ConstantPortSymbol.createConstantPortSymbol(node, this);
         addToScope(constantPortSymbol);
-        for (ASTQualifiedNameWithArray target : node.getTargets()) {
+        for (ASTQualifiedNameWithArray target : node.getTargets().getQualifiedNameWithArrays()) {
             counter = 0;
             targetnum = 0;
             List<String> targetNames = getPortName(target, 0);

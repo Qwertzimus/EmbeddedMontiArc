@@ -31,9 +31,9 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
    * @attribute importStatements List of imported elements
    * @attribute Component the root component of the component
    */
-  EMACompilationUnit =
-    ("package" package:(Name& || ".")+ ";")? 
-    (ImportStatement)*
+  EMACompilationUnit =NEWLINETOKEN*
+    ("package" package:(Name& || ".")+ ";")? NEWLINETOKEN*
+    (ImportStatement NEWLINETOKEN*)*
     Component;
 
 
@@ -82,10 +82,10 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
   */
   
   symbol scope Component implements Element =
-    "component" Name
+   NEWLINETOKEN* "component" Name
     genericTypeParameters:TypeParameters // TypeParameters is optional itself
     ("(" (Parameter || ",")+ ")")?
-    ("implements" superComponent:ReferenceType)?
+    ("implements" superComponent:ReferenceType)? NEWLINETOKEN*
     body:ComponentBody;
 
 
@@ -96,9 +96,9 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
   * @attribute elements list of architectural elements
   */
   ComponentBody =
-    ("{"
+    ("{" NEWLINETOKEN*
       Element*
-    "}");
+    "}" NEWLINETOKEN*);
     
   /**
   * An Interface defines an interface of a component 
@@ -107,8 +107,8 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
   *   this interface
   */
   Interface implements Element =
-    ("port"|"ports") 
-    ports:(Port || ",")+ ";";
+    NEWLINETOKEN* ("port"|"ports")
+    ports:(Port || ",")+ ";" NEWLINETOKEN*;
   
  /**a
   * An incoming port is used to receive messages, an 
@@ -124,8 +124,8 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
    * declaration later on
    */
    Port =
-          (incoming:["in"] | outgoing:["out"])
-           Type   (Name? | Name ( "[" UnitNumberResolution "]" )?);
+          NEWLINETOKEN*(incoming:["in"] | outgoing:["out"])
+           Type   (Name? | Name ( "[" UnitNumberResolution "]" )?) NEWLINETOKEN*;
 
 
   /**
@@ -140,10 +140,10 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
     *   created
     */
     SubComponent implements Element =
-      "instance"
+      NEWLINETOKEN* "instance"
       type:ReferenceType
       ("(" arguments:(Expression || ",")+ ")" )?
-      instances:(SubComponentInstance || ",")* ";";
+      instances:(SubComponentInstance || ",")* ";" NEWLINETOKEN*;
 
 
   /**
@@ -160,7 +160,7 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
   // TODO better/more intuitive name? e.g. "refConnector" (not really good...)
   SubComponentInstance =
     Name
-    ("[" UnitNumberResolution "]")?;
+    ("[" UnitNumberResolution "]")? NEWLINETOKEN*;
 
   /**
   * A connector connects one source port with one or many
@@ -172,9 +172,10 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
   *   instance names
   */
   Connector implements Element=
-    "connect" (source:QualifiedNameWithArray  | (boolLiteral:BooleanLiteral) | (stringLiteral:StringLiteral)| UnitNumberResolution) "->"
-    targets:(QualifiedNameWithArray || ",")+ ";";
+    NEWLINETOKEN* "connect" (source:QualifiedNameWithArray  | (boolLiteral:BooleanLiteral) | (stringLiteral:StringLiteral)| UnitNumberResolution) "->"
+    targets:ConnectorTargets ";" NEWLINETOKEN*;
 
+   ConnectorTargets = (QualifiedNameWithArray (",")? NEWLINETOKEN* )+;
 
   /* ======================================================*/
   /* ============ From OLD MARC Grammar ==================*/
@@ -197,8 +198,8 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
   * @attribute off do not use autoconnection (default)
   */
   MontiArcAutoConnect implements MontiArcConfig = 
-    "autoconnect" 
-    (["type"] | ["port"] | ["off"]) ";";
+    NEWLINETOKEN* "autoconnect"
+    (["type"] | ["port"] | ["off"]) ";" NEWLINETOKEN*;
      
   /**
    * AutoInstantiate is used to automatically instantiate inner components.
@@ -208,8 +209,8 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
    * @attribute off do not use autoinstantiate (default)
    */
    MontiArcAutoInstantiate implements MontiArcConfig =
-     "autoinstantiate" 
-     (["on"] | ["off"]) ";";
+     NEWLINETOKEN* "autoinstantiate"
+     (["on"] | ["off"]) ";" NEWLINETOKEN*;
 
 
 
@@ -218,4 +219,9 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
    Ranges implements PrintType,TypeArgument=
    	"[" Range+ "]";
 
+token NEWLINETOKEN =
+         ('\r' '\n' |
+         '\r' |
+         '\n' ):
+       ;
 }

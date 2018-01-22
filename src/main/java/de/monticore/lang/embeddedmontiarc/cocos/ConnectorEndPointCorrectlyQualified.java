@@ -68,7 +68,7 @@ public class ConnectorEndPointCorrectlyQualified
                 Log.error("Error Connector has no valid source or constant " + node.toString());
         }
 
-        for (ASTQualifiedNameWithArray name : node.getTargets()) {
+        for (ASTQualifiedNameWithArray name : node.getTargets().getQualifiedNameWithArrays()) {
             checkEndPointMaximallyTwiceQualified(name);
         }
     }

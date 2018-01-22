@@ -136,7 +136,7 @@ public class AutoConnection {
         targets.add(target);
 
         astConnector.setSource(source);
-        astConnector.setTargets(targets);
+        astConnector.setTargets(new ASTConnectorTargets(targets, new ArrayList<String>()));
 
         Optional<ASTMontiArcAutoConnect> auto = resolveAutoconnect(node);
         if (auto.isPresent()) {
