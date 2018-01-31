@@ -2,21 +2,21 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.se_rwth.commons.logging.Log;
 
-public class AdaptableParameterPortSymbol extends PortSymbol{
-    protected AdaptableParameterPortSymbol(String name) {
+public class ConfigPortSymbol extends PortSymbol{
+    protected ConfigPortSymbol(String name) {
         super(name);
         setDirection(PortSymbol.INCOMING);
     }
 
     @Override
-    protected boolean isAdaptableParameter(){
+    protected boolean isConfig(){
         return true;
     }
 
     @Override
     public void setDirection(boolean isIncoming) {
         if(!isIncoming)
-            Log.error("AdaptableParameterPorts can only be incoming!");
+            Log.error("ConfigPorts can only be incoming!");
 
         super.setDirection(INCOMING);
     }

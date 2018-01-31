@@ -280,7 +280,7 @@ public class PortSymbol extends CommonSymbol implements ElementInstance {
     }
   }
 
-  protected boolean isAdaptableParameter(){
+  protected boolean isConfig(){
     return false;
   }
 }

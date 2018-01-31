@@ -921,13 +921,13 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             componentSymbol.addParameter(astParameter);
 
             if(astParameter.adaptableKeywordIsPresent())
-                addAdaptableParameterPort(componentSymbol,parameterSymbol);
+                addConfigPort(componentSymbol,parameterSymbol);
         }
         Log.debug(componentSymbol.toString(), "ComponentPostParam");
     }
 
-    private void addAdaptableParameterPort(ComponentSymbol componentSymbol, MCFieldSymbol parameterSymbol) {
-        AdaptableParameterPortSymbol adaptPort = new AdaptableParameterPortSymbol(parameterSymbol.getName());
+    private void addConfigPort(ComponentSymbol componentSymbol, MCFieldSymbol parameterSymbol) {
+        ConfigPortSymbol adaptPort = new ConfigPortSymbol(parameterSymbol.getName());
         adaptPort.setTypeReference(parameterSymbol.getType());
 
         componentSymbol.addIncomingPort(adaptPort);
