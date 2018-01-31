@@ -193,6 +193,17 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
     }
 
     @Test
+    public void testAdaptableParameterInstance() {
+        Scope symTab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
+                "testing.adaptableParameterInstance", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+
+        assertNotNull(inst);
+
+        assertNotNull(inst.getSubComponent("adaptableParameter").orElse(null).getPort("n"));
+    }
+
+    @Test
     public void testExtensionMechanism1() {
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(

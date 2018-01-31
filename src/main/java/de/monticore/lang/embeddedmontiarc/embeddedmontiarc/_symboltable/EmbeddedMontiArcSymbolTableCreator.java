@@ -919,8 +919,18 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
                     (MontiCarTypeSymbolReference) paramTypeSymbol);
             componentSymbol.addConfigParameter(parameterSymbol);
             componentSymbol.addParameter(astParameter);
+
+            if(astParameter.adaptableKeywordIsPresent())
+                addAdaptableParameterPort(componentSymbol,parameterSymbol);
         }
         Log.debug(componentSymbol.toString(), "ComponentPostParam");
+    }
+
+    private void addAdaptableParameterPort(ComponentSymbol componentSymbol, MCFieldSymbol parameterSymbol) {
+        AdaptableParameterPortSymbol adaptPort = new AdaptableParameterPortSymbol(parameterSymbol.getName());
+        adaptPort.setTypeReference(parameterSymbol.getType());
+
+        componentSymbol.addIncomingPort(adaptPort);
     }
 
     private boolean needsInstanceCreation(ASTComponent node, ComponentSymbol symbol) {

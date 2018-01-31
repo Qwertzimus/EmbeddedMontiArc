@@ -279,4 +279,8 @@ public class PortSymbol extends CommonSymbol implements ElementInstance {
       return name.startsWith("CONSTANTPORT");
     }
   }
+
+  protected boolean isAdaptableParameter(){
+    return false;
+  }
 }

@@ -1,0 +1,5 @@
+package testing;
+
+component AdaptableParameter(adaptable Q n){
+
+}
