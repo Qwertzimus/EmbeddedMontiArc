@@ -1,5 +1,5 @@
 package testing;
 
-component AdaptableParameter(adaptable Q n){
+component AdaptableParameter(adaptable Q param1, Q param2){
 
 }

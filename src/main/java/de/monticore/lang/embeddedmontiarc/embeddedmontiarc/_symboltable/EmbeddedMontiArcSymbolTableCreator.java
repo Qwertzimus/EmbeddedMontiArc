@@ -29,17 +29,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Stack;
 
+import com.google.common.collect.Lists;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.*;
 import de.monticore.lang.monticar.ts.references.MCASTTypeSymbolReference;
 import org.jscience.mathematics.number.Rational;
 
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTConnector;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTEMACompilationUnit;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTMontiArcAutoConnect;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTMontiArcAutoInstantiate;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTPort;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTSubComponent;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTSubComponentInstance;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.TypesHelper;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.types.TypesPrinter;
 import de.monticore.lang.embeddedmontiarc.helper.ArcTypePrinter;
@@ -297,7 +291,13 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
 
     public void createPort(ASTPort node, String name, boolean isIncoming,
                            MCTypeReference<? extends MCTypeSymbol> typeRef, PortArraySymbol pas) {
-        PortSymbol ps = new PortSymbol(name);
+        PortSymbol ps;
+        if(node instanceof ASTConfigPort) {
+            ps = new ConfigPortSymbol(name);
+        }else {
+            ps = new PortSymbol(name);
+        }
+
         ps.setNameDependsOn(pas.getNameDependsOn());
         ps.setTypeReference(typeRef);
         ps.setDirection(isIncoming);
@@ -921,16 +921,21 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
             componentSymbol.addParameter(astParameter);
 
             if(astParameter.adaptableKeywordIsPresent())
-                addConfigPort(componentSymbol,parameterSymbol);
+                addConfigPort(componentSymbol,cmp,parameterSymbol,astParameter);
         }
         Log.debug(componentSymbol.toString(), "ComponentPostParam");
     }
 
-    private void addConfigPort(ComponentSymbol componentSymbol, MCFieldSymbol parameterSymbol) {
-        ConfigPortSymbol adaptPort = new ConfigPortSymbol(parameterSymbol.getName());
-        adaptPort.setTypeReference(parameterSymbol.getType());
+    private void addConfigPort(ComponentSymbol componentSymbol,ASTComponent astComponent, MCFieldSymbol parameterSymbol,ASTParameter astParameter) {
+        ASTConfigPort tmpASTPort = new ASTConfigPort();
+        tmpASTPort.setName(parameterSymbol.getName());
+        tmpASTPort.setType(astParameter.getType());
+        tmpASTPort.setIncoming(true);
 
-        componentSymbol.addIncomingPort(adaptPort);
+        ASTInterface tmpInterface = EmbeddedMontiArcNodeFactory.createASTInterface();
+        tmpInterface.setPorts(Lists.newArrayList(tmpASTPort));
+
+        astComponent.getBody().getElements().add(tmpInterface);
     }
 
     private boolean needsInstanceCreation(ASTComponent node, ComponentSymbol symbol) {

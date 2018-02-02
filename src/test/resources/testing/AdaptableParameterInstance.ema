@@ -1,6 +1,6 @@
 package testing;
 
 component AdaptableParameterInstance{
-    instance AdaptableParameter(4) adaptableParameter;
-    instance AdaptableParameter(3) adaptableParameter2;
+    instance AdaptableParameter(1,2) adaptableParameter;
+    instance AdaptableParameter(3,4) adaptableParameter2;
 }

@@ -20,25 +20,11 @@
  */
 package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
-import de.se_rwth.commons.logging.Log;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTPort;
 
-public class ConfigPortSymbol extends PortSymbol{
+public class ASTConfigPort extends ASTPort{
 
-    public ConfigPortSymbol(String name) {
-        super(name);
-        setDirection(PortSymbol.INCOMING);
-    }
-
-    @Override
-    public boolean isConfig(){
-        return true;
-    }
-
-    @Override
-    public void setDirection(boolean isIncoming) {
-        if(!isIncoming)
-            Log.error("ConfigPorts can only be incoming!");
-
-        super.setDirection(INCOMING);
+    public ASTConfigPort(){
+        super();
     }
 }

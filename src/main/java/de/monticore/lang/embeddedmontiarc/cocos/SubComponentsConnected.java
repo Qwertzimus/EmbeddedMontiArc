@@ -86,6 +86,8 @@ public class SubComponentsConnected implements EmbeddedMontiArcASTComponentCoCo 
                     for (String p : remainingSubIn) {
                         if (PortSymbol.isConstantPortName(p)) {
 
+                        } else if(isConfigPort(sub,p)){
+                            //ConfigPorts dont need to be connected!
                         } else {
                             Log.error(
                                     String.format("0xAC008 Port %s of subcomponent %s is not used!", p,
@@ -131,5 +133,13 @@ public class SubComponentsConnected implements EmbeddedMontiArcASTComponentCoCo 
                 }
             }
         }
+    }
+
+    private boolean isConfigPort(ComponentInstanceSymbol instanceSymbol, String relativePortName) {
+        String[] tmp = relativePortName.split("\\.");
+        String shortName = tmp[tmp.length - 1];
+        ComponentSymbol comp = instanceSymbol.getComponentType().getReferencedSymbol();
+        PortSymbol port = comp.getIncomingPort(shortName).orElse(null);
+        return port == null ? false : port.isConfig();
     }
 }

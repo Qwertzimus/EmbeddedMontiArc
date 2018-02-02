@@ -45,8 +45,17 @@ public class EMAPortBuilder {
             if(port.getNameWithoutArrayBracketPart().equals("degree")){
                 System.out.println("info:"+((MCASTTypeSymbol)port.getTypeReference().getReferencedSymbol()).getAstType().toString());
             }
-            return new EMAPortBuilder().setName(port.getName()).setDirection(port.isIncoming())
-                    .setTypeReference(port.getTypeReference()).setASTNode(port.getAstNode()).build();
+            if(port.isConfig()){
+                ConfigPortSymbol res = new ConfigPortSymbol(port.getName());
+                res.setDirection(true);
+                res.setTypeReference(port.getTypeReference());
+                res.setAstNode(port.getAstNode().orElse(null));
+
+                return res;
+            }else {
+                return new EMAPortBuilder().setName(port.getName()).setDirection(port.isIncoming())
+                        .setTypeReference(port.getTypeReference()).setASTNode(port.getAstNode()).build();
+            }
         }
     }
 

@@ -18,27 +18,14 @@
  *  License along with this project. If not, see <http://www.gnu.org/licenses/>.
  * *******************************************************************************
  */
-package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
+package de.monticore.lang.embeddedmontiarc.cocos;
 
-import de.se_rwth.commons.logging.Log;
+import org.junit.Test;
 
-public class ConfigPortSymbol extends PortSymbol{
+public class ConfigPortTest extends AbstractCoCoTest {
 
-    public ConfigPortSymbol(String name) {
-        super(name);
-        setDirection(PortSymbol.INCOMING);
-    }
-
-    @Override
-    public boolean isConfig(){
-        return true;
-    }
-
-    @Override
-    public void setDirection(boolean isIncoming) {
-        if(!isIncoming)
-            Log.error("ConfigPorts can only be incoming!");
-
-        super.setDirection(INCOMING);
+    @Test
+    public void testConfigPort(){
+        checkValid("","testing.AdaptableParameterInstance");
     }
 }
