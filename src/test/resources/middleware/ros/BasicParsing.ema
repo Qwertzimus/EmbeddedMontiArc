@@ -1,0 +1,9 @@
+package middleware.ros;
+
+component BasicParsing{
+    port in Q rosIn;
+    port in Q noRosIn;
+    port out Q rosOut;
+    port out Q noRosOut;
+
+}
