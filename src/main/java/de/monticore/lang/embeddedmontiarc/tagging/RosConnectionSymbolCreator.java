@@ -84,12 +84,16 @@ public class RosConnectionSymbolCreator implements TagSymbolCreator {
                                     .filter(Optional::isPresent) // if the symbol is not present, does not mean that the symbol
                                     .map(Optional::get)          // is not available at all, maybe it will be loaded later
                                     .forEachOrdered(s -> {
+                                        RosConnectionSymbol tmpSymbol;
                                         if (m.group(4) != null) {
-                                            tagging.addTag(s,
-                                                    new RosConnectionSymbol(m.group(1), m.group(2), m.group(4)));
+                                            tmpSymbol = new RosConnectionSymbol(m.group(1), m.group(2), m.group(4));
                                         } else {
-                                            tagging.addTag(s,
-                                                    new RosConnectionSymbol(m.group(1), m.group(2)));
+                                            tmpSymbol = new RosConnectionSymbol(m.group(1), m.group(2));
+                                        }
+                                        tagging.addTag(s,tmpSymbol);
+                                        if(s.isKindOf(PortSymbol.KIND)){
+                                            PortSymbol p = (PortSymbol) s;
+                                            p.setRosConnectionSymbol(tmpSymbol);
                                         }
                                     }));
         }

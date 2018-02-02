@@ -22,6 +22,7 @@ package de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable;
 
 import de.monticore.ast.ASTNode;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc.unit.constant.EMAConstantValue;
+import de.monticore.lang.embeddedmontiarc.tagging.RosConnectionSymbol;
 import de.monticore.lang.monticar.ts.MCASTTypeSymbol;
 import de.monticore.lang.monticar.ts.references.MCTypeReference;
 import de.se_rwth.commons.logging.Log;
@@ -35,6 +36,7 @@ public class EMAPortBuilder {
     protected Optional<MCTypeReference> typeReference = Optional.empty();
     protected Optional<EMAConstantValue> constantValue = Optional.empty();
     protected Optional<ASTNode> astNode = Optional.empty();
+    protected Optional<RosConnectionSymbol> rosConnectionSymbol = Optional.empty();
 
     public static PortSymbol clone(PortSymbol port) {
         if (port.isConstant())
@@ -46,7 +48,7 @@ public class EMAPortBuilder {
                 System.out.println("info:"+((MCASTTypeSymbol)port.getTypeReference().getReferencedSymbol()).getAstType().toString());
             }
             return new EMAPortBuilder().setName(port.getName()).setDirection(port.isIncoming())
-                    .setTypeReference(port.getTypeReference()).setASTNode(port.getAstNode()).build();
+                    .setTypeReference(port.getTypeReference()).setASTNode(port.getAstNode()).setRosConnectionSymbol(port.getRosConnectionSymbol()).build();
         }
     }
 
@@ -69,6 +71,11 @@ public class EMAPortBuilder {
         this.astNode = astNode;
         return this;
     }
+    public EMAPortBuilder setRosConnectionSymbol(Optional<RosConnectionSymbol> rosConnectionSymbol){
+        this.rosConnectionSymbol = rosConnectionSymbol;
+        return this;
+    }
+
 
     public EMAPortBuilder setTypeReference(MCTypeReference typeReference) {
         this.typeReference = Optional.of(typeReference);
@@ -82,6 +89,8 @@ public class EMAPortBuilder {
             p.setTypeReference(this.typeReference.get());
             if (astNode.isPresent())
                 p.setAstNode(astNode.get());
+            if(rosConnectionSymbol.isPresent())
+                p.setRosConnectionSymbol(rosConnectionSymbol.get());
             return p;
         }
         Log.error("not all parameters have been set before to build the port symbol");
@@ -99,6 +108,8 @@ public class EMAPortBuilder {
         p.setConstantValue(constantValue.get());
         if (astNode.isPresent())
             p.setAstNode(astNode.get());
+        if(rosConnectionSymbol.isPresent())
+            p.setRosConnectionSymbol(rosConnectionSymbol.get());
         return p;
     }
 }

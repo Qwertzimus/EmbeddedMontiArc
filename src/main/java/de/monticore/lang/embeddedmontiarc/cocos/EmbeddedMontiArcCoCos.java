@@ -29,6 +29,7 @@ import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.*;
  * @author Robert Heim
  */
 public class EmbeddedMontiArcCoCos {
+
   public static EmbeddedMontiArcCoCoChecker createChecker() {
     return new EmbeddedMontiArcCoCoChecker()
         //.addCoCo(new UniqueConstraint())
@@ -46,5 +47,10 @@ public class EmbeddedMontiArcCoCos {
         .addCoCo(new InPortUniqueSender())
         .addCoCo(new ReferencedSubComponentExists())
         .addCoCo(new PortTypeOnlyBooleanOrSIUnit());
+  }
+
+  public static EmbeddedMontiArcSTCoCoChecker createSTChecker(){
+    return new EmbeddedMontiArcSTCoCoChecker()
+            .addCoCo(new InRosPortRosSender());
   }
 }

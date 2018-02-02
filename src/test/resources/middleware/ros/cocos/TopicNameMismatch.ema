@@ -1,0 +1,10 @@
+package middleware.ros.cocos;
+
+component TopicNameMismatch{
+
+    instance SubComp subComp1;
+    instance SubComp subComp2;
+
+    connect subComp1.outPort -> subComp2.inPort;
+
+}

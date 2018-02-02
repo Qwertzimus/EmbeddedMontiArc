@@ -18,22 +18,24 @@
  *  License along with this project. If not, see <http://www.gnu.org/licenses/>.
  * *******************************************************************************
  */
-package de.monticore.lang.embeddedmontiarc.middleware.ros;
+package de.monticore.lang.embeddedmontiarc.cocos;
 
-import de.monticore.lang.embeddedmontiarc.AbstractSymtabTest;
-import de.monticore.lang.embeddedmontiarc.tagging.RosToEmamTagSchema;
-import de.monticore.lang.tagging._symboltable.TaggingResolver;
-import de.monticore.symboltable.Scope;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AbstractTaggingResolverTest extends AbstractSymtabTest{
+public class EmbeddedMontiArcSTCoCoChecker {
+    List<EmbeddedMontiArcExpandedComponentInstanceSymbolCoCo> expandedComponentInstanceSymbolCoCos = new ArrayList<>();
 
-    protected static TaggingResolver createSymTabAndTaggingResolver(String... modelPath) {
-        Scope scope = createSymTab(modelPath);
-        TaggingResolver tagging = new TaggingResolver(scope, Arrays.asList(modelPath));
-        RosToEmamTagSchema.registerTagTypes(tagging);
-        return tagging;
+    public void checkAll(ExpandedComponentInstanceSymbol expandedComponentInstanceSymbol){
+        expandedComponentInstanceSymbolCoCos.forEach(coco -> coco.check(expandedComponentInstanceSymbol));
+        expandedComponentInstanceSymbol.getSubComponents().forEach(this::checkAll);
+    }
+
+    public EmbeddedMontiArcSTCoCoChecker addCoCo(EmbeddedMontiArcExpandedComponentInstanceSymbolCoCo coCo){
+        expandedComponentInstanceSymbolCoCos.add(coCo);
+        return this;
     }
 
 }

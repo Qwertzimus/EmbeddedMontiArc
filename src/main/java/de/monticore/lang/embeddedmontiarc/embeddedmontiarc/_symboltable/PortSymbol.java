@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import de.monticore.lang.embeddedmontiarc.helper.SymbolPrinter;
+import de.monticore.lang.embeddedmontiarc.tagging.RosConnectionSymbol;
 import de.monticore.lang.monticar.stream._symboltable.NamedStreamSymbol;
 import de.monticore.lang.monticar.ts.MCTypeSymbol;
 import de.monticore.lang.monticar.ts.references.MCTypeReference;
@@ -58,7 +59,9 @@ public class PortSymbol extends CommonSymbol implements ElementInstance {
   private MutableScope locallyDefinedStreams = new CommonScope();
   
   protected Optional<String> nameDependsOn = Optional.empty();
-  
+
+  private Optional<RosConnectionSymbol> rosConnectionSymbol = Optional.empty();
+
   /**
    * use {@link #builder()}
    */
@@ -278,5 +281,17 @@ public class PortSymbol extends CommonSymbol implements ElementInstance {
     else {
       return name.startsWith("CONSTANTPORT");
     }
+  }
+
+  public void setRosConnectionSymbol(RosConnectionSymbol rosConnectionSymbol){
+    this.rosConnectionSymbol = Optional.of(rosConnectionSymbol);
+  }
+
+  public Optional<RosConnectionSymbol> getRosConnectionSymbol(){
+    return rosConnectionSymbol;
+  }
+
+  public boolean isRosPort(){
+    return getRosConnectionSymbol().isPresent();
   }
 }
