@@ -124,7 +124,7 @@ grammar EmbeddedMontiArc extends de.monticore.lang.monticar.Common2, de.monticor
    * declaration later on
    */
    Port =
-          NEWLINETOKEN*(incoming:["in"] | outgoing:["out"])
+          NEWLINETOKEN*(AdaptableKeyword? incoming:["in"] | outgoing:["out"])
            Type   (Name? | Name ( "[" UnitNumberResolution "]" )?) NEWLINETOKEN*;
 
 

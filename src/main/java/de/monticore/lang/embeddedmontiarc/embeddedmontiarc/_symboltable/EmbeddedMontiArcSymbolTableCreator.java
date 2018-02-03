@@ -292,7 +292,7 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
     public void createPort(ASTPort node, String name, boolean isIncoming,
                            MCTypeReference<? extends MCTypeSymbol> typeRef, PortArraySymbol pas) {
         PortSymbol ps;
-        if(node instanceof ASTConfigPort) {
+        if(node instanceof ASTConfigPort || node.adaptableKeywordIsPresent()) {
             ps = new ConfigPortSymbol(name);
         }else {
             ps = new PortSymbol(name);

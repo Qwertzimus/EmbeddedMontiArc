@@ -210,6 +210,22 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
     }
 
     @Test
+    public void testConfigPort(){
+        Scope symtab = createSymTab("src/test/resources");
+
+        ExpandedComponentInstanceSymbol comp = symtab.<ExpandedComponentInstanceSymbol>resolve("testing.configPort",ExpandedComponentInstanceSymbol.KIND).orElse(null);
+        assertNotNull(comp);
+
+        PortSymbol configPort = comp.getIncomingPort("in1").orElse(null);
+        assertNotNull(configPort);
+        assertTrue(configPort.isConfig());
+
+        PortSymbol nonConfigPort = comp.getIncomingPort("in2").orElse(null);
+        assertNotNull(nonConfigPort);
+        assertFalse(nonConfigPort.isConfig());
+    }
+
+    @Test
     public void testExtensionMechanism1() {
         Scope symTab = createSymTab("src/test/resources");
         ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(

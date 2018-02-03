@@ -1,0 +1,6 @@
+package testing;
+
+component ConfigPort{
+    port adaptable in Q in1;
+    port in Q in2;
+}

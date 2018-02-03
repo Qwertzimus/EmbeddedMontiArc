@@ -52,7 +52,7 @@ import org.junit.Test;
 public class ParserTest {
   public static final boolean ENABLE_FAIL_QUICK = false;
   private static List<String> expectedParseErrorModels = Arrays.asList(
-      "")
+      "src/test/resources/testing/ConfigPortInvalid.ema")
       .stream().map(s -> Paths.get(s).toString())
       .collect(Collectors.toList());
 
