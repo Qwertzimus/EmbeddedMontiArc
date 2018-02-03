@@ -18,18 +18,17 @@
  *  License along with this project. If not, see <http://www.gnu.org/licenses/>.
  * *******************************************************************************
  */
-package de.monticore.lang.embeddedmontiarc.middleware.ros;
+package de.monticore.lang.embeddedmontiarc.cocos;
 
-import de.monticore.lang.embeddedmontiarc.cocos.EmbeddedMontiArcCoCos;
-import de.monticore.lang.embeddedmontiarc.cocos.EmbeddedMontiArcSTCoCoChecker;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
+import de.monticore.ast.ASTNode;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcCoCoChecker;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentSymbol;
+import de.monticore.lang.embeddedmontiarc.middleware.ros.AbstractTaggingResolverTest;
 import de.monticore.lang.embeddedmontiarc.tagging.RosConnectionSymbol;
 import de.monticore.lang.tagging._symboltable.TaggingResolver;
 import de.se_rwth.commons.logging.Finding;
 import de.se_rwth.commons.logging.Log;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,54 +37,28 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class SymtabCoCoTest extends AbstractTaggingResolverTest {
+public class AbstractTaggingCoCoTest extends AbstractTaggingResolverTest {
 
-    @BeforeClass
-    public static void init() {
-        Log.enableFailQuick(false);
+    private void resolveTags(TaggingResolver taggingResolver, ComponentSymbol componentSymbol){
+        taggingResolver.getTags(componentSymbol, RosConnectionSymbol.KIND);
+        componentSymbol.getSubComponents().forEach(sub -> resolveTags(taggingResolver,sub.getComponentType().getReferencedSymbol()));
     }
 
-    @Before
-    public void setUp() {
-        Log.getFindings().clear();
-    }
-
-    @Test
-    public void testValidRosToRos() {
-        testCoCo("middleware.ros.cocos.rosToRosComp");
-    }
-
-    @Test
-    public void testNoRosToRos() {
-        testCoCo("middleware.ros.cocos.noRosToRosComp", "0x3830a");
-    }
-
-    @Test
-    public void testTopicNameMismatch() {
-        testCoCo("middleware.ros.cocos.topicNameMismatch", "0x23a0d");
-    }
-
-    @Test
-    public void testTopicTypeMismatch() {
-        testCoCo("middleware.ros.cocos.topicTypeMismatch", "0x31f6e");
-    }
-
-    public void resolveTags(TaggingResolver taggingResolver,ExpandedComponentInstanceSymbol expandedComponentInstanceSymbol){
-        expandedComponentInstanceSymbol.getPorts().forEach(p -> taggingResolver.getTags(p,RosConnectionSymbol.KIND));
-        expandedComponentInstanceSymbol.getSubComponents().forEach(sub -> resolveTags(taggingResolver,sub));
-    }
-
-    //TODO: check findings for error msgs not just presence
-    public void testCoCo(String componentInstanceName, String... expectedErrors) {
+    public void testCoCosOnComponent(String componentName, String... expectedErrors) {
         TaggingResolver taggingResolver = createSymTabAndTaggingResolver("src/test/resources/");
 
-        ExpandedComponentInstanceSymbol component = taggingResolver.<ExpandedComponentInstanceSymbol>resolve(componentInstanceName, ExpandedComponentInstanceSymbol.KIND).orElse(null);
+        ComponentSymbol component = taggingResolver.<ComponentSymbol>resolve(componentName, ComponentSymbol.KIND).orElse(null);
         assertNotNull(component);
 
         resolveTags(taggingResolver,component);
 
-        EmbeddedMontiArcSTCoCoChecker symtabCoCoChecker = EmbeddedMontiArcCoCos.createSTChecker();
-        symtabCoCoChecker.checkAll(component);
+        ASTNode tmpNode = component.getAstNode().orElse(null);
+        assertNotNull(tmpNode);
+        ASTComponent astComponent = tmpNode instanceof ASTComponent ? (ASTComponent) tmpNode : null;
+        assertNotNull(astComponent);
+
+        EmbeddedMontiArcCoCoChecker checker = EmbeddedMontiArcCoCos.createChecker();
+        checker.checkAll(astComponent);
 
         List<String> findings = Log.getFindings().stream().map(Finding::getMsg).collect(Collectors.toList());
         Arrays.stream(expectedErrors)
@@ -100,5 +73,4 @@ public class SymtabCoCoTest extends AbstractTaggingResolverTest {
                     assertTrue(found);
                 });
     }
-
 }

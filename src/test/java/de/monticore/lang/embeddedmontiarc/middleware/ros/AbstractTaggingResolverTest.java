@@ -35,5 +35,4 @@ public class AbstractTaggingResolverTest extends AbstractSymtabTest{
         RosToEmamTagSchema.registerTagTypes(tagging);
         return tagging;
     }
-
 }

@@ -20,19 +20,33 @@
  */
 package de.monticore.lang.embeddedmontiarc.cocos;
 
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentCoCo;
+import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentSymbol;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
 import de.monticore.lang.embeddedmontiarc.tagging.RosConnectionSymbol;
+import de.monticore.symboltable.Symbol;
 import de.se_rwth.commons.logging.Log;
 
-public class InRosPortRosSender implements EmbeddedMontiArcExpandedComponentInstanceSymbolCoCo {
+public class InRosPortRosSender implements EmbeddedMontiArcASTComponentCoCo {
 
     @Override
-    public void check(ExpandedComponentInstanceSymbol symbol) {
-        symbol.getConnectors().forEach(connectorSymbol -> {
+    public void check(ASTComponent node) {
+        Symbol symbol = node.getSymbol().orElse(null);
+        if(symbol.isKindOf(ComponentSymbol.KIND)){
+            check((ComponentSymbol) symbol);
+        }
 
-            PortSymbol source = connectorSymbol.getSourcePort();
-            PortSymbol target = connectorSymbol.getTargetPort();
+    }
+
+    private void check(ComponentSymbol symbol) {
+        symbol.getConnectors().forEach(connector -> {
+
+            PortSymbol source = connector.getSourcePort();
+            PortSymbol target = connector.getTargetPort();
+
+            if(source == null || target == null) Log.error("Could not resolve target or source!");
 
             RosConnectionSymbol sourceTag = source.getRosConnectionSymbol().orElse(null);
             RosConnectionSymbol targetTag = target.getRosConnectionSymbol().orElse(null);

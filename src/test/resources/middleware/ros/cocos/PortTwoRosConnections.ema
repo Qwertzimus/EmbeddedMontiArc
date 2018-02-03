@@ -2,8 +2,16 @@ package middleware.ros.cocos;
 
 component PortTwoRosConnections{
 
-    instance SubComp subComp1;
-    instance SubComp subComp2;
+    component SubComp1{
+        port out Q outPort;
+    }
+
+    component SubComp2{
+        port in Q inPort;
+    }
+
+    instance SubComp1 subComp1;
+    instance SubComp2 subComp2;
 
     connect subComp1.outPort -> subComp2.inPort;
 
