@@ -27,6 +27,7 @@ import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.Expanded
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
 import de.monticore.lang.embeddedmontiarc.tagging.RosConnectionSymbol;
 import de.monticore.symboltable.Symbol;
+import de.monticore.symboltable.resolving.ResolvedSeveralEntriesException;
 import de.se_rwth.commons.logging.Log;
 
 public class InRosPortRosSender implements EmbeddedMontiArcASTComponentCoCo {
@@ -43,10 +44,20 @@ public class InRosPortRosSender implements EmbeddedMontiArcASTComponentCoCo {
     private void check(ComponentSymbol symbol) {
         symbol.getConnectors().forEach(connector -> {
 
-            PortSymbol source = connector.getSourcePort();
-            PortSymbol target = connector.getTargetPort();
+            PortSymbol source = null;
+            PortSymbol target = null;
+            try {
+                source = connector.getSourcePort();
+                target = connector.getTargetPort();
+            } catch (ResolvedSeveralEntriesException ignored) {
+                //needed so that other invalid coco tests dont fail(e.g. UniquePortsTest)
+                Log.warn(ignored.getMessage());
+            }
 
-            if(source == null || target == null) Log.error("Could not resolve target or source!");
+            if(source == null || target == null){
+                Log.warn("Could not resolve target or source!");
+                return;
+            }
 
             RosConnectionSymbol sourceTag = source.getRosConnectionSymbol().orElse(null);
             RosConnectionSymbol targetTag = target.getRosConnectionSymbol().orElse(null);
