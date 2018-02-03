@@ -1,0 +1,5 @@
+package adaptable;
+
+tagschema AdaptableTagSchema {
+    tagtype Adaptable for Port;
+}

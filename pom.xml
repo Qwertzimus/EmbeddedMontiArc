@@ -46,7 +46,7 @@
     <SIUnit.version>0.0.10-SNAPSHOT</SIUnit.version>
     <struct.version>0.0.10-SNAPSHOT</struct.version>
     <Common-MontiCar.version>0.0.10b-SNAPSHOT</Common-MontiCar.version>
-
+    <tagging.version>0.0.1</tagging.version>
     <!-- .. Libraries .................................................. -->
     <guava.version>18.0</guava.version>
     <junit.version>4.12</junit.version>
@@ -78,6 +78,12 @@
       <groupId>org.antlr</groupId>
       <artifactId>antlr4-runtime</artifactId>
       <version>4.7.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>de.monticore.lang</groupId>
+      <artifactId>Tagging</artifactId>
+      <version>${tagging.version}</version>
     </dependency>
 
     <dependency>
