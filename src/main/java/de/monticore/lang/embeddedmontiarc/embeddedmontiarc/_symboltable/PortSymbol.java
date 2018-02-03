@@ -52,6 +52,8 @@ public class PortSymbol extends CommonSymbol implements ElementInstance {
    * Flags, if this port is incoming.
    */
   private boolean incoming;
+
+  private boolean config = false;
   
   private MCTypeReference<? extends MCTypeSymbol> typeReference;
   
@@ -280,7 +282,11 @@ public class PortSymbol extends CommonSymbol implements ElementInstance {
     }
   }
 
+  public void setConfig(boolean config){
+    this.config = config;
+  }
+
   public boolean isConfig(){
-    return false;
+    return config;
   }
 }

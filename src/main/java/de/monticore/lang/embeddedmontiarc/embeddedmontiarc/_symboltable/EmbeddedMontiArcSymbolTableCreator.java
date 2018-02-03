@@ -31,6 +31,7 @@ import java.util.Stack;
 
 import com.google.common.collect.Lists;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.*;
+import de.monticore.lang.monticar.common2._ast.ASTAdaptableKeyword;
 import de.monticore.lang.monticar.ts.references.MCASTTypeSymbolReference;
 import org.jscience.mathematics.number.Rational;
 
@@ -292,15 +293,12 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
     public void createPort(ASTPort node, String name, boolean isIncoming,
                            MCTypeReference<? extends MCTypeSymbol> typeRef, PortArraySymbol pas) {
         PortSymbol ps;
-        if(node instanceof ASTConfigPort || node.adaptableKeywordIsPresent()) {
-            ps = new ConfigPortSymbol(name);
-        }else {
-            ps = new PortSymbol(name);
-        }
+        ps = new PortSymbol(name);
 
         ps.setNameDependsOn(pas.getNameDependsOn());
         ps.setTypeReference(typeRef);
         ps.setDirection(isIncoming);
+        ps.setConfig(node.adaptableKeywordIsPresent());
 
         addToScopeAndLinkWithNode(ps, node);
     }
@@ -927,10 +925,13 @@ public class EmbeddedMontiArcSymbolTableCreator extends EmbeddedMontiArcSymbolTa
     }
 
     private void addConfigPort(ComponentSymbol componentSymbol,ASTComponent astComponent, MCFieldSymbol parameterSymbol,ASTParameter astParameter) {
-        ASTConfigPort tmpASTPort = new ASTConfigPort();
-        tmpASTPort.setName(parameterSymbol.getName());
-        tmpASTPort.setType(astParameter.getType());
-        tmpASTPort.setIncoming(true);
+        ASTPort tmpASTPort = ASTPort.getBuilder()
+                .name(parameterSymbol.getName())
+                .type(astParameter.getType())
+                .incoming(true)
+                .outgoing(false)
+                .adaptableKeyword(ASTAdaptableKeyword.getBuilder().build())
+                .build();
 
         ASTInterface tmpInterface = EmbeddedMontiArcNodeFactory.createASTInterface();
         tmpInterface.setPorts(Lists.newArrayList(tmpASTPort));
