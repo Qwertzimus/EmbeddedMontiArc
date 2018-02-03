@@ -3,4 +3,10 @@ package testing;
 component ConfigPort{
     port adaptable in Q in1;
     port in Q in2;
+
+    port out Q out1;
+    port out Q out2;
+
+    connect in1 -> out1;
+    connect in2 -> out2;
 }
