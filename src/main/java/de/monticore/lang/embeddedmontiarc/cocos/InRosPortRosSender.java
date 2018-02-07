@@ -23,8 +23,8 @@ package de.monticore.lang.embeddedmontiarc.cocos;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._ast.ASTComponent;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._cocos.EmbeddedMontiArcASTComponentCoCo;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ComponentSymbol;
-import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.ExpandedComponentInstanceSymbol;
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
+import de.monticore.lang.embeddedmontiarc.tagging.MiddlewareSymbol;
 import de.monticore.lang.embeddedmontiarc.tagging.RosConnectionSymbol;
 import de.monticore.symboltable.Symbol;
 import de.monticore.symboltable.resolving.ResolvedSeveralEntriesException;
@@ -59,8 +59,11 @@ public class InRosPortRosSender implements EmbeddedMontiArcASTComponentCoCo {
                 return;
             }
 
-            RosConnectionSymbol sourceTag = source.getRosConnectionSymbol().orElse(null);
-            RosConnectionSymbol targetTag = target.getRosConnectionSymbol().orElse(null);
+            RosConnectionSymbol sourceTag = (RosConnectionSymbol) source.getMiddlewareSymbol()
+                    .filter(mws -> mws.isKindOf(RosConnectionSymbol.KIND)).orElse(null);
+
+            RosConnectionSymbol targetTag = (RosConnectionSymbol) target.getMiddlewareSymbol()
+                    .filter(mws -> mws.isKindOf(RosConnectionSymbol.KIND)).orElse(null);
 
             if (targetTag != null) {
                 if (sourceTag != null) {

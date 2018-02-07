@@ -25,7 +25,7 @@ import de.monticore.lang.tagging._symboltable.TagSymbol;
 
 import java.util.Optional;
 
-public class RosConnectionSymbol extends TagSymbol {
+public class RosConnectionSymbol extends MiddlewareSymbol {
     public static final RosConnectionKind KIND = RosConnectionKind.INSTANCE;
 
     public RosConnectionSymbol(String topicName, String topicType) {

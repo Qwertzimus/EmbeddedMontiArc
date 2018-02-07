@@ -93,7 +93,7 @@ public class RosConnectionSymbolCreator implements TagSymbolCreator {
                                         tagging.addTag(s,tmpSymbol);
                                         if(s.isKindOf(PortSymbol.KIND)){
                                             PortSymbol p = (PortSymbol) s;
-                                            p.setRosConnectionSymbol(tmpSymbol);
+                                            p.setMiddlewareSymbol(tmpSymbol);
                                         }
                                     }));
         }
