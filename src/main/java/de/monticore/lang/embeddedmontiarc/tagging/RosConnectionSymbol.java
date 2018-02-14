@@ -21,19 +21,22 @@
 package de.monticore.lang.embeddedmontiarc.tagging;
 
 import de.monticore.lang.tagging._symboltable.TagKind;
-import de.monticore.lang.tagging._symboltable.TagSymbol;
 
 import java.util.Optional;
 
 public class RosConnectionSymbol extends MiddlewareSymbol {
     public static final RosConnectionKind KIND = RosConnectionKind.INSTANCE;
 
+    public RosConnectionSymbol() {
+        super(KIND, Optional.empty(), Optional.empty(), Optional.empty());
+    }
+
     public RosConnectionSymbol(String topicName, String topicType) {
         this(KIND, topicName, topicType);
     }
 
     public RosConnectionSymbol(RosConnectionKind kind, String topicName, String topicType) {
-        super(kind, topicName, topicType, Optional.empty());
+        super(kind, Optional.ofNullable(topicName), Optional.ofNullable(topicType), Optional.empty());
     }
 
     public RosConnectionSymbol(String topicName, String topicType, String msgField) {
@@ -41,7 +44,7 @@ public class RosConnectionSymbol extends MiddlewareSymbol {
     }
 
     protected RosConnectionSymbol(RosConnectionKind kind, String topicName, String topicType, String msgField) {
-        super(kind, topicName, topicType, Optional.of(msgField));
+        super(kind, Optional.ofNullable(topicName), Optional.ofNullable(topicType), Optional.ofNullable(msgField));
     }
 
     @Override
@@ -50,16 +53,28 @@ public class RosConnectionSymbol extends MiddlewareSymbol {
                 getTopicName(), getTopicType(), getMsgField());
     }
 
-    public String getTopicName() {
+    public Optional<String> getTopicName() {
         return getValue(0);
     }
 
-    public String getTopicType() {
+    public Optional<String> getTopicType() {
         return getValue(1);
     }
 
     public Optional<String> getMsgField() {
         return getValue(2);
+    }
+
+    public void setTopicName(String topicName) {
+        this.values.set(0, Optional.ofNullable(topicName));
+    }
+
+    public void setTopicType(String topicType) {
+        this.values.set(1, Optional.ofNullable(topicType));
+    }
+
+    public void setMsgField(String msgField) {
+        this.values.set(2, Optional.ofNullable(msgField));
     }
 
     public static class RosConnectionKind extends TagKind {

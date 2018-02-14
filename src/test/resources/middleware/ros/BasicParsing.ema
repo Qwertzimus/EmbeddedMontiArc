@@ -3,7 +3,7 @@ package middleware.ros;
 component BasicParsing{
     port in Q rosIn;
     port in Q noRosIn;
+    port in Q emptyTagIn;
     port out Q rosOut;
     port out Q noRosOut;
-
 }

@@ -21,19 +21,19 @@
 package de.monticore.lang.embeddedmontiarc.tagging;
 
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
-import de.monticore.lang.tagging._ast.ASTNameScope;
-import de.monticore.lang.tagging._ast.ASTScope;
-import de.monticore.lang.tagging._ast.ASTTag;
-import de.monticore.lang.tagging._ast.ASTTaggingUnit;
+import de.monticore.lang.tagging._ast.*;
 import de.monticore.lang.tagging._symboltable.TagSymbolCreator;
 import de.monticore.lang.tagging._symboltable.TaggingResolver;
 import de.monticore.symboltable.Scope;
+import de.monticore.symboltable.Symbol;
 import de.se_rwth.commons.Joiners;
 import de.se_rwth.commons.logging.Log;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class RosConnectionSymbolCreator implements TagSymbolCreator {
 
@@ -70,28 +70,45 @@ public class RosConnectionSymbolCreator implements TagSymbolCreator {
                         packageName;
 
         for (ASTTag element : unit.getTagBody().getTags()) {
-            element.getTagElements().stream()
-                    .filter(t -> t.getName().equals("RosConnection")) // after that point we can throw error messages
+            List<ASTTagElement> tagElements = element.getTagElements().stream()
+                    .filter(t -> t.getName().equals("RosConnection"))
+                    .collect(Collectors.toList());
+            // after that point we can throw error messages
+            List<Symbol> ports = element.getScopes().stream()
+                    .filter(this::checkScope)
+                    .map(s -> (ASTNameScope) s)
+                    .map(s -> tagging.resolve(Joiners.DOT.join(rootCmp, // resolve down does not try to reload symbol
+                            s.getQualifiedName().toString()), PortSymbol.KIND))
+                    .filter(Optional::isPresent) // if the symbol is not present, does not mean that the symbol
+                    .map(Optional::get)          // is not available at all, maybe it will be loaded later
+                    .collect(Collectors.toList());
+
+            //Empty tags
+            tagElements.stream()
+                    .filter(t -> !t.tagValueIsPresent())
+                    .forEachOrdered(tag -> {
+                        ports.stream()
+                                .forEachOrdered(s -> {
+                                    RosConnectionSymbol tmpSymbol = new RosConnectionSymbol();
+                                    tagging.addTag(s, tmpSymbol);
+                                    if (s.isKindOf(PortSymbol.KIND)) {
+                                        PortSymbol p = (PortSymbol) s;
+                                        p.setMiddlewareSymbol(tmpSymbol);
+                                    }
+                                });
+                    });
+
+            //Tags with TagValue
+            tagElements.stream()
                     .filter(t -> t.getTagValue().isPresent())
                     .map(t -> matchRegexPattern(t.getTagValue().get()))
                     .filter(r -> r != null)
                     .forEachOrdered(m ->
-                            element.getScopes().stream()
-                                    .filter(this::checkScope)
-                                    .map(s -> (ASTNameScope) s)
-                                    .map(s -> tagging.resolve(Joiners.DOT.join(rootCmp, // resolve down does not try to reload symbol
-                                            s.getQualifiedName().toString()), PortSymbol.KIND))
-                                    .filter(Optional::isPresent) // if the symbol is not present, does not mean that the symbol
-                                    .map(Optional::get)          // is not available at all, maybe it will be loaded later
+                            ports.stream()
                                     .forEachOrdered(s -> {
-                                        RosConnectionSymbol tmpSymbol;
-                                        if (m.group(4) != null) {
-                                            tmpSymbol = new RosConnectionSymbol(m.group(1), m.group(2), m.group(4));
-                                        } else {
-                                            tmpSymbol = new RosConnectionSymbol(m.group(1), m.group(2));
-                                        }
-                                        tagging.addTag(s,tmpSymbol);
-                                        if(s.isKindOf(PortSymbol.KIND)){
+                                        RosConnectionSymbol tmpSymbol = new RosConnectionSymbol(m.group(1), m.group(2), m.group(4));
+                                        tagging.addTag(s, tmpSymbol);
+                                        if (s.isKindOf(PortSymbol.KIND)) {
                                             PortSymbol p = (PortSymbol) s;
                                             p.setMiddlewareSymbol(tmpSymbol);
                                         }
