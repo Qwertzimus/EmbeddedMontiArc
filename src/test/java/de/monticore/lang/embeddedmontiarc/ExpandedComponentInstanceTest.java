@@ -260,6 +260,52 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
         testConnectorCorrectnessForComponent(inst);
     }
 
+
+    @Test
+    public void testConnectorCorrectness2() {
+        Scope symTab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol inst = symTab.<ExpandedComponentInstanceSymbol>resolve(
+                "testing.subComponentConnector2", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+
+        assertNotNull(inst);
+
+        assertEquals(2, inst.getConnectors().size());
+
+        Iterator<ConnectorSymbol> iter = inst.getConnectors().iterator();
+        ConnectorSymbol cs = iter.next();
+
+        assertEquals("a1.out1", cs.getSource());
+        assertEquals("out1", cs.getTarget());
+        assertEquals("testing.subComponentConnector2.a1.out1", cs.getSourcePort().getFullName());
+        assertEquals("testing.subComponentConnector2.out1", cs.getTargetPort().getFullName());
+
+        cs = iter.next();
+
+        assertEquals("in1", cs.getSource());
+        assertEquals("a1.in1", cs.getTarget());
+        assertEquals("testing.subComponentConnector2.in1", cs.getSourcePort().getFullName());
+        assertEquals("testing.subComponentConnector2.a1.in1", cs.getTargetPort().getFullName());
+
+        assertEquals(1, inst.getSubComponents().size());
+
+        ExpandedComponentInstanceSymbol inst2 = inst.getSubComponents().iterator().next();
+
+        assertEquals(2, inst2.getConnectors().size());
+        iter = inst2.getConnectors().iterator();
+        cs = iter.next();
+        assertEquals("a1.out1", cs.getSource());
+        assertEquals("out1", cs.getTarget());
+        assertEquals("testing.subComponentConnector2.a1.a1.out1", cs.getSourcePort().getFullName());
+        assertEquals("testing.subComponentConnector2.a1.out1", cs.getTargetPort().getFullName());
+
+        cs = iter.next();
+        assertEquals("in1", cs.getSource());
+        assertEquals("a1.in1", cs.getTarget());
+        assertEquals("testing.subComponentConnector2.a1.in1", cs.getSourcePort().getFullName());
+        assertEquals("testing.subComponentConnector2.a1.a1.in1", cs.getTargetPort().getFullName());
+
+    }
+
     private void testConnectorCorrectnessForComponent(ExpandedComponentInstanceSymbol inst) {
         inst.getConnectors().forEach(connectorSymbol -> {
             assertNotNull(connectorSymbol.getSourcePort());
@@ -268,8 +314,8 @@ public class ExpandedComponentInstanceTest extends AbstractSymtabTest {
             PortSymbol sourcePort = connectorSymbol.getSourcePort();
             PortSymbol targetPort = connectorSymbol.getTargetPort();
 
-             System.out.println("source: " + sourcePort.getFullName());
-             System.out.println("target: " + targetPort.getFullName() + "\n");
+            System.out.println("source: " + sourcePort.getFullName());
+            System.out.println("target: " + targetPort.getFullName() + "\n");
 
             assertNotEquals(sourcePort.getFullName(), targetPort.getFullName());
         });
