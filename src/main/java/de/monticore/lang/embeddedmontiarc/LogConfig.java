@@ -27,7 +27,7 @@ import de.se_rwth.commons.logging.Log;
  */
 public class LogConfig extends Log {
     static Log log;
-    boolean disableOutput = false;
+    boolean disableOutput = true;
 
     public static void init() {
         log = new LogConfig();
