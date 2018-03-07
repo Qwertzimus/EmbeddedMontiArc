@@ -294,7 +294,7 @@ public class ConnectorSymbol extends CommonSymbol implements ElementInstance {
             return port.get();
         }
 
-        Log.info("False Source: " + c.getSource() + " in: " + c.getEnclosingScope().getName().get(),
+        Log.debug("False Source: " + c.getSource() + " in: " + c.getEnclosingScope().getName().get(),
                 "ConnectorSymbol");
         Log.error("0xAC012 No source have been set for the connector symbol");
         return null;
@@ -324,13 +324,12 @@ public class ConnectorSymbol extends CommonSymbol implements ElementInstance {
             return port.get();
         }
 
-        if (c.getTargetPort() != null) {
+        /*if ( c.getTargetPort() != null) {
             return c.getTargetPort();
-        }
-        Log.info(c.getEnclosingScope().toString(), "Scope:");
-        Log.info(c.toString(), "Connector:");
-        Log.info("False target: " + c.getTarget() + " in: " + c.getEnclosingScope().getName().get(),
-                "ImplementExecutionOrder");
+        }*/
+        System.out.println("Scope:" + c.getEnclosingScope().toString());
+        System.out.println("Connector:" + c.toString());
+        System.out.println("False target: " + c.getTarget() + " in: " + c.getEnclosingScope().getName().get());
         Log.error("0xAC013 No target have been set for the connector symbol");
         return null;
     }
