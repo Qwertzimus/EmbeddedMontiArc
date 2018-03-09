@@ -722,29 +722,29 @@ public class SymtabTest extends AbstractSymtabTest {
         Iterator<ConnectorSymbol> connectorSymbolIter = cs.getConnectors().iterator();
 
         ConnectorSymbol cur = connectorSymbolIter.next();
-        assertEquals("pass.pout1[1]",cur.getSource());
-        assertEquals("out1[1]",cur.getTarget());
+        assertEquals("pass.pout1[1]", cur.getSource());
+        assertEquals("out1[1]", cur.getTarget());
         cur = connectorSymbolIter.next();
-        assertEquals("pass.pout1[2]",cur.getSource());
-        assertEquals("out1[2]",cur.getTarget());
+        assertEquals("pass.pout1[2]", cur.getSource());
+        assertEquals("out1[2]", cur.getTarget());
         cur = connectorSymbolIter.next();
-        assertEquals("pass.pout1[3]",cur.getSource());
-        assertEquals("out1[3]",cur.getTarget());
+        assertEquals("pass.pout1[3]", cur.getSource());
+        assertEquals("out1[3]", cur.getTarget());
         cur = connectorSymbolIter.next();
-        assertEquals("pass.pout1[4]",cur.getSource());
-        assertEquals("out1[4]",cur.getTarget());
+        assertEquals("pass.pout1[4]", cur.getSource());
+        assertEquals("out1[4]", cur.getTarget());
         cur = connectorSymbolIter.next();
-        assertEquals("in1[1]",cur.getSource());
-        assertEquals("pass.pin1[1]",cur.getTarget());
+        assertEquals("in1[1]", cur.getSource());
+        assertEquals("pass.pin1[1]", cur.getTarget());
         cur = connectorSymbolIter.next();
-        assertEquals("in1[2]",cur.getSource());
-        assertEquals("pass.pin1[2]",cur.getTarget());
+        assertEquals("in1[2]", cur.getSource());
+        assertEquals("pass.pin1[2]", cur.getTarget());
         cur = connectorSymbolIter.next();
-        assertEquals("in1[1]",cur.getSource());
-        assertEquals("pass.pin1[3]",cur.getTarget());
+        assertEquals("in1[1]", cur.getSource());
+        assertEquals("pass.pin1[3]", cur.getTarget());
         cur = connectorSymbolIter.next();
-        assertEquals("in1[2]",cur.getSource());
-        assertEquals("pass.pin1[4]",cur.getTarget());
+        assertEquals("in1[2]", cur.getSource());
+        assertEquals("pass.pin1[4]", cur.getTarget());
 
     }
 
@@ -771,6 +771,13 @@ public class SymtabTest extends AbstractSymtabTest {
         MCTypeSymbol s2 = out1.getTypeReference().getReferencedSymbol();
         assertEquals("structures.S2", s2.getFullName());
         assertTrue(s2 instanceof StructSymbol);
+    }
+
+    @Test
+    public void testSymtabFAS() {
+        Scope symTab = createSymTab("src/test/resources");
+        ExpandedComponentInstanceSymbol instance = symTab.<ExpandedComponentInstanceSymbol>resolve("fas.demo_fas_Fkt_m.fAS", ExpandedComponentInstanceSymbol.KIND).orElse(null);
+        assertNotNull(instance);
     }
 }
 

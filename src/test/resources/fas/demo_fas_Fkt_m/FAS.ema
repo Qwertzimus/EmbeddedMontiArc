@@ -69,7 +69,7 @@ component FAS {
     connect Distance_Object_m -> distWarner.Distance_Object_m;
 
     connect tempo.CC_active_b -> dist.CC_active_b;
-    connect V_Vehicle_ms -> dist.V_Vehicle_ms;
+    connect V_Vehicle_kmh -> dist.V_Vehicle_ms;
     connect Distance_Object_m -> dist.Distance_Object_m;
     connect Distance_stat -> dist.Distance_stat;
     connect V_Obj_rel_kmh -> dist.V_Obj_rel_kmh;
