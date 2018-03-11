@@ -47,8 +47,8 @@ component FAS {
     connect CruiseControl_b -> tempo.CruiseControl_b;
 	connect V_Vehicle_kmh -> tempo.V_Vehicle_kmh;
     connect Limiter_b -> tempo.Limiter_b;
-    connect LeverUp_stat -> tempo.LeverUp_stat;
-    connect LeverDown_stat -> tempo.LeverDown_stat;
+    connect LeverUp_stat -> tempo.LeverUp_Stat;
+    connect LeverDown_stat -> tempo.LeverDown_Stat;
     //connect followToStop.FTS_active_b -> tempo.FTS_active_b;
 
     connect Limiter_b -> lim.Limiter_b;
@@ -76,8 +76,8 @@ component FAS {
     //connect followToStop.FTS_active_b -> dist.FTS_active_b;
     //connect followToStop.FTS_Abstand_soll_m -> dist.FTS_Abstand_soll_m;
 
-	connect V_Vehicle_kmh -> followToStop.V_Vehicle_kmh;
-	connect V_Obj_rel_kmh -> followToStop.V_Obj_rel_kmh;
+	//connect V_Vehicle_kmh -> followToStop.V_Vehicle_kmh;
+	//connect V_Obj_rel_kmh -> followToStop.V_Obj_rel_kmh;
 
     connect multDiv1.out1 -> emergencyBrake.V_Vehicle_ms;
     connect Distance_Object_m -> emergencyBrake.Distance_Object_m;
@@ -93,8 +93,8 @@ component FAS {
     connect dist.Decelerator_pc -> velocityControl.Decelerator_pc;
     connect emergencyBrake.BrakeForce_Emergency_pc -> velocityControl.BrakeForce_Emergency_pc;
 
-    connect distWarner.Acusti_warn_b -> or.in1;
-    connect emergencyBrake.Acusti_warn_b -> or.in2;
+    connect distWarner.Acusti_warn_b -> or.in1[1];
+    connect emergencyBrake.Acusti_warn_b -> or.in1[2];
 
     connect tempo.CC_active_b -> CC_active_b;
     connect velocityControl.Accelaration_pc -> Accelaration_pc;

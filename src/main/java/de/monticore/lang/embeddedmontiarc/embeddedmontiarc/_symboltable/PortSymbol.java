@@ -127,7 +127,7 @@ public class PortSymbol extends CommonSymbol implements ElementInstance {
   }
   
   /**
-   * returns the expanded component instance which defines the connector this is independent from
+   * returns the expanded component instance which defines the port this is independent from
    * the component to which the source and target ports belong to
    *
    * @return is optional, b/c a connector can belong to a component symbol or to an expanded
