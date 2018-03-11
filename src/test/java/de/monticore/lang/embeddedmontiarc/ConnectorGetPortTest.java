@@ -32,7 +32,7 @@ import static org.junit.Assert.assertNotNull;
 public class ConnectorGetPortTest extends AbstractSymtabTest {
 
 
-    @Ignore
+    //@Ignore
     @Test
     public void testGetPorts() throws Exception {
         Scope symTab = createSymTab("src/test/resources");
