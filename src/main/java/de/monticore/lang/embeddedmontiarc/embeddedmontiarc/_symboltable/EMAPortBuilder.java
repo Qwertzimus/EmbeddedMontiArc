@@ -42,9 +42,6 @@ public class EMAPortBuilder {
                     setTypeReference(port.getTypeReference()).setConstantValue(((ConstantPortSymbol) port).getConstantValue()).setASTNode(port.getAstNode())
                     .buildConstantPort();
         else {
-            if(port.getNameWithoutArrayBracketPart().equals("degree")){
-                System.out.println("info:"+((MCASTTypeSymbol)port.getTypeReference().getReferencedSymbol()).getAstType().toString());
-            }
             return new EMAPortBuilder().setName(port.getName()).setDirection(port.isIncoming())
                     .setTypeReference(port.getTypeReference()).setASTNode(port.getAstNode()).build();
         }
