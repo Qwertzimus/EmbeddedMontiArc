@@ -386,6 +386,7 @@
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.3.0</version>
                 <configuration>
+                  <sourceDirectories>src</sourceDirectories>
                 </configuration>
             </plugin>
             <plugin>
