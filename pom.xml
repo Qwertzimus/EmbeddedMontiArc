@@ -427,11 +427,6 @@
                 <version>2.7</version>
                 <configuration>
                     <format>xml</format>
-		<instrumentation>
-                <excludes>
-                    <exclude>target/**</exclude>
-                </excludes>
-            </instrumentation>
            </configuration>
 	</plugin>
     </plugins>
