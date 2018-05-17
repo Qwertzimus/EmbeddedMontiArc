@@ -400,7 +400,7 @@
                     	<aggregate>true</aggregate>
 			<instrumentation>
                  		<excludes>
-					<exclude>target/**</exclude>
+					<exclude>target</exclude>
                  		</excludes>
              		</instrumentation>
                 </configuration>
@@ -427,6 +427,11 @@
                 <version>2.7</version>
                 <configuration>
                     <format>xml</format>
+		<instrumentation>
+                <excludes>
+                    <exclude>target</exclude>
+                </excludes>
+            </instrumentation>
            </configuration>
 	</plugin>
     </plugins>
