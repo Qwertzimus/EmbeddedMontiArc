@@ -32,6 +32,8 @@ import javax.measure.unit.Unit;
 
 import de.monticore.lang.numberunit._ast.ASTUnitNumber;
 
+import static de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.EMATypeHelper.initTypeRefGeneralType;
+
 /**
  * The ConstantPortSymbol is a port which has a constant value assigned and is used
  * by a ConstantConnector to connect this value to other ports.
@@ -105,12 +107,12 @@ public class ConstantPortSymbol extends PortSymbol {
             constantPortSymbol.initConstantPortSymbol(node.getUnitNumberResolution().get().getUnitNumber().get());
             String typeName;
             typeName = "UnitNumberResolution";
-            constantPortSymbol.setTypeReference(symbolTableCreator.initTypeRefGeneralType(typeName));
+            constantPortSymbol.setTypeReference(initTypeRefGeneralType(typeName, symbolTableCreator));
         } else if (node.getBoolLiteral().isPresent()) {
             constantPortSymbol.initConstantPortSymbol(node.getBoolLiteral().get());
             String typeName;
             typeName = "B";
-            constantPortSymbol.setTypeReference(symbolTableCreator.initTypeRefGeneralType(typeName));
+            constantPortSymbol.setTypeReference(initTypeRefGeneralType(typeName, symbolTableCreator));
         } else {
             Log.info("Case not handled", "ConstantPortInit");
         }
