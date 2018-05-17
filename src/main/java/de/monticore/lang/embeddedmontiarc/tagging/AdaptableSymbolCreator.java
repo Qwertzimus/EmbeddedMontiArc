@@ -23,19 +23,21 @@
 
 package de.monticore.lang.embeddedmontiarc.tagging;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import de.monticore.lang.embeddedmontiarc.embeddedmontiarc._symboltable.PortSymbol;
-import de.monticore.lang.tagging._ast.*;
+import de.monticore.lang.tagging._ast.ASTNameScope;
+import de.monticore.lang.tagging._ast.ASTScope;
+import de.monticore.lang.tagging._ast.ASTTag;
+import de.monticore.lang.tagging._ast.ASTTaggingUnit;
 import de.monticore.lang.tagging._symboltable.TagSymbolCreator;
 import de.monticore.lang.tagging._symboltable.TaggingResolver;
 import de.monticore.symboltable.Scope;
 import de.monticore.symboltable.Symbol;
-import de.monticore.symboltable.SymbolKind;
 import de.se_rwth.commons.Joiners;
 import de.se_rwth.commons.logging.Log;
+
+import java.util.Collection;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * created by SimpleTagTypeCreator.ftl
@@ -53,7 +55,7 @@ public class AdaptableSymbolCreator implements TagSymbolCreator {
     final String rootCmp = // if-else does not work b/c of final (required by streams)
             (unit.getTagBody().getTargetModel().isPresent()) ?
                     Joiners.DOT.join(packageName, ((ASTNameScope) unit.getTagBody().getTargetModel().get())
-                            .getQualifiedName().toString()) :
+                            .getQualifiedNameString().toString()) :
                     packageName;
 
     for (ASTTag element : unit.getTagBody().getTags()) {
@@ -64,7 +66,7 @@ public class AdaptableSymbolCreator implements TagSymbolCreator {
                               .filter(this::checkScope)
                               .map(s -> (ASTNameScope) s)
                               .map(s -> tagging.resolve(Joiners.DOT.join(rootCmp, // resolve down does not try to reload symbol
-                                      s.getQualifiedName().toString()), PortSymbol.KIND))
+                                      s.getQualifiedNameString()), PortSymbol.KIND))
                               .filter(Optional::isPresent) // if the symbol is not present, does not mean that the symbol
                               .map(Optional::get)          // is not available at all, maybe it will be loaded later
                               .forEachOrdered(s -> {
