@@ -399,8 +399,9 @@
                     	<maxmem>256m</maxmem>
                     	<aggregate>true</aggregate>
 			<instrumentation>
-                 		<excludes>
-					<exclude>target</exclude>
+              <ignoreTrivial>true</ignoreTrivial>
+              <excludes>
+					<exclude>**/target/**</exclude>
                  		</excludes>
              		</instrumentation>
                 </configuration>
@@ -428,8 +429,9 @@
                 <configuration>
                     <format>xml</format>
 		<instrumentation>
-                <excludes>
-                    <exclude>target</exclude>
+          <ignoreTrivial>true</ignoreTrivial>
+          <excludes>
+                    <exclude>**/target/**/*.java</exclude>
                 </excludes>
             </instrumentation>
            </configuration>
